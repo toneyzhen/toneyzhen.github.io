@@ -216,6 +216,11 @@ h2::after {
     border-color: #0277bd;
 }
 
+/*cool descendant to change hover color of border bottom too*/
+.project-card:hover .project-img {
+    border-bottom-color: #0277bd;
+}
+
 .project-img {
     width: 100%;
     height: 200px;
@@ -224,7 +229,9 @@ h2::after {
     align-items: center;
     justify-content: center;
     font-size: 80px;
+    border-bottom: 3px solid #b3e5fc;
 }
+
 
 .project-img img {
     width: 100%;
