@@ -71,7 +71,7 @@ nav a:hover {
     align-items: center;
     justify-content: center;
     text-align: center;
-    padding: 100px 20px;
+    padding: 95px 100px;
     position: relative;
     overflow: hidden;
 }
@@ -93,10 +93,13 @@ nav a:hover {
 }
 
 .penguin-hero img {
-    width: 25%;
-    height: 25%;
+    width: 20%;
+    height: 20%;
     object-fit: cover;
+    clip-path: inset(5% 0 0 0); /* crop out top 5% of the image */
 }
+
+
 
 @keyframes waddle {
     0%, 100% { transform: rotate(-5deg); }
@@ -391,7 +394,7 @@ footer::before {
 .about-text p {
     margin-bottom: 20px;
     color: #546e7a;
-    font-size: 18px;
+    font-size: 17px;
     line-height: 1.8;
 }
 
