@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Portfolio</title>
+    <meta name="description" content="Toney Zhen's portfolio — AI/ML projects, research experience, and skills in computer vision, deep learning, and full-stack development.">
+    <title>Toney Zhen | AI/ML Portfolio</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -12,7 +13,12 @@
     <header>
         <nav class="container">
             <div class="logo">Portfolio</div>
-            <ul>
+            <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation menu" aria-expanded="false">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <ul id="navMenu">
                 <li><a href="#home">Home</a></li>
                 <li><a href="#about">About</a></li>
                 <li><a href="#experience">Experience</a></li>
@@ -20,6 +26,7 @@
                 <li><a href="#skills">Skills</a></li>
                 <li><a href="#courses">Courses</a></li>
                 <li><a href="#contact">Contact</a></li>
+                <li><a href="Toney_Resume.pdf" class="nav-resume-btn" download>Resume</a></li>
             </ul>
         </nav>
     </header>
@@ -28,12 +35,11 @@
         <div class="hero-content">
             <div class="penguin-hero"><img src="images/thumbsup.jpg" alt="me doing a thumbsup"></div>
             <h1>Hi, I'm Toney Zhen</h1>
+            <p class="hero-subtitle">AI/ML Engineer & Researcher</p>
             <br>
             <i>"Innovation needs a lot of experimentation, experimentation needs exploration, explorations will result in failures. If you do not have tolerance for failures, you won't succeed."</i>
             <br>
             <i>- Jensen Huang</i>
-            <!-- <p>some title like Creative Developer & Arctic Enthusiast</p> -->
-            <!-- <a href="#contact" class="btn">Slide Into My DMs LOL</a> -->
         </div>
     </section>
 
@@ -150,18 +156,18 @@
                 </div>
 
                 <div class="project-card">
-                    <div class="project-img"><img src="images/maliciousinput.png" alt="fabflix moviemart"></div>
+                    <div class="project-img"><img src="images/maliciousinput.png" alt="LLM Shield guardrail flagging malicious input"></div>
                     <div class="project-content">
                         <a href = "https://github.com/adv-11/ml-guardrails-project" target = "_blank"><h3>LLM Shield</h3></a>
                         <p>4 lightweight, precision-first guardrails that screen
                             requests and responses sent to and from the LLM to ensure safety.
-                            Built from fundamental machine learning algorithms.
-                            </p>
+                            Built from fundamental machine learning algorithms.</p>
                         <div class="project-tags">
                             <span class="tag">Python</span>
+                            <span class="tag">Scikit-learn</span>
                             <span class="tag">NumPy</span>
-                            <span class="tag">pandas</span>
-                            <span class="tag">scikit-learn</span>
+                            <span class="tag">Pandas</span>
+                            <span class="tag">Matplotlib</span>
                         </div>
                     </div>
                 </div>

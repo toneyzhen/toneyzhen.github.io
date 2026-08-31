@@ -32,6 +32,7 @@ nav {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    position: relative;
 }
 
 .logo {
@@ -63,6 +64,55 @@ nav a {
 
 nav a:hover {
     color: #0277bd;
+}
+
+.nav-resume-btn {
+    background: linear-gradient(135deg, #0277bd 0%, #01579b 100%);
+    color: white !important;
+    padding: 8px 20px;
+    border-radius: 50px;
+    font-weight: 600;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.nav-resume-btn:hover {
+    color: white !important;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(2, 119, 189, 0.3);
+}
+
+.nav-toggle {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    width: 32px;
+    height: 32px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+}
+
+.nav-toggle span {
+    display: block;
+    width: 100%;
+    height: 3px;
+    background: #0277bd;
+    border-radius: 2px;
+    transition: transform 0.3s, opacity 0.3s;
+}
+
+.nav-toggle.open span:nth-child(1) {
+    transform: translateY(8px) rotate(45deg);
+}
+
+.nav-toggle.open span:nth-child(2) {
+    opacity: 0;
+}
+
+.nav-toggle.open span:nth-child(3) {
+    transform: translateY(-8px) rotate(-45deg);
 }
 
 .hero {
@@ -118,6 +168,14 @@ nav a:hover {
     margin-bottom: 30px;
     color: #2c3e50;
     animation: fadeInUp 1s ease 0.2s backwards;
+}
+
+.hero-subtitle {
+    font-size: 20px !important;
+    font-weight: 600;
+    color: #0277bd !important;
+    margin-bottom: 10px !important;
+    letter-spacing: 0.5px;
 }
 
 .btn {
@@ -421,7 +479,7 @@ footer::before {
 
 .experience-card {
     background: white;
-    padding: 30px;
+    padding: 25px;
     border-radius: 15px;
     box-shadow: 0 5px 20px rgba(0,0,0,0.1);
     transition: transform 0.3s, box-shadow 0.3s;
@@ -439,9 +497,9 @@ footer::before {
     justify-content: space-between;
     align-items: flex-start;
     flex-wrap: wrap;
-    gap: 15px;
-    margin-bottom: 15px;
-    padding-bottom: 15px;
+    gap: 12px;
+    margin-bottom: 12px;
+    padding-bottom: 12px;
     border-bottom: 2px solid #e1f5fe;
 }
 
@@ -483,14 +541,14 @@ footer::before {
     list-style: none;
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 8px;
 }
 
 .experience-list li {
     color: #546e7a;
-    font-size: 15px;
-    line-height: 1.6;
-    padding-left: 22px;
+    font-size: 14px;
+    line-height: 1.5;
+    padding-left: 20px;
     position: relative;
 }
 
@@ -605,5 +663,42 @@ footer::before {
     .experience-meta {
         align-items: flex-start;
         text-align: left;
+    }
+
+    .nav-toggle {
+        display: flex;
+    }
+
+    nav ul {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        flex-direction: column;
+        gap: 0;
+        background: rgba(255, 255, 255, 0.98);
+        box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        border-bottom: 3px solid #0277bd;
+    }
+
+    nav ul.open {
+        display: flex;
+    }
+
+    nav ul li {
+        text-align: center;
+        border-top: 1px solid #e1f5fe;
+    }
+
+    nav ul li a {
+        display: block;
+        padding: 16px 0;
+    }
+
+    nav ul li .nav-resume-btn {
+        display: inline-block;
+        padding: 10px 24px;
+        margin: 10px 0;
     }
 }
