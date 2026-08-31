@@ -15,6 +15,7 @@
             <ul>
                 <li><a href="#home">Home</a></li>
                 <li><a href="#about">About</a></li>
+                <li><a href="#experience">Experience</a></li>
                 <li><a href="#projects">Projects</a></li>
                 <li><a href="#skills">Skills</a></li>
                 <li><a href="#courses">Courses</a></li>
@@ -44,23 +45,67 @@
                     <div class="penguin-avatar"><img src="images/gradphoto.jpg" alt="my grad photo"></div>
                 </div>
                 <div class="about-text">
-                    <p>Hello there! My name is Toney Zhen and I am originally from a city 
-                        called Whittier, located in Southeast LA. I am proud to have 
-                        graduated from UCI with a Bachelor of Science in Computer 
-                        Science. Currently, I am continuing my love of education 
-                        by pursuing a Masters in Artifical Intelligence at SJSU. </p>
-                    <p>I am a passionate developer who loves creating amazing digital 
-                        experiences, just like penguins love sliding on ice. With a keen eye 
-                        for design and a love for clean code (or working code at least), I 
-                        bring fun ideas to life through technology. When I'm not coding, you 
-                        can find me exploring new technologies, trying to work out how to do 
-                        a muscle-up, playing endless hours of online chess, or perhaps waddling 
-                        around the Antarctic (metaphorically speaking, of course). </p>
-                    <p>Persistence, open-mindedness, and a love for exploration are three 
-                        qualities in my life that have brought me to where I am today. My 
-                        journey has been an exciting adventure, and I am always 
-                        eager to take on new challenges and collaborate with fellow 
-                        like-minded people. ❄️</p>
+                    <p>Hello there! My name is Toney Zhen, and I'm originally from Whittier,
+                        a city in Southeast LA. I graduated from UCI with a Bachelor of
+                        Science in Computer Science, and I'm currently pursuing a Master's
+                        in Artificial Intelligence at SJSU. What draws me to AI/ML is simple:
+                        it's the technological revolution of our generation, and I want to
+                        help build it, not just watch it happen.</p>
+                    <p>That drive shows up in the work I do, whether it's fine-tuning vision
+                        models to catch AI-generated images, building guardrails that keep
+                        LLMs safer, or digging into why models fail just as much as why they
+                        succeed. Outside of that, you'll usually find me curled up with a
+                        book, chasing my first muscle-up, or waddling around on a hike
+                        (metaphorically speaking, of course).</p>
+                    <p>Fearlessness, open-mindedness, patience, and a love for exploration
+                        are the qualities that keep pushing me forward. It's been a
+                        rewarding journey so far, and I'm always excited for what's next,
+                        especially when I get to tackle it alongside people who share that
+                        same curiosity. ❄️</p>
+                </div>
+            </div>
+        </div>
+        <div class="ice-shelf"></div>
+    </section>
+
+    <section id="experience">
+        <div class="container">
+            <h2>Experience</h2>
+            <div class="experience-grid">
+                <div class="experience-card">
+                    <div class="experience-header">
+                        <div>
+                            <h3>AI/ML Research Assistant</h3>
+                            <p class="experience-org">Pan Research Group at UCI</p>
+                        </div>
+                        <div class="experience-meta">
+                            <span class="experience-date">Oct. 2023 - Jan. 2025</span>
+                            <span class="experience-location">Irvine, CA</span>
+                        </div>
+                    </div>
+                    <ul class="experience-list">
+                        <li>Trained a PyTorch model on a dataset of 300+ labeled images, achieving 79% accuracy in grain boundary detection, replacing a slow manual process and freeing researchers to focus on analysis</li>
+                        <li>Leveraged NumPy, SciPy, and Matplotlib to predict TEM to HRTEM image transformations, improving data quality</li>
+                        <li>Collaborated weekly with faculty and grad students, incorporating their feedback to refine models and validate results</li>
+                        <li>Documented experiments and shared reproducible code so other lab members could extend the work, supporting ongoing material science research</li>
+                    </ul>
+                </div>
+
+                <div class="experience-card">
+                    <div class="experience-header">
+                        <div>
+                            <h3>Applied Science Research Intern</h3>
+                            <p class="experience-org">Federal Geographic Data Committee</p>
+                        </div>
+                        <div class="experience-meta">
+                            <span class="experience-date">Sep. 2023 - May 2024</span>
+                            <span class="experience-location">Remote</span>
+                        </div>
+                    </div>
+                    <ul class="experience-list">
+                        <li>Automated management of extensive spreadsheet data, saving hours of manual effort while ensuring data integrity</li>
+                        <li>Worked under a remote supervisor and adapted deliverables based on feedback</li>
+                    </ul>
                 </div>
             </div>
         </div>
@@ -72,11 +117,27 @@
             <h2>Featured Projects</h2>
             <div class="projects-grid">
                 <div class="project-card">
+                    <div class="project-img">🎭</div>
+                    <div class="project-content">
+                        <a href="https://github.com/adv-11/Deepfake-Classification-DeepLearning" target="_blank"><h3>DeepFake Image Classifier</h3></a>
+                        <p>Fine-tuned CNNs and Vision Transformers to classify real vs.
+                            AI-generated images, tuning the top model to ~0.99 validation AUC.</p>
+                        <div class="project-tags">
+                            <span class="tag">Python</span>
+                            <span class="tag">PyTorch</span>
+                            <span class="tag">torchvision</span>
+                            <span class="tag">CNNs</span>
+                            <span class="tag">Vision Transformers</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card">
                     <div class="project-img"><img src="images/fabflix.png" alt="fabflix moviemart"></div>
                     <div class="project-content">
                         <h3>FabFlix MovieMart</h3>
-                        <p>A scalable full-stack web application providing support for an 
-                            e-commerce catalogue of 20,000+ unique movies and 70,000+ movie 
+                        <p>A scalable full-stack web application providing support for an
+                            e-commerce catalogue of 20,000+ unique movies and 70,000+ movie
                             stars.</p>
                         <div class="project-tags">
                             <span class="tag">JavaScript</span>
@@ -92,30 +153,15 @@
                     <div class="project-img"><img src="images/maliciousinput.png" alt="fabflix moviemart"></div>
                     <div class="project-content">
                         <a href = "https://github.com/adv-11/ml-guardrails-project" target = "_blank"><h3>LLM Shield</h3></a>
-                        <p>4 lightweight, precision-first guardrails that screen 
+                        <p>4 lightweight, precision-first guardrails that screen
                             requests and responses sent to and from the LLM to ensure safety.
-                            Built from fundamental machine learning algorithms. 
+                            Built from fundamental machine learning algorithms.
                             </p>
                         <div class="project-tags">
                             <span class="tag">Python</span>
                             <span class="tag">NumPy</span>
                             <span class="tag">pandas</span>
                             <span class="tag">scikit-learn</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="project-card">
-                    <div class="project-img"><img src="images/ucisearchengine.png" alt="uci search engine"></div>
-                    <div class="project-content">
-                        <h3>UCI Search Engine</h3>
-                        <p>Engineered a web crawler to index from 50,000+ UCI-related pages 
-                            and developed a search engine, achieving an average query 
-                            response time of 100 ms.</p>
-                        <div class="project-tags">
-                            <span class="tag">JavaScript</span>
-                            <span class="tag">React</span>
-                            <span class="tag">Python</span>
                         </div>
                     </div>
                 </div>
@@ -130,23 +176,18 @@
             <div class="skills-grid">
                 <div class="skill-card">
                     <div class="skill-icon">💻</div>
-                    <h3>Web Dev</h3>
-                    <p>HTML, CSS, JavaScript</p>
+                    <h3>Programming Languages</h3>
+                    <p>Python, Java, JavaScript, C, C++, SQL</p>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-icon">🤖</div>
+                    <h3>AI/ML</h3>
+                    <p>PyTorch, torchvision, Scikit-learn, NumPy, Pandas, Matplotlib, CNNs, Vision Transformers</p>
                 </div>
                 <div class="skill-card">
                     <div class="skill-icon">⚛️</div>
-                    <h3>Frameworks</h3>
-                    <p>Django, Flask, Node.js, React, JUnit, Docker, Kubernetes</p>
-                </div>
-                <div class="skill-card">
-                    <div class="skill-icon">🎨</div>
-                    <h3>UI/UX Design</h3>
-                    <p>Figma</p>
-                </div>
-                <div class="skill-card">
-                    <div class="skill-icon">🔧</div>
-                    <h3>Backend</h3>
-                    <p>Python, Javascript, Java, C, C++, SQL</p>
+                    <h3>Frameworks & Tools</h3>
+                    <p>Django, Flask, Node.js, React, JUnit, Git, Docker, Kubernetes, AWS, VS Code</p>
                 </div>
                 <div class="skill-card">
                     <div class="skill-icon">🐧</div>
@@ -162,15 +203,6 @@
         <div class="container">
             <h2>Courses Taken</h2>
             <div class="courses-grid">
-                <div class="course-card">
-                    <div class="course-icon">⚙️</div>
-                    <h3>Data Structure Analysis</h3>
-                    <p>Techniques for efficient algorithm design, including 
-                        divide-and-conquer and dynamic programming, and time/space analysis. 
-                        Focuses on implementation and mathematical analysis of fundamental 
-                        data structures and algorithms. Covers storage allocation and memory 
-                        management techniques.</p>
-                </div>
                 <div class="course-card">
                     <div class="course-icon">💾</div>
                     <h3>Database Management Systems</h3>
@@ -192,27 +224,35 @@
                     </div> -->
                 </div>
                 <div class="course-card">
-                    <div class="course-icon">🎨</div>
-                    <h3>UI Software</h3>
-                    <p>Introduction to human-computer interaction programming. Emphasis on 
-                        current tools, standards, methodologies for implementing effective 
-                        interaction designs. Widget toolkits, Web interface programming, 
-                        geo-spatial and map interfaces, mobile phone interfaces.</p>
+                    <div class="course-icon">🤖</div>
+                    <h3>Machine Learning+Data Mining</h3>
+                    <p>Introduction to principles of machine learning and data-mining
+                        applied to real-world datasets. Typical applications include spam
+                        filtering, object recognition, and credit scoring.</p>
                 </div>
                 <div class="course-card">
                     <div class="course-icon">🧠</div>
                     <h3>Artificial Intelligence</h3>
-                    <p>Different means of representing knowledge and uses of representations 
-                        in heuristic problem solving. Representations considered include 
-                        predicate logic, semantic nets, procedural representations, natural 
+                    <p>Different means of representing knowledge and uses of representations
+                        in heuristic problem solving. Representations considered include
+                        predicate logic, semantic nets, procedural representations, natural
                         language grammars, and search trees.</p>
                 </div>
                 <div class="course-card">
-                    <div class="course-icon">🤖</div>
-                    <h3>Machine Learning+Data Mining</h3>
-                    <p>Introduction to principles of machine learning and data-mining 
-                        applied to real-world datasets. Typical applications include spam 
-                        filtering, object recognition, and credit scoring.</p>
+                    <div class="course-icon">🔗</div>
+                    <h3>Deep Learning</h3>
+                    <p>Explores deep neural networks and their applications to problems
+                        such as speech recognition, image segmentation, and natural
+                        language processing. Covers the underlying theory, the range of
+                        applications, and techniques for learning from very large datasets.</p>
+                </div>
+                <div class="course-card">
+                    <div class="course-icon">🎮</div>
+                    <h3>Reinforcement Learning</h3>
+                    <p>Covers reinforcement learning (RL) and deep reinforcement learning
+                        (DRL), including RL formalism, Markov decision processes, Deep
+                        Q-Networks, and RL programming platforms, along with relevant
+                        applications of RL across various fields.</p>
                 </div>
             </div>
         </div>
@@ -244,7 +284,7 @@
 
     <footer>
         <div class="container">
-            <p>&copy; 2025 Toney Zhen. Waddling through code since forever.</p>
+            <p>&copy; 2026 Toney Zhen. Waddling through code since forever.</p>
             <p style="margin-top: 10px; opacity: 0.9;">🧊 Proudly coded in Antarctica 🧊</p>
         </div>
     </footer>

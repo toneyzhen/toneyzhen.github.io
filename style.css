@@ -409,6 +409,98 @@ footer::before {
     margin-bottom: 0;
 }
 
+.experience-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 25px;
+    margin-top: 40px;
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.experience-card {
+    background: white;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
+    border: 2px solid #b3e5fc;
+}
+
+.experience-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(2, 119, 189, 0.2);
+    border-color: #0277bd;
+}
+
+.experience-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-bottom: 15px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid #e1f5fe;
+}
+
+.experience-header h3 {
+    color: #0277bd;
+    font-size: 20px;
+}
+
+.experience-org {
+    color: #546e7a;
+    font-weight: 600;
+    margin-top: 4px;
+}
+
+.experience-meta {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    text-align: right;
+    gap: 4px;
+}
+
+.experience-date {
+    background: #e1f5fe;
+    color: #01579b;
+    padding: 4px 14px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.experience-location {
+    color: #90a4ae;
+    font-size: 13px;
+}
+
+.experience-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.experience-list li {
+    color: #546e7a;
+    font-size: 15px;
+    line-height: 1.6;
+    padding-left: 22px;
+    position: relative;
+}
+
+.experience-list li::before {
+    content: "❄";
+    position: absolute;
+    left: 0;
+    color: #0277bd;
+}
+
 .courses-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -504,5 +596,14 @@ footer::before {
 
     .penguin-avatar {
         font-size: 120px;
+    }
+
+    .experience-header {
+        flex-direction: column;
+    }
+
+    .experience-meta {
+        align-items: flex-start;
+        text-align: left;
     }
 }
