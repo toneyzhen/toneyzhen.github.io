@@ -226,7 +226,7 @@ section {
     z-index: 2;
 }
 
-section:nth-child(even) {
+main section:nth-child(even) {
     background: #f0f9ff;
 }
 
