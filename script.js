@@ -56,3 +56,88 @@ function createSnowflakes() {
 
 // Initialize snowflakes when page loads
 createSnowflakes();
+
+// Scroll penguin: waddles along the bottom edge as you scroll; click it to slide back to the top
+function createScrollPenguin() {
+    const track = document.createElement('div');
+    track.className = 'scroll-track';
+    track.setAttribute('aria-hidden', 'true');
+    track.innerHTML = '<div class="scroll-track-fill"></div>';
+
+    const penguin = document.createElement('button');
+    penguin.type = 'button';
+    penguin.className = 'scroll-penguin';
+    penguin.title = 'Back to top';
+    penguin.setAttribute('aria-label', 'Back to top');
+    penguin.innerHTML = `
+        <div class="scroll-penguin-facing">
+            <svg viewBox="0 0 40 44" aria-hidden="true">
+                <ellipse cx="14" cy="41.5" rx="5" ry="2.2" fill="#ffa726"/>
+                <ellipse cx="25" cy="41.5" rx="5" ry="2.2" fill="#ffa726"/>
+                <ellipse cx="19" cy="24" rx="14" ry="17" fill="#1f2d3d"/>
+                <ellipse cx="22.5" cy="27" rx="9" ry="13" fill="#ffffff"/>
+                <ellipse cx="12" cy="26" rx="4" ry="10" fill="#15202b" transform="rotate(12 12 26)"/>
+                <circle cx="25" cy="14" r="2.4" fill="#ffffff"/>
+                <circle cx="25.9" cy="14" r="1.2" fill="#111111"/>
+                <polygon points="30,15 38,17.5 30,20" fill="#ffa726"/>
+            </svg>
+        </div>`;
+
+    document.body.appendChild(track);
+    document.body.appendChild(penguin);
+
+    const fill = track.firstElementChild;
+    let lastY = window.scrollY;
+    let walkTimer = null;
+    let ticking = false;
+    let arrived = false;
+
+    function update() {
+        ticking = false;
+        const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+        const progress = maxScroll > 0 ? Math.min(Math.max(window.scrollY / maxScroll, 0), 1) : 0;
+        const travel = window.innerWidth - penguin.offsetWidth - 8;
+
+        penguin.style.transform = `translateX(${4 + progress * travel}px)`;
+        fill.style.transform = `scaleX(${progress})`;
+
+        const y = window.scrollY;
+        if (y !== lastY) {
+            penguin.classList.toggle('facing-left', y < lastY);
+            lastY = y;
+        }
+
+        const atEnd = progress > 0.995;
+        if (atEnd && !arrived) {
+            penguin.classList.remove('walking');
+            // restart the hop animation
+            penguin.classList.remove('arrived');
+            void penguin.offsetWidth;
+            penguin.classList.add('arrived');
+        } else if (!atEnd) {
+            penguin.classList.remove('arrived');
+        }
+        arrived = atEnd;
+    }
+
+    function onScroll() {
+        if (!arrived) penguin.classList.add('walking');
+        clearTimeout(walkTimer);
+        walkTimer = setTimeout(() => penguin.classList.remove('walking'), 150);
+        if (!ticking) {
+            ticking = true;
+            requestAnimationFrame(update);
+        }
+    }
+
+    penguin.addEventListener('click', () => {
+        const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        window.scrollTo({ top: 0, behavior: reduceMotion ? 'auto' : 'smooth' });
+    });
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', () => requestAnimationFrame(update));
+    update();
+}
+
+createScrollPenguin();
