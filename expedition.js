@@ -137,7 +137,7 @@
         if (book.reading) {
             back.appendChild(el('strong', null, 'Reading now'));
         } else if (book.rating) {
-            const stars = el('span', 'stars', '★'.repeat(book.rating) + '☆'.repeat(5 - book.rating));
+            const stars = el('span', 'book-stars', '★'.repeat(book.rating) + '☆'.repeat(5 - book.rating));
             stars.setAttribute('aria-label', `${book.rating} out of 5 stars`);
             back.appendChild(stars);
         }

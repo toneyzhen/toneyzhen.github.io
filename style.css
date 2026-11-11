@@ -1487,7 +1487,7 @@ a.log-meta:hover {
     color: var(--muted);
 }
 
-.book-back .stars {
+.book-stars {
     color: #fbbf24;
     font-size: 18px;
     letter-spacing: 2px;
