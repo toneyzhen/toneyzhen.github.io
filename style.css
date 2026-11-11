@@ -8,6 +8,8 @@
     --header-bg: rgba(255, 255, 255, 0.95);
     --menu-bg: rgba(255, 255, 255, 0.98);
     --hero-fade: #ffffff;
+    --horizon: #b3e5fc;
+    --horizon-glow: rgba(2, 119, 189, 0.12);
     --section-bg: #ffffff;
     --section-alt-bg: #f0f9ff;
     --card-bg: #ffffff;
@@ -29,10 +31,12 @@
     --accent: #7dd3fc;
     --header-bg: rgba(6, 14, 30, 0.9);
     --menu-bg: rgba(6, 14, 30, 0.98);
-    --hero-fade: #0b1730;
-    --section-bg: #0d1a31;
-    --section-alt-bg: #0b1730;
-    --card-bg: #12233f;
+    --hero-fade: rgba(125, 211, 252, 0.1);
+    --horizon: rgba(125, 211, 252, 0.7);
+    --horizon-glow: rgba(125, 211, 252, 0.3);
+    --section-bg: #112240;
+    --section-alt-bg: #0f1f3b;
+    --card-bg: #172d50;
     --ice-border: #22426a;
     --divider: #1c3557;
     --chip-bg: rgba(125, 211, 252, 0.12);
@@ -273,6 +277,12 @@ section {
     background: var(--section-bg);
     position: relative;
     z-index: 2;
+}
+
+/* horizon line where the hero sky ends and the page content begins */
+.hero + section {
+    border-top: 2px solid var(--horizon);
+    box-shadow: 0 -6px 28px var(--horizon-glow);
 }
 
 main section:nth-child(even) {
