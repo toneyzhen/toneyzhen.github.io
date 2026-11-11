@@ -1,0 +1,32 @@
+name: Temporary Goodreads widget check
+
+on:
+  push:
+    paths:
+      - ".github/workflows/diagnose.yml"
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Fetch the public shelf widget
+        run: |
+          UA="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0 Safari/537.36"
+          for shelf in read currently-reading; do
+            u="https://www.goodreads.com/review/custom_widget/206355505.bookshelf?cover_position=left&cover_size=medium&num_books=100&order=d&shelf=$shelf&show_author=1&show_cover=1&show_rating=1&show_review=1&show_tags=0&show_title=1&sort=date_read&widget_bg_transparent=true&widget_border_width=0&widget_id=1&widget_text_color=000000&widget_title_size=medium&widget_width=full"
+            code=$(curl -s -A "$UA" -o w.txt -w "%{http_code} -> %{redirect_url}" "$u")
+            echo "===== $shelf: $code ($(wc -c < w.txt) bytes)"
+            echo "--- first 1500 chars"; head -c 1500 w.txt; echo
+            echo "--- one book block, unescaped"
+            python3 - <<'PY'
+          import re, codecs
+          s = open('w.txt', encoding='utf-8', errors='replace').read()
+          try:
+              s = codecs.decode(s, 'unicode_escape')
+          except Exception:
+              pass
+          i = s.find('gr_custom_each_container')
+          print(s[max(0, i - 200): i + 2500] if i >= 0 else 'no gr_custom_each_container found')
+          print('book blocks:', s.count('gr_custom_each_container'))
+          PY
+          done
