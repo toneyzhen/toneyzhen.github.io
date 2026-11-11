@@ -1,6 +1,6 @@
 {
   "_comment": "Renames applied by the Goodreads sync. Key: the title as Goodreads gives it (after any subtitle is dropped). Value: the title to show.",
   "titles": {
-    "Psychocybernetic Principles for Creative Living": "Psychocybernetics"
+    "Psychocybernetic Principles for Creative Living": "Psycho-Cybernetics"
   }
 }
