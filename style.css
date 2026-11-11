@@ -730,10 +730,24 @@ footer::before {
     padding: 0;
     border: none;
     background: none;
-    cursor: pointer;
+    cursor: grab;
     z-index: 91;
     will-change: transform;
+    touch-action: none;
+    user-select: none;
+    -webkit-user-select: none;
     -webkit-tap-highlight-color: transparent;
+}
+
+/* bigger invisible grab area, easier to catch on touch screens */
+.scroll-penguin::before {
+    content: "";
+    position: absolute;
+    inset: -12px -10px -3px;
+}
+
+.scroll-penguin.dragging {
+    cursor: grabbing;
 }
 
 .scroll-penguin:focus-visible {

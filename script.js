@@ -67,8 +67,8 @@ function createScrollPenguin() {
     const penguin = document.createElement('button');
     penguin.type = 'button';
     penguin.className = 'scroll-penguin';
-    penguin.title = 'Back to top';
-    penguin.setAttribute('aria-label', 'Back to top');
+    penguin.title = 'Drag to scroll, click to go back to top';
+    penguin.setAttribute('aria-label', 'Scroll position. Drag or use arrow keys to scroll, click to go back to top');
     penguin.innerHTML = `
         <div class="scroll-penguin-facing">
             <svg viewBox="0 0 40 44" aria-hidden="true">
@@ -130,9 +130,59 @@ function createScrollPenguin() {
         }
     }
 
+    // Drag the penguin left/right to scrub through the page, like a scrollbar thumb
+    const maxScrollNow = () => document.documentElement.scrollHeight - window.innerHeight;
+    let drag = null;
+
+    function scrollToProgress(progress) {
+        const clamped = Math.min(Math.max(progress, 0), 1);
+        window.scrollTo({ top: clamped * maxScrollNow(), behavior: 'auto' });
+    }
+
+    penguin.addEventListener('pointerdown', (e) => {
+        if (e.button !== 0) return;
+        const rect = penguin.getBoundingClientRect();
+        drag = { startX: e.clientX, grabOffset: e.clientX - rect.left, moved: false };
+        penguin.setPointerCapture(e.pointerId);
+    });
+
+    penguin.addEventListener('pointermove', (e) => {
+        if (!drag) return;
+        if (!drag.moved && Math.abs(e.clientX - drag.startX) < 5) return;
+        if (!drag.moved) {
+            drag.moved = true;
+            penguin.classList.add('dragging');
+        }
+        const travel = window.innerWidth - penguin.offsetWidth - 8;
+        scrollToProgress((e.clientX - drag.grabOffset - 4) / travel);
+    });
+
+    function endDrag() {
+        if (!drag) return;
+        penguin.classList.remove('dragging');
+        // keep the flag until the click event that follows pointerup has been ignored
+        setTimeout(() => { drag = null; }, 0);
+    }
+    penguin.addEventListener('pointerup', endDrag);
+    penguin.addEventListener('pointercancel', endDrag);
+
     penguin.addEventListener('click', () => {
+        if (drag && drag.moved) return;
         const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
         window.scrollTo({ top: 0, behavior: reduceMotion ? 'auto' : 'smooth' });
+    });
+
+    // Keyboard: arrows nudge the penguin, Home/End jump to the ends
+    penguin.addEventListener('keydown', (e) => {
+        const max = maxScrollNow();
+        if (max <= 0) return;
+        const progress = window.scrollY / max;
+        const steps = { ArrowRight: 0.05, ArrowUp: 0.05, ArrowLeft: -0.05, ArrowDown: -0.05 };
+        if (e.key in steps) scrollToProgress(progress + steps[e.key]);
+        else if (e.key === 'Home') scrollToProgress(0);
+        else if (e.key === 'End') scrollToProgress(1);
+        else return;
+        e.preventDefault();
     });
 
     window.addEventListener('scroll', onScroll, { passive: true });
