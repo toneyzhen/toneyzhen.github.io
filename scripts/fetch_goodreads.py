@@ -38,19 +38,34 @@ def fetch(url):
 
 
 def widget_html(js):
-    """The widget is JavaScript: var widget_code = '<html>'; pull out and unescape the string."""
-    match = re.search(r"var widget_code = '(.*?)(?<!\\)';", js, re.S)
-    if not match:
+    """The widget is JavaScript: var widget_code = '<html>'. Pull out that string and unescape it."""
+    marker = "var widget_code = '"
+    begin = js.find(marker)
+    if begin < 0:
         print("Unexpected widget response, first 400 characters:\n" + js[:400])
         raise ValueError("Goodreads widget didn't contain widget_code; its format may have changed")
+    i = begin + len(marker)
+    chars = []
+    while i < len(js):
+        ch = js[i]
+        if ch == "\\" and i + 1 < len(js):
+            chars.append(js[i:i + 2])
+            i += 2
+            continue
+        if ch == "'":
+            break
+        chars.append(ch)
+        i += 1
+    raw = "".join(chars)
 
     def unescape(m):
         ch = m.group(1)
         if ch.startswith("u"):
             return chr(int(ch[1:], 16))
-        return {"n": "\n", "t": "\t", "r": ""}.get(ch, ch)
+        # a backslash before a line break just continues the string
+        return {"n": "\n", "t": "\t", "r": "", "\n": "", "\r": ""}.get(ch, ch)
 
-    return re.sub(r"\\(u[0-9a-fA-F]{4}|.)", unescape, match.group(1), flags=re.S)
+    return re.sub(r"\\(u[0-9a-fA-F]{4}|.)", unescape, raw, flags=re.S)
 
 
 def strip_tags(fragment):
