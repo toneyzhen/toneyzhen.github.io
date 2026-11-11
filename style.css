@@ -1504,6 +1504,14 @@ a.log-meta:hover {
     height: 100%;
     object-fit: cover;
     display: block;
+    pointer-events: none;
+    -webkit-user-drag: none;
+}
+
+.book-scene,
+.book-scene * {
+    user-select: none;
+    -webkit-user-select: none;
 }
 
 .book-front .made-cover {

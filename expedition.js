@@ -124,6 +124,7 @@
             const img = el('img');
             img.src = book.cover;
             img.alt = '';
+            img.draggable = false; // let a drag turn the book instead of picking up the picture
             img.onerror = () => front.replaceChildren(madeCover(book));
             front.appendChild(img);
         } else {
@@ -219,7 +220,9 @@
     (function () {
         const scene = $('bookScene');
         let drag = null;
+        scene.addEventListener('dragstart', (e) => e.preventDefault());
         scene.addEventListener('pointerdown', (e) => {
+            e.preventDefault(); // no text selection or image drag while turning the book
             drag = { x: e.clientX, y: e.clientY, rotY, rotX };
             scene.setPointerCapture(e.pointerId);
             scene.classList.add('dragging');
