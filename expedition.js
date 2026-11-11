@@ -489,6 +489,69 @@
         }
     }
 
+    // Paints every country and US state border onto one flat image (equirectangular),
+    // which the globe wraps around itself. One image is far cheaper than hundreds of 3D shapes.
+    function globeTexture(geo) {
+        const W = window.innerWidth > 700 ? 4096 : 2048;
+        const H = W / 2;
+        const canvas = document.createElement('canvas');
+        canvas.width = W;
+        canvas.height = H;
+        const ctx = canvas.getContext('2d');
+        const px = (lng) => ((lng + 180) / 360) * W;
+        const py = (lat) => ((90 - lat) / 180) * H;
+
+        ctx.fillStyle = '#0b1f3f';
+        ctx.fillRect(0, 0, W, H);
+
+        // faint graticule every 30 degrees
+        ctx.strokeStyle = 'rgba(125, 211, 252, 0.07)';
+        ctx.lineWidth = W / 4096;
+        ctx.beginPath();
+        for (let lng = -180; lng <= 180; lng += 30) { ctx.moveTo(px(lng), 0); ctx.lineTo(px(lng), H); }
+        for (let lat = -60; lat <= 60; lat += 30) { ctx.moveTo(0, py(lat)); ctx.lineTo(W, py(lat)); }
+        ctx.stroke();
+
+        function trace(feature) {
+            const g = feature.geometry;
+            if (!g) return;
+            const polys = g.type === 'Polygon' ? [g.coordinates] : g.coordinates;
+            for (const rings of polys) {
+                for (const ring of rings) {
+                    let prev = ring[0][0];
+                    ring.forEach(([lng, lat], i) => {
+                        // keep shapes that cross the date line continuous; the copies drawn at +-W cover the wrap
+                        while (lng - prev > 180) lng -= 360;
+                        while (lng - prev < -180) lng += 360;
+                        prev = lng;
+                        if (i === 0) ctx.moveTo(px(lng), py(lat));
+                        else ctx.lineTo(px(lng), py(lat));
+                    });
+                    ctx.closePath();
+                }
+            }
+        }
+
+        function paint(features, fill, stroke, width) {
+            for (const offset of [-W, 0, W]) {
+                ctx.save();
+                ctx.translate(offset, 0);
+                ctx.beginPath();
+                features.forEach(trace);
+                if (fill) { ctx.fillStyle = fill; ctx.fill('evenodd'); }
+                ctx.strokeStyle = stroke;
+                ctx.lineWidth = width;
+                ctx.lineJoin = 'round';
+                ctx.stroke();
+                ctx.restore();
+            }
+        }
+
+        paint(geo.countries, '#1b385a', 'rgba(125, 211, 252, 0.5)', 1.2 * W / 4096);
+        paint(geo.states, null, 'rgba(125, 211, 252, 0.3)', 0.8 * W / 4096);
+        return canvas.toDataURL('image/jpeg', 0.9);
+    }
+
     async function openGlobe() {
         const dialog = $('globeDialog');
         dialog.showModal();
@@ -503,34 +566,31 @@
 
         try {
             const [geo] = await Promise.all([loadGeo(), loadScript('vendor/globe.gl.min.js')]);
-            const features = geo.countries.concat(geo.states);
+            // Only the visited places are 3D shapes; everything else is painted onto the globe's image.
+            const visited = geo.countries.concat(geo.states).filter(isVisited);
             const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 
             globe = new Globe(stage, { animateIn: !reduceMotion })
                 .width(stage.clientWidth)
                 .height(stage.clientHeight)
                 .backgroundColor('rgba(0,0,0,0)')
+                .globeImageUrl(globeTexture(geo))
                 .showAtmosphere(true)
                 .atmosphereColor('#7dd3fc')
                 .atmosphereAltitude(0.2)
-                .polygonsData(features)
-                .polygonsTransitionDuration(reduceMotion ? 0 : 400)
-                .polygonCapColor((f) => {
-                    if (f.properties.name === selected && isVisited(f)) return '#99f6e4';
-                    if (isVisited(f)) return VISITED_FILL;
-                    return f.kind === 'state' ? 'rgba(125, 211, 252, 0.05)' : 'rgba(125, 211, 252, 0.14)';
-                })
-                .polygonSideColor((f) => (isVisited(f) ? 'rgba(45, 212, 191, 0.35)' : 'rgba(125, 211, 252, 0.04)'))
-                .polygonStrokeColor(() => 'rgba(125, 211, 252, 0.35)')
-                .polygonAltitude((f) => {
-                    if (isVisited(f)) return f.properties.name === selected ? 0.05 : 0.02;
-                    return f.kind === 'state' ? 0.009 : 0.006;
-                })
-                .polygonLabel((f) => `<div class="globe-tooltip"><b>${esc(f.properties.name)}</b>${isVisited(f) ? '<br>Been here' : ''}</div>`)
-                .onPolygonHover((f) => { stage.style.cursor = f && isVisited(f) ? 'pointer' : ''; })
-                .onPolygonClick((f) => { if (isVisited(f)) selectPlace(f.properties.name); });
+                .polygonsData(visited)
+                .polygonsTransitionDuration(reduceMotion ? 0 : 300)
+                .polygonCapColor((f) => (f.properties.name === selected ? '#99f6e4' : VISITED_FILL))
+                .polygonSideColor(() => 'rgba(45, 212, 191, 0.35)')
+                .polygonStrokeColor(() => 'rgba(153, 246, 228, 0.6)')
+                .polygonAltitude((f) => (f.properties.name === selected ? 0.05 : 0.02))
+                .polygonLabel((f) => `<div class="globe-tooltip"><b>${esc(f.properties.name)}</b><br>Been here</div>`)
+                .onPolygonHover((f) => { stage.style.cursor = f ? 'pointer' : ''; })
+                .onPolygonClick((f) => selectPlace(f.properties.name));
 
-            globe.globeMaterial().color.set('#0b1f3f');
+            // Rendering at 3x on a phone costs 9x the pixels for little visible gain
+            globe.renderer().setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.5));
+
             const controls = globe.controls();
             controls.autoRotate = !reduceMotion;
             controls.autoRotateSpeed = 0.5;
