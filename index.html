@@ -28,6 +28,7 @@
                 <li><a href="#projects">Projects</a></li>
                 <li><a href="#skills">Skills</a></li>
                 <li><a href="#courses">Courses</a></li>
+                <li><a href="#log">Log</a></li>
                 <li><a href="#contact">Contact</a></li>
                 <li><a href="Toney_Resume.pdf" class="nav-resume-btn" download>Resume</a></li>
             </ul>
@@ -275,6 +276,102 @@
         <div class="ice-shelf"></div>
     </section>
 
+    <section id="log">
+        <div class="container">
+            <h2>Expedition Log</h2>
+            <p class="log-intro">Off the clock: what I'm reading, where I've waddled, and what's in my headphones.</p>
+            <div class="log-grid">
+
+                <article class="log-card" id="shelfCard">
+                    <div class="log-card-head">
+                        <h3>Bookshelf</h3>
+                        <span class="log-meta" id="shelfMeta">Synced from Goodreads</span>
+                    </div>
+                    <div class="shelf" id="shelf" aria-label="Books I've read and am reading">
+                        <p class="log-empty" id="shelfEmpty">My shelf syncs from Goodreads once a day. Books will show up here after the next sync.</p>
+                    </div>
+                    <div class="shelf-ledge" aria-hidden="true"></div>
+                    <p class="log-hint">Click a book to take it off the shelf.</p>
+                </article>
+
+                <article class="log-card" id="globeCard">
+                    <div class="log-card-head">
+                        <h3>Where I've Been</h3>
+                        <span class="log-meta" id="globeMeta"></span>
+                    </div>
+                    <button class="globe-preview" id="globeOpen" type="button" aria-label="Open the 3D globe of places I've been">
+                        <canvas id="globeCanvas" aria-hidden="true"></canvas>
+                        <span class="globe-cta">Explore in 3D</span>
+                    </button>
+                    <p class="place-list" id="placeList"></p>
+                </article>
+
+                <article class="log-card" id="musicCard">
+                    <div class="log-card-head">
+                        <h3>Listening</h3>
+                        <a class="log-meta" id="musicProfile" href="https://www.last.fm/user/toney562" target="_blank" rel="noopener">via Last.fm</a>
+                    </div>
+                    <div class="now-playing" id="nowPlaying">
+                        <div class="np-art" id="npArt" aria-hidden="true"></div>
+                        <div class="np-text">
+                            <span class="np-status" id="npStatus">Loading…</span>
+                            <span class="np-track" id="npTrack"></span>
+                            <span class="np-artist" id="npArtist"></span>
+                        </div>
+                        <span class="eq" id="npEq" aria-hidden="true" hidden><i></i><i></i><i></i><i></i></span>
+                    </div>
+                    <h4 class="log-subhead">Top artists this month</h4>
+                    <ol class="top-artists" id="topArtists"></ol>
+                    <p class="log-footnote" id="musicStats"></p>
+                </article>
+
+            </div>
+        </div>
+        <div class="ice-shelf"></div>
+
+        <dialog class="log-dialog book-dialog" id="bookDialog" aria-labelledby="bookTitle">
+            <button class="dialog-close" type="button" data-close aria-label="Close">&times;</button>
+            <div class="book-stage">
+                <button class="book-nav" type="button" id="bookPrev" aria-label="Previous book">&lsaquo;</button>
+                <div class="book-scene" id="bookScene">
+                    <div class="book3d" id="book3d">
+                        <div class="book-face book-front" id="bookFront"></div>
+                        <div class="book-face book-back" id="bookBack"></div>
+                        <div class="book-face book-spine" id="bookSpine"></div>
+                        <div class="book-face book-pages"></div>
+                        <div class="book-face book-top"></div>
+                        <div class="book-face book-bottom"></div>
+                    </div>
+                </div>
+                <button class="book-nav" type="button" id="bookNext" aria-label="Next book">&rsaquo;</button>
+            </div>
+            <div class="book-caption">
+                <h3 id="bookTitle"></h3>
+                <p class="book-author" id="bookAuthor"></p>
+                <div class="book-actions">
+                    <button class="log-button" type="button" id="bookFlip">Flip it over</button>
+                    <a class="log-button ghost" id="bookLink" href="#" target="_blank" rel="noopener">Goodreads</a>
+                </div>
+                <p class="log-hint">Drag the book to turn it. Arrow keys switch books.</p>
+            </div>
+        </dialog>
+
+        <dialog class="log-dialog globe-dialog" id="globeDialog" aria-labelledby="globeTitle">
+            <button class="dialog-close" type="button" data-close aria-label="Close">&times;</button>
+            <div class="globe-stage" id="globeStage">
+                <p class="globe-loading" id="globeLoading">Loading the globe…</p>
+            </div>
+            <aside class="globe-panel">
+                <h3 id="globeTitle">Where I've Been</h3>
+                <p class="log-meta" id="globePanelMeta"></p>
+                <div class="globe-selected" id="globeSelected" aria-live="polite">
+                    <p class="log-hint">Drag to spin. Click a highlighted place or pick one below.</p>
+                </div>
+                <div id="globeChips"></div>
+            </aside>
+        </dialog>
+    </section>
+
     <section id="contact">
         <div class="container">
             <h2>Get In Touch</h2>
@@ -308,5 +405,6 @@
     </footer>
 
     <script src="script.js"></script>
+    <script src="expedition.js"></script>
 </body>
 </html>

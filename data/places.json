@@ -1,0 +1,16 @@
+{
+  "_comment": "Places shown on the globe. type is 'state' (US state) or 'country'. name must match the map's spelling. note and year are optional.",
+  "places": [
+    { "name": "California",   "type": "state",   "lat": 37.2, "lng": -119.5, "note": "Home. Grew up in Whittier, studied at UCI.", "year": "" },
+    { "name": "Oregon",       "type": "state",   "lat": 43.9, "lng": -120.6, "note": "", "year": "" },
+    { "name": "Washington",   "type": "state",   "lat": 47.4, "lng": -120.5, "note": "", "year": "" },
+    { "name": "Nevada",       "type": "state",   "lat": 39.3, "lng": -116.6, "note": "", "year": "" },
+    { "name": "Utah",         "type": "state",   "lat": 39.3, "lng": -111.7, "note": "", "year": "" },
+    { "name": "Colorado",     "type": "state",   "lat": 39.0, "lng": -105.5, "note": "", "year": "" },
+    { "name": "Arizona",      "type": "state",   "lat": 34.3, "lng": -111.7, "note": "", "year": "" },
+    { "name": "Illinois",     "type": "state",   "lat": 40.0, "lng": -89.2,  "note": "", "year": "" },
+    { "name": "Pennsylvania", "type": "state",   "lat": 40.9, "lng": -77.8,  "note": "", "year": "" },
+    { "name": "Italy",        "type": "country", "lat": 42.8, "lng": 12.6,   "note": "", "year": "" },
+    { "name": "China",        "type": "country", "lat": 35.0, "lng": 103.8,  "note": "", "year": "" }
+  ]
+}
