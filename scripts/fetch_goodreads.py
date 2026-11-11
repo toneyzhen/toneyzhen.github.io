@@ -1,108 +1,112 @@
 #!/usr/bin/env python3
 """Fetch a public Goodreads profile's shelves and write them to a JSON file.
 
-Goodreads no longer has an API, but every public shelf still has an RSS feed.
-Browsers can't read that feed directly from the site (no CORS headers), so a
-GitHub Action runs this script once a day and commits data/books.json.
+Goodreads retired its API in 2020 and its shelf RSS feeds in late 2026. The
+public "custom widget" (the embeddable bookshelf box) still works without
+signing in, so this script reads that. It has titles, authors, covers, links
+and star ratings, but no read dates or page counts.
+
+Browsers can't fetch it from the site directly, so a GitHub Action runs this
+once a day and commits the result.
 
 Usage: python3 scripts/fetch_goodreads.py <goodreads-user-id> <output.json>
-
-If the profile isn't public, set GOODREADS_KEY to the "key" value from the
-RSS link at the bottom of your Goodreads "My Books" page.
 """
 
 import html
 import json
-import os
 import re
 import sys
-import urllib.error
-import urllib.parse
 import urllib.request
-import xml.etree.ElementTree as ET
 from datetime import datetime, timezone
-from email.utils import parsedate_to_datetime
 
-# Goodreads has served the feed at both of these over the years; try them in order.
-FEEDS = [
-    "https://www.goodreads.com/review/list_rss/{user}?shelf={shelf}&per_page=100",
-    "https://www.goodreads.com/review/list_rss/{user}?shelf={shelf}",
-]
-MAX_READ = 30
+WIDGET = (
+    "https://www.goodreads.com/review/custom_widget/{user}.bookshelf"
+    "?cover_position=left&cover_size=medium&num_books=100&order=d&shelf={shelf}"
+    "&show_author=1&show_cover=1&show_rating=1&show_review=1&show_tags=0&show_title=1"
+    "&sort=date_read&widget_bg_transparent=true&widget_border_width=0&widget_id=1"
+    "&widget_text_color=000000&widget_title_size=medium&widget_width=full"
+)
+MAX_READ = 50
 
 
 def fetch(url):
-    req = urllib.request.Request(url, headers={"User-Agent": "portfolio-bookshelf-sync/1.0"})
+    req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0 (portfolio bookshelf sync)"})
     with urllib.request.urlopen(req, timeout=30) as resp:
-        return resp.read()
+        return resp.read().decode("utf-8", errors="replace")
+
+
+def widget_html(js):
+    """The widget is JavaScript: var widget_code = '<html>'; pull out and unescape the string."""
+    match = re.search(r"var widget_code = '(.*?)';\s*\n", js, re.S)
+    if not match:
+        raise ValueError("Goodreads widget didn't contain widget_code; its format may have changed")
+
+    def unescape(m):
+        ch = m.group(1)
+        if ch.startswith("u"):
+            return chr(int(ch[1:], 16))
+        return {"n": "\n", "t": "\t", "r": ""}.get(ch, ch)
+
+    return re.sub(r"\\(u[0-9a-fA-F]{4}|.)", unescape, match.group(1), flags=re.S)
+
+
+def strip_tags(fragment):
+    return html.unescape(re.sub(r"<[^>]+>", "", fragment)).strip()
+
+
+def clean_url(url):
+    return html.unescape(url).split("?")[0] if url else None
+
+
+def parse(markup):
+    books = []
+    for block in markup.split('class="gr_custom_each_container_1"')[1:]:
+        img = re.search(r'<img alt="([^"]*)"[^>]*src="([^"]+)"', block)
+        link = re.search(r'<a title="([^"]*)" rel="nofollow" href="([^"]+)"', block)
+        title_div = re.search(r'gr_custom_title_1">(.*?)</div>', block, re.S)
+        author_div = re.search(r'gr_custom_author_1">(.*?)</div>', block, re.S)
+        rating_div = re.search(r'gr_custom_rating_1">(.*?)</div>', block, re.S)
+        review_div = re.search(r'gr_custom_review_1">(.*?)</div>', block, re.S)
+
+        title = html.unescape(img.group(1)) if img and img.group(1) else ""
+        if not title and title_div:
+            title = strip_tags(title_div.group(1))
+        if not title:
+            continue
+
+        cover = img.group(2) if img else None
+        if cover and "nophoto" in cover:
+            cover = None
+        elif cover:
+            # drop the size suffix (e.g. ._SX98_) to get the full-size cover
+            cover = re.sub(r"\._S[XY]\d+_(?=\.)", "", cover)
+
+        author = strip_tags(author_div.group(1)) if author_div else ""
+        author = re.sub(r"^by\s+", "", author)
+
+        books.append({
+            "title": title,
+            "author": author,
+            "cover": cover,
+            "rating": rating_div.group(1).count("star_active") if rating_div else 0,
+            "pages": None,
+            "readAt": None,
+            "review": strip_tags(review_div.group(1)) if review_div else "",
+            "url": clean_url(link.group(2)) if link else None,
+        })
+    return books
 
 
 def fetch_shelf(user, shelf):
-    """Return the shelf's books, or None if Goodreads wouldn't serve the feed."""
-    for template in FEEDS:
-        url = template.format(user=user, shelf=shelf)
-        key = os.environ.get("GOODREADS_KEY", "").strip()
-        shown = url
-        if key:
-            url += "&key=" + urllib.parse.quote(key)
-            shown += "&key=***"
-        try:
-            return parse(fetch(url))
-        except urllib.error.HTTPError as err:
-            print(f"{shelf}: HTTP {err.code} from {shown}")
-        except ET.ParseError as err:
-            print(f"{shelf}: response from {shown} wasn't valid RSS ({err})")
-    return None
-
-
-def text(item, tag):
-    el = item.find(tag)
-    return (el.text or "").strip() if el is not None else ""
-
-
-def iso_date(value):
-    if not value:
-        return None
-    try:
-        return parsedate_to_datetime(value).date().isoformat()
-    except (TypeError, ValueError):
-        return None
-
-
-def clean_review(raw):
-    if not raw:
-        return ""
-    no_tags = re.sub(r"<br\s*/?>", "\n", raw, flags=re.I)
-    no_tags = re.sub(r"<[^>]+>", "", no_tags)
-    return re.sub(r"\n{3,}", "\n\n", html.unescape(no_tags)).strip()
-
-
-def cover(item):
-    for tag in ("book_large_image_url", "book_medium_image_url", "book_image_url"):
-        url = text(item, tag)
-        if url and "nophoto" not in url:
-            return url
-    return None
-
-
-def parse(xml_bytes):
-    root = ET.fromstring(xml_bytes)
-    books = []
-    for item in root.iter("item"):
-        book_el = item.find("book")
-        pages = text(book_el, "num_pages") if book_el is not None else ""
-        rating = text(item, "user_rating")
-        books.append({
-            "title": html.unescape(text(item, "title")),
-            "author": html.unescape(text(item, "author_name")),
-            "cover": cover(item),
-            "rating": int(rating) if rating.isdigit() else 0,
-            "pages": int(pages) if pages.isdigit() else None,
-            "readAt": iso_date(text(item, "user_read_at")),
-            "addedAt": iso_date(text(item, "user_date_added")),
-            "review": clean_review(text(item, "user_review")),
-            "url": text(item, "link") or None,
-        })
+    markup = widget_html(fetch(WIDGET.format(user=user, shelf=shelf)))
+    # Goodreads falls back to another shelf when the requested one is empty;
+    # the header link says which shelf it actually returned.
+    served = re.search(r'gr_custom_header_1">.*?shelf=([\w-]+)', markup, re.S)
+    if served and served.group(1) != shelf:
+        print(f"{shelf}: empty (Goodreads returned the '{served.group(1)}' shelf instead)")
+        return []
+    books = parse(markup)
+    print(f"{shelf}: {len(books)} books")
     return books
 
 
@@ -113,15 +117,8 @@ def main():
 
     reading = fetch_shelf(user, "currently-reading")
     read = fetch_shelf(user, "read")
-    if reading is None and read is None:
-        try:
-            fetch(f"https://www.goodreads.com/user/show/{user}")
-            print("The profile page loads, but its shelf feeds don't. Check that the profile is public.")
-        except urllib.error.HTTPError as err:
-            print(f"The profile page returned HTTP {err.code} too.")
-        sys.exit("Couldn't read any Goodreads shelf; leaving the existing books file unchanged.")
-    reading, read = reading or [], read or []
-    read.sort(key=lambda b: b["readAt"] or b["addedAt"] or "", reverse=True)
+    if not reading and not read:
+        sys.exit("Got no books from Goodreads; leaving the existing books file unchanged.")
 
     data = {
         "updated": datetime.now(timezone.utc).date().isoformat(),
