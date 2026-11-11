@@ -91,6 +91,8 @@ def parse(markup):
             title = strip_tags(title_div.group(1))
         if not title:
             continue
+        # "Atomic Habits: An Easy & Proven Way..." -> "Atomic Habits"
+        title = title.split(": ")[0].strip()
 
         cover = img.group(2) if img else None
         if cover and "nophoto" in cover:
