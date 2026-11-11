@@ -1037,11 +1037,6 @@ a.log-meta:hover {
     transition: transform 0.2s;
 }
 
-.log-button.ghost {
-    background: transparent;
-    color: var(--accent);
-}
-
 .log-button:hover {
     transform: translateY(-2px);
 }

@@ -148,9 +148,6 @@
 
         $('bookTitle').textContent = book.title;
         $('bookAuthor').textContent = book.author;
-        const link = $('bookLink');
-        link.hidden = !book.url;
-        if (book.url) link.href = book.url;
         $('bookPrev').disabled = bookIndex === 0;
         $('bookNext').disabled = bookIndex === books.length - 1;
     }
