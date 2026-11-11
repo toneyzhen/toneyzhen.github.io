@@ -192,3 +192,26 @@ function createScrollPenguin() {
 
 createScrollPenguin();
 
+
+
+// Resume: show the PDF in a viewer on the page where the browser can display PDFs inline.
+// Phones (Android can't embed PDFs; iOS shows only page one) follow the link to a new tab instead.
+(function () {
+    const link = document.getElementById('resumeLink');
+    const dialog = document.getElementById('resumeDialog');
+    const frame = document.getElementById('resumeFrame');
+    if (!link || !dialog || !frame || typeof dialog.showModal !== 'function') return;
+
+    const canEmbed = () => navigator.pdfViewerEnabled === true && window.matchMedia('(pointer: fine)').matches;
+
+    link.addEventListener('click', (e) => {
+        if (!canEmbed()) return; // default: opens the PDF in a new tab
+        e.preventDefault();
+        if (!frame.src) frame.src = link.getAttribute('href') + '#view=FitH';
+        dialog.showModal();
+    });
+
+    dialog.addEventListener('click', (e) => {
+        if (e.target === dialog || e.target.closest('[data-close]')) dialog.close();
+    });
+})();
