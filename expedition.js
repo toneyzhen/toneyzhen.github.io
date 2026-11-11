@@ -158,10 +158,9 @@
     function madeCover(book) {
         const cover = el('div', 'made-cover');
         const title = el('strong', null, book.title);
-        // shrink titles with long words or many characters so they stay on the cover
+        // the CSS sizes the title so this many characters fit on one line
         const longestWord = Math.max(...book.title.split(/\s+/).map((w) => w.length));
-        if (longestWord > 11 || book.title.length > 40) title.style.setProperty('--cover-title', '17px');
-        if (longestWord > 15 || book.title.length > 70) title.style.setProperty('--cover-title', '14px');
+        title.style.setProperty('--title-chars', Math.max(longestWord, 9));
         cover.appendChild(title);
         cover.appendChild(el('small', null, book.author));
         return cover;

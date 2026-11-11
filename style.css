@@ -1498,6 +1498,7 @@ a.log-meta:hover {
 }
 
 .book-front {
+    container-type: inline-size;
     transform: translateZ(calc(var(--d) / 2));
     background: var(--spine, #2b4c7e);
     box-shadow: inset 4px 0 8px rgba(0, 0, 0, 0.35);
@@ -1521,11 +1522,14 @@ a.log-meta:hover {
 }
 
 .made-cover strong {
-    font-size: var(--cover-title, 22px);
+    /* Never split a word: size the text so its longest word fits the cover's width.
+       --title-chars is the longest word's length; 0.68em is a wide bold letter. */
+    font-size: min(22px, calc((100cqi - 36px) / (var(--title-chars, 10) * 0.68)));
     line-height: 1.2;
     text-wrap: balance;
-    overflow-wrap: anywhere;
-    hyphens: auto;
+    overflow-wrap: normal;
+    word-break: normal;
+    hyphens: manual;
 }
 
 .made-cover small {
