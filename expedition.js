@@ -563,6 +563,10 @@
 
     const LASTFM_BLANK_ART = '2a96cbd8b46e442fc41c2b86b821562f';
 
+    // Live data and the daily snapshot (data/lastfm.json) share one shape:
+    // { recent: {name, artist, art, nowPlaying, playedAt}, topArtists: [{name, plays}],
+    //   topTracks: [{name, artist, plays}], stats: {plays, since} }
+
     function lastfm(method, params) {
         const q = new URLSearchParams({ method, user: LASTFM.user, api_key: LASTFM.apiKey, format: 'json', ...params });
         return fetch('https://ws.audioscrobbler.com/2.0/?' + q).then((r) => r.json()).then((data) => {
@@ -570,6 +574,36 @@
             return data;
         });
     }
+
+    const normalize = {
+        recent(data) {
+            const t = [].concat(data.recenttracks.track || [])[0];
+            if (!t) return null;
+            return {
+                name: t.name,
+                artist: t.artist && (t.artist['#text'] || t.artist.name),
+                art: (t.image || []).map((i) => i['#text']).filter((u) => u && !u.includes(LASTFM_BLANK_ART)).pop() || null,
+                nowPlaying: !!(t['@attr'] && t['@attr'].nowplaying === 'true'),
+                playedAt: t.date ? +t.date.uts : null,
+            };
+        },
+        topArtists(data) {
+            return [].concat(data.topartists.artist || []).map((a) => ({ name: a.name, plays: +a.playcount }));
+        },
+        topTracks(data) {
+            return [].concat(data.toptracks.track || []).map((t) => ({ name: t.name, artist: t.artist && t.artist.name, plays: +t.playcount }));
+        },
+        stats(data) {
+            return { plays: +data.user.playcount, since: +data.user.registered.unixtime };
+        },
+    };
+
+    const LIVE_CALLS = {
+        recent: ['user.getrecenttracks', { limit: 1 }],
+        topArtists: ['user.gettopartists', { period: '1month', limit: 5 }],
+        topTracks: ['user.gettoptracks', { period: '1month', limit: 5 }],
+        stats: ['user.getinfo', {}],
+    };
 
     function timeAgo(seconds) {
         const diff = Date.now() / 1000 - seconds;
@@ -590,64 +624,100 @@
         $('npEq').hidden = !live || reduceMotion;
     }
 
-    async function refreshRecent() {
-        try {
-            const data = await lastfm('user.getrecenttracks', { limit: 1 });
-            const t = [].concat(data.recenttracks.track || [])[0];
-            if (!t) return setNowPlaying('Nothing played yet', 'Waiting for the first song', '');
-            const art = (t.image || []).map((i) => i['#text']).filter((u) => u && !u.includes(LASTFM_BLANK_ART)).pop();
-            const live = t['@attr'] && t['@attr'].nowplaying === 'true';
-            const status = live ? 'Now playing' : t.date ? 'Last played ' + timeAgo(+t.date.uts) : 'Last played';
-            setNowPlaying(status, t.name, t.artist && (t.artist['#text'] || t.artist.name), art, live);
-        } catch (e) {
-            setNowPlaying('Offline', "Couldn't reach Last.fm right now", '');
-        }
-    }
+    const render = {
+        recent(r) {
+            if (!r) return setNowPlaying('Nothing played yet', 'Waiting for the first song', '');
+            const status = r.nowPlaying ? 'Now playing' : r.playedAt ? 'Last played ' + timeAgo(r.playedAt) : 'Recently played';
+            setNowPlaying(status, r.name, r.artist, r.art, r.nowPlaying);
+        },
+        topArtists(items) {
+            renderTopList($('topArtists'), items, 'artists');
+        },
+        topTracks(items) {
+            renderTopList($('topTracks'), items, 'tracks');
+        },
+        stats(s) {
+            const since = new Date(s.since * 1000).toLocaleDateString(undefined, { month: 'short', year: 'numeric' });
+            $('musicStats').textContent = `${s.plays.toLocaleString()} songs played since ${since}`;
+        },
+    };
 
-    async function loadTopArtists() {
-        const list = $('topArtists');
-        try {
-            const data = await lastfm('user.gettopartists', { period: '1month', limit: 5 });
-            const artists = [].concat(data.topartists.artist || []);
-            if (!artists.length) {
-                list.appendChild(el('li', 'log-hint', 'Not enough listening this month yet.'));
-                return;
-            }
-            const max = Math.max(...artists.map((a) => +a.playcount));
-            artists.forEach((a) => {
-                const li = el('li');
-                li.appendChild(el('span', 'artist-name', a.name));
-                li.appendChild(el('span', 'artist-plays', `${(+a.playcount).toLocaleString()} plays`));
-                const bar = el('span', 'artist-bar');
-                const fill = el('b');
-                fill.style.width = Math.max(6, (a.playcount / max) * 100) + '%';
-                bar.appendChild(fill);
-                li.appendChild(bar);
-                list.appendChild(li);
-            });
-        } catch (e) {
-            list.appendChild(el('li', 'log-hint', 'Top artists are unavailable right now.'));
-        }
-    }
-
-    async function loadStats() {
-        try {
-            const { user } = await lastfm('user.getinfo', {});
-            const since = new Date(+user.registered.unixtime * 1000).toLocaleDateString(undefined, { month: 'short', year: 'numeric' });
-            $('musicStats').textContent = `${(+user.playcount).toLocaleString()} songs played since ${since}`;
-        } catch (e) { /* the stats line is optional */ }
-    }
-
-    function startListening() {
-        if (!LASTFM.apiKey) {
-            setNowPlaying('Coming soon', 'Live stats on the way', 'Follow along on Last.fm');
-            $('topArtists').appendChild(el('li', 'log-hint', 'Top artists will show up here.'));
+    function renderTopList(list, items, kind) {
+        list.replaceChildren();
+        if (!items || !items.length) {
+            const message = items ? `Not enough listening this month to rank ${kind} yet.` : `Top ${kind} will show up here when Last.fm is reachable.`;
+            list.appendChild(el('li', 'log-hint', message));
             return;
         }
-        refreshRecent();
-        loadTopArtists();
-        loadStats();
-        setInterval(() => { if (!document.hidden) refreshRecent(); }, 60000);
+        const max = Math.max(...items.map((i) => i.plays));
+        items.forEach((item) => {
+            const li = el('li');
+            const text = el('span', 'item-text');
+            text.appendChild(el('span', 'item-name', item.name));
+            if (item.artist) text.appendChild(el('span', 'item-sub', item.artist));
+            li.appendChild(text);
+            li.appendChild(el('span', 'item-plays', `${item.plays.toLocaleString()} plays`));
+            const bar = el('span', 'item-bar');
+            const fill = el('b');
+            fill.style.width = Math.max(6, (item.plays / max) * 100) + '%';
+            bar.appendChild(fill);
+            li.appendChild(bar);
+            list.appendChild(li);
+        });
+    }
+
+    // Artists / Tracks switch
+    (function () {
+        const tabs = [$('tabArtists'), $('tabTracks')];
+        function select(tab) {
+            tabs.forEach((t) => {
+                const on = t === tab;
+                t.setAttribute('aria-selected', String(on));
+                t.tabIndex = on ? 0 : -1;
+                $(t.getAttribute('aria-controls')).hidden = !on;
+            });
+        }
+        tabs.forEach((tab, i) => {
+            tab.addEventListener('click', () => select(tab));
+            tab.addEventListener('keydown', (e) => {
+                if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return;
+                const next = tabs[(i + 1) % tabs.length];
+                select(next);
+                next.focus();
+            });
+        });
+    })();
+
+    async function loadLive(parts) {
+        const shown = {};
+        await Promise.all(parts.map(async (part) => {
+            try {
+                const [method, params] = LIVE_CALLS[part];
+                render[part](normalize[part](await lastfm(method, params)));
+                shown[part] = true;
+            } catch (e) { /* keep whatever the snapshot showed */ }
+        }));
+        return shown;
+    }
+
+    async function startListening() {
+        const snapshot = await fetch('data/lastfm.json', { cache: 'no-cache' })
+            .then((r) => (r.ok ? r.json() : null))
+            .catch(() => null);
+        if (snapshot) {
+            Object.keys(render).forEach((part) => { if (snapshot[part] !== undefined) render[part](snapshot[part]); });
+        }
+
+        const live = LASTFM.apiKey ? await loadLive(Object.keys(LIVE_CALLS)) : {};
+        if (!snapshot) {
+            if (!live.recent) setNowPlaying('Offline', "Couldn't reach Last.fm right now", '');
+            if (!live.topArtists) renderTopList($('topArtists'), null, 'artists');
+            if (!live.topTracks) renderTopList($('topTracks'), null, 'tracks');
+        }
+
+        if (LASTFM.apiKey) {
+            setInterval(() => { if (!document.hidden) loadLive(['recent']); }, 60000);
+        }
     }
 
     whenNear($('musicCard'), startListening);

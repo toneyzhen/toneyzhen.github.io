@@ -1,0 +1,42 @@
+name: Update listening snapshot from Last.fm
+
+on:
+  schedule:
+    - cron: "41 15 * * *" # daily, 15:41 UTC
+  workflow_dispatch:
+  push:
+    paths:
+      - ".github/workflows/lastfm.yml"
+      - "scripts/fetch_lastfm.py"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: data-sync-${{ github.ref }}
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Fetch Last.fm data
+        env:
+          # Last.fm's read-only key is public by design; it's also in expedition.js.
+          LASTFM_USER: toney562
+          LASTFM_API_KEY: 7454f6c38ac3e0ce8887c2ecc22f99d2
+        run: python3 scripts/fetch_lastfm.py data/lastfm.json
+
+      - name: Commit if the data changed
+        run: |
+          git add data/lastfm.json
+          if git diff --cached --quiet; then
+            echo "No changes to commit"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "Update listening snapshot from Last.fm"
+          git pull --rebase
+          git push

@@ -320,8 +320,15 @@
                         </div>
                         <span class="eq" id="npEq" aria-hidden="true" hidden><i></i><i></i><i></i><i></i></span>
                     </div>
-                    <h4 class="log-subhead">Top artists this month</h4>
-                    <ol class="top-artists" id="topArtists"></ol>
+                    <div class="top-head">
+                        <h4 class="log-subhead">Top this month</h4>
+                        <div class="top-tabs" role="tablist" aria-label="Top this month">
+                            <button type="button" role="tab" id="tabArtists" aria-selected="true" aria-controls="topArtists">Artists</button>
+                            <button type="button" role="tab" id="tabTracks" aria-selected="false" aria-controls="topTracks" tabindex="-1">Tracks</button>
+                        </div>
+                    </div>
+                    <ol class="top-list" id="topArtists" role="tabpanel" aria-labelledby="tabArtists"></ol>
+                    <ol class="top-list" id="topTracks" role="tabpanel" aria-labelledby="tabTracks" hidden></ol>
                     <p class="log-footnote" id="musicStats"></p>
                 </article>
 
