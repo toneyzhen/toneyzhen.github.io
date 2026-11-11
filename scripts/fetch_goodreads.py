@@ -12,12 +12,17 @@ import html
 import json
 import re
 import sys
+import urllib.error
 import urllib.request
 import xml.etree.ElementTree as ET
 from datetime import datetime, timezone
 from email.utils import parsedate_to_datetime
 
-FEED = "https://www.goodreads.com/review/list_rss/{user}?shelf={shelf}&per_page=100"
+# Goodreads has served the feed at both of these over the years; try them in order.
+FEEDS = [
+    "https://www.goodreads.com/review/list_rss/{user}?shelf={shelf}&per_page=100",
+    "https://www.goodreads.com/review/list_rss/{user}?shelf={shelf}",
+]
 MAX_READ = 30
 
 
@@ -25,6 +30,19 @@ def fetch(url):
     req = urllib.request.Request(url, headers={"User-Agent": "portfolio-bookshelf-sync/1.0"})
     with urllib.request.urlopen(req, timeout=30) as resp:
         return resp.read()
+
+
+def fetch_shelf(user, shelf):
+    """Return the shelf's books, or None if Goodreads wouldn't serve the feed."""
+    for template in FEEDS:
+        url = template.format(user=user, shelf=shelf)
+        try:
+            return parse(fetch(url))
+        except urllib.error.HTTPError as err:
+            print(f"{shelf}: HTTP {err.code} from {url}")
+        except ET.ParseError as err:
+            print(f"{shelf}: response from {url} wasn't valid RSS ({err})")
+    return None
 
 
 def text(item, tag):
@@ -83,8 +101,16 @@ def main():
         sys.exit(__doc__)
     user, out_path = sys.argv[1], sys.argv[2]
 
-    reading = parse(fetch(FEED.format(user=user, shelf="currently-reading")))
-    read = parse(fetch(FEED.format(user=user, shelf="read")))
+    reading = fetch_shelf(user, "currently-reading")
+    read = fetch_shelf(user, "read")
+    if reading is None and read is None:
+        try:
+            fetch(f"https://www.goodreads.com/user/show/{user}")
+            print("The profile page loads, but its shelf feeds don't. Check that the profile is public.")
+        except urllib.error.HTTPError as err:
+            print(f"The profile page returned HTTP {err.code} too.")
+        sys.exit("Couldn't read any Goodreads shelf; leaving the existing books file unchanged.")
+    reading, read = reading or [], read or []
     read.sort(key=lambda b: b["readAt"] or b["addedAt"] or "", reverse=True)
 
     data = {
