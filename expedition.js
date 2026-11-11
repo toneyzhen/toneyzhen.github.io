@@ -157,7 +157,12 @@
 
     function madeCover(book) {
         const cover = el('div', 'made-cover');
-        cover.appendChild(el('strong', null, book.title));
+        const title = el('strong', null, book.title);
+        // shrink titles with long words or many characters so they stay on the cover
+        const longestWord = Math.max(...book.title.split(/\s+/).map((w) => w.length));
+        if (longestWord > 11 || book.title.length > 40) title.style.setProperty('--cover-title', '17px');
+        if (longestWord > 15 || book.title.length > 70) title.style.setProperty('--cover-title', '14px');
+        cover.appendChild(title);
         cover.appendChild(el('small', null, book.author));
         return cover;
     }

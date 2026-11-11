@@ -8,6 +8,7 @@ on:
     paths:
       - ".github/workflows/goodreads.yml"
       - "scripts/fetch_goodreads.py"
+      - "data/book-overrides.json"
 
 permissions:
   contents: write

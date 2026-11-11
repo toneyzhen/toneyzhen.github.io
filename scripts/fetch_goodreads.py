@@ -27,6 +27,7 @@ WIDGET = (
     "&widget_text_color=000000&widget_title_size=medium&widget_width=full"
 )
 MAX_READ = 50
+OVERRIDES = "data/book-overrides.json"
 
 
 def fetch(url):
@@ -117,6 +118,14 @@ def parse(markup):
     return books
 
 
+def load_title_overrides():
+    try:
+        with open(OVERRIDES, encoding="utf-8") as f:
+            return json.load(f).get("titles", {})
+    except (OSError, ValueError):
+        return {}
+
+
 def fetch_shelf(user, shelf):
     markup = widget_html(fetch(WIDGET.format(user=user, shelf=shelf)))
     # Goodreads falls back to another shelf when the requested one is empty;
@@ -139,6 +148,10 @@ def main():
     read = fetch_shelf(user, "read")
     if not reading and not read:
         sys.exit("Got no books from Goodreads; leaving the existing books file unchanged.")
+
+    renames = load_title_overrides()
+    for book in reading + read:
+        book["title"] = renames.get(book["title"], book["title"])
 
     data = {
         "updated": datetime.now(timezone.utc).date().isoformat(),

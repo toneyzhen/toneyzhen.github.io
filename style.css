@@ -1465,9 +1465,11 @@ a.log-meta:hover {
 }
 
 .made-cover strong {
-    font-size: 22px;
+    font-size: var(--cover-title, 22px);
     line-height: 1.2;
     text-wrap: balance;
+    overflow-wrap: anywhere;
+    hyphens: auto;
 }
 
 .made-cover small {
