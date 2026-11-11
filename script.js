@@ -194,24 +194,114 @@ createScrollPenguin();
 
 
 
-// Resume: show the PDF in a viewer on the page where the browser can display PDFs inline.
-// Phones (Android can't embed PDFs; iOS shows only page one) follow the link to a new tab instead.
+// Resume: open in a pop-up on the page on every device. PDF.js draws the pages, since phone
+// browsers can't show a PDF inside a page by themselves. It loads only on the first open.
 (function () {
     const link = document.getElementById('resumeLink');
     const dialog = document.getElementById('resumeDialog');
-    const frame = document.getElementById('resumeFrame');
-    if (!link || !dialog || !frame || typeof dialog.showModal !== 'function') return;
+    const pages = document.getElementById('resumePages');
+    if (!link || !dialog || !pages || typeof dialog.showModal !== 'function') return;
 
-    const canEmbed = () => navigator.pdfViewerEnabled === true && window.matchMedia('(pointer: fine)').matches;
+    const pdfUrl = link.getAttribute('href');
+    let doc = null;
+    let renderedWidth = 0;
+    let rendering = null;
+
+    function showStatus(text, withLink) {
+        const p = document.createElement('p');
+        p.className = 'resume-status';
+        p.textContent = text;
+        if (withLink) {
+            const a = document.createElement('a');
+            a.href = pdfUrl;
+            a.target = '_blank';
+            a.rel = 'noopener';
+            a.textContent = 'Open it in a new tab';
+            p.append(' ', a, '.');
+        }
+        pages.replaceChildren(p);
+    }
+
+    async function loadDocument() {
+        const base = document.baseURI;
+        const pdfjs = await import(new URL('vendor/pdfjs/pdf.min.mjs', base).href);
+        pdfjs.GlobalWorkerOptions.workerSrc = new URL('vendor/pdfjs/pdf.worker.min.mjs', base).href;
+        return pdfjs.getDocument({ url: new URL(pdfUrl, base).href }).promise;
+    }
+
+    async function render() {
+        const width = Math.min(pages.clientWidth - 2 * parseFloat(getComputedStyle(pages).paddingLeft), 820);
+        if (width <= 0 || Math.abs(width - renderedWidth) < 40) return;
+        renderedWidth = width;
+        const dpr = Math.min(window.devicePixelRatio || 1, 2);
+        const out = [];
+        for (let n = 1; n <= doc.numPages; n++) {
+            const page = await doc.getPage(n);
+            const viewport = page.getViewport({ scale: width / page.getViewport({ scale: 1 }).width });
+            const canvas = document.createElement('canvas');
+            canvas.width = Math.floor(viewport.width * dpr);
+            canvas.height = Math.floor(viewport.height * dpr);
+            canvas.setAttribute('aria-hidden', 'true');
+            await page.render({ canvas, canvasContext: canvas.getContext('2d'), viewport, transform: dpr === 1 ? null : [dpr, 0, 0, dpr, 0, 0] }).promise;
+
+            const wrap = document.createElement('div');
+            wrap.className = 'resume-page';
+            wrap.setAttribute('role', 'img');
+            wrap.setAttribute('aria-label', `Resume page ${n} of ${doc.numPages}`);
+            wrap.appendChild(canvas);
+
+            // keep the PDF's own links clickable
+            const annotations = await page.getAnnotations();
+            annotations.filter((a) => a.subtype === 'Link' && a.url).forEach((a) => {
+                const [x1, y1] = viewport.convertToViewportPoint(a.rect[0], a.rect[1]);
+                const [x2, y2] = viewport.convertToViewportPoint(a.rect[2], a.rect[3]);
+                const hit = document.createElement('a');
+                hit.href = a.url;
+                hit.target = '_blank';
+                hit.rel = 'noopener';
+                hit.setAttribute('aria-label', a.url.replace(/^mailto:/, 'Email '));
+                Object.assign(hit.style, {
+                    left: (Math.min(x1, x2) / viewport.width) * 100 + '%',
+                    top: (Math.min(y1, y2) / viewport.height) * 100 + '%',
+                    width: (Math.abs(x2 - x1) / viewport.width) * 100 + '%',
+                    height: (Math.abs(y2 - y1) / viewport.height) * 100 + '%',
+                });
+                wrap.appendChild(hit);
+            });
+            out.push(wrap);
+        }
+        pages.replaceChildren(...out);
+    }
+
+    async function open() {
+        dialog.showModal();
+        try {
+            if (!doc) {
+                showStatus('Loading resume…');
+                doc = await loadDocument();
+            }
+            rendering = render();
+            await rendering;
+        } catch (err) {
+            console.warn('Resume viewer:', err);
+            renderedWidth = 0;
+            showStatus("The resume couldn't be displayed here.", true);
+        }
+    }
 
     link.addEventListener('click', (e) => {
-        if (!canEmbed()) return; // default: opens the PDF in a new tab
         e.preventDefault();
-        if (!frame.src) frame.src = link.getAttribute('href') + '#view=FitH';
-        dialog.showModal();
+        open();
     });
 
     dialog.addEventListener('click', (e) => {
         if (e.target === dialog || e.target.closest('[data-close]')) dialog.close();
+    });
+
+    let resizeTimer = null;
+    window.addEventListener('resize', () => {
+        if (!dialog.open || !doc) return;
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(() => { render().catch(() => {}); }, 250);
     });
 })();

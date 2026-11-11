@@ -1858,9 +1858,75 @@ a.log-meta:hover {
     outline-offset: 2px;
 }
 
-.resume-frame {
+.resume-pages {
     flex: 1;
+    min-height: 0;
+    overflow: auto;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    background: #050c1a;
+    overscroll-behavior: contain;
+}
+
+.resume-page {
+    position: relative;
     width: 100%;
-    border: none;
-    background: #525659;
+    max-width: 820px;
+    flex: 0 0 auto;
+    background: #ffffff;
+    border-radius: 4px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+    overflow: hidden;
+}
+
+.resume-page canvas {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+/* invisible click targets over the PDF's own links (email, GitHub, LinkedIn) */
+.resume-page a {
+    position: absolute;
+    border-radius: 2px;
+}
+
+.resume-page a:hover,
+.resume-page a:focus-visible {
+    background: rgba(2, 119, 189, 0.15);
+    outline: none;
+}
+
+.resume-status {
+    margin: auto;
+    color: var(--muted);
+    text-align: center;
+}
+
+.resume-status a {
+    color: var(--accent);
+}
+
+@media (max-width: 768px) {
+    .resume-dialog {
+        max-width: calc(100vw - 16px);
+        max-height: calc(100dvh - 16px);
+        height: calc(100dvh - 16px);
+    }
+
+    .resume-bar {
+        padding: 10px 10px 10px 16px;
+    }
+
+    .resume-action {
+        padding: 6px 10px;
+        font-size: 13px;
+    }
+
+    .resume-pages {
+        padding: 10px;
+    }
 }

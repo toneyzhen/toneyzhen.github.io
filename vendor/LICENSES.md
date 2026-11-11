@@ -4,6 +4,7 @@ Third-party files in this folder, copied unmodified from npm:
 - topojson-client.min.js — topojson-client@3.1.0 (ISC)
 - countries-110m.json — world-atlas@2.0.2 (ISC)
 - states-10m.json — us-atlas@3.0.1 (ISC)
+- pdfjs/pdf.min.mjs, pdfjs/pdf.worker.min.mjs — pdfjs-dist@6.4.299, legacy build (Apache-2.0; full text in pdfjs/LICENSE)
 
 ==================== globe.gl ====================
 MIT License
