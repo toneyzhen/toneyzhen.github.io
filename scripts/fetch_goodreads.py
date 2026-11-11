@@ -30,15 +30,18 @@ MAX_READ = 50
 
 
 def fetch(url):
-    req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0 (portfolio bookshelf sync)"})
+    # Goodreads serves the widget to ordinary browsers, so identify as one.
+    agent = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0 Safari/537.36"
+    req = urllib.request.Request(url, headers={"User-Agent": agent})
     with urllib.request.urlopen(req, timeout=30) as resp:
         return resp.read().decode("utf-8", errors="replace")
 
 
 def widget_html(js):
     """The widget is JavaScript: var widget_code = '<html>'; pull out and unescape the string."""
-    match = re.search(r"var widget_code = '(.*?)';\s*\n", js, re.S)
+    match = re.search(r"var widget_code = '(.*?)(?<!\\)';", js, re.S)
     if not match:
+        print("Unexpected widget response, first 400 characters:\n" + js[:400])
         raise ValueError("Goodreads widget didn't contain widget_code; its format may have changed")
 
     def unescape(m):
