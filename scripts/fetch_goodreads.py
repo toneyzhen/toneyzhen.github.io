@@ -6,13 +6,18 @@ Browsers can't read that feed directly from the site (no CORS headers), so a
 GitHub Action runs this script once a day and commits data/books.json.
 
 Usage: python3 scripts/fetch_goodreads.py <goodreads-user-id> <output.json>
+
+If the profile isn't public, set GOODREADS_KEY to the "key" value from the
+RSS link at the bottom of your Goodreads "My Books" page.
 """
 
 import html
 import json
+import os
 import re
 import sys
 import urllib.error
+import urllib.parse
 import urllib.request
 import xml.etree.ElementTree as ET
 from datetime import datetime, timezone
@@ -36,12 +41,17 @@ def fetch_shelf(user, shelf):
     """Return the shelf's books, or None if Goodreads wouldn't serve the feed."""
     for template in FEEDS:
         url = template.format(user=user, shelf=shelf)
+        key = os.environ.get("GOODREADS_KEY", "").strip()
+        shown = url
+        if key:
+            url += "&key=" + urllib.parse.quote(key)
+            shown += "&key=***"
         try:
             return parse(fetch(url))
         except urllib.error.HTTPError as err:
-            print(f"{shelf}: HTTP {err.code} from {url}")
+            print(f"{shelf}: HTTP {err.code} from {shown}")
         except ET.ParseError as err:
-            print(f"{shelf}: response from {url} wasn't valid RSS ({err})")
+            print(f"{shelf}: response from {shown} wasn't valid RSS ({err})")
     return None
 
 
