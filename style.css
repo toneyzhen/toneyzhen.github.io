@@ -197,6 +197,15 @@ nav a:hover {
     animation: fadeInUp 1s ease 0.2s backwards;
 }
 
+.quote-note {
+    display: block;
+    max-width: 520px;
+    margin: 14px auto 0;
+    font-size: 13px;
+    line-height: 1.5;
+    color: var(--faint);
+}
+
 .hero-subtitle {
     font-size: 20px !important;
     font-weight: 600;
