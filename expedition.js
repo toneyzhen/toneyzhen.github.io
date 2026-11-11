@@ -5,7 +5,7 @@
 
     // Last.fm's read-only API key is meant to be used in the browser. Create one at
     // https://www.last.fm/api/account/create and paste the "API key" (not the shared secret) here.
-    const LASTFM = { user: 'toney562', apiKey: '' };
+    const LASTFM = { user: 'toney562', apiKey: '7454f6c38ac3e0ce8887c2ecc22f99d2' };
 
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const $ = (id) => document.getElementById(id);

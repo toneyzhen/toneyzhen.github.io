@@ -1,0 +1,33 @@
+name: Temporary data-source check
+
+on:
+  push:
+    paths:
+      - ".github/workflows/diagnose.yml"
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Last.fm key and username
+        run: |
+          for m in user.getinfo user.getrecenttracks; do
+            echo "== $m"
+            curl -s "https://ws.audioscrobbler.com/2.0/?method=$m&user=toney562&api_key=7454f6c38ac3e0ce8887c2ecc22f99d2&format=json&limit=1" | head -c 600; echo
+          done
+      - name: Goodreads pages and feeds
+        run: |
+          UA="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0 Safari/537.36"
+          for u in \
+            "https://www.goodreads.com/user/show/206355505-toney-zhen" \
+            "https://www.goodreads.com/review/list/206355505?shelf=read" \
+            "https://www.goodreads.com/review/list_rss/206355505?shelf=read" \
+            "https://www.goodreads.com/review/list_rss/206355505-toney-zhen?shelf=read" \
+            "https://www.goodreads.com/review/list_rss/206355505?shelf=%23ALL%23"; do
+            code=$(curl -s -A "$UA" -o page.html -w "%{http_code}" "$u")
+            echo "== $code $u ($(wc -c < page.html) bytes)"
+            grep -o 'list_rss/[^"'"'"' ]*' page.html | sed 's/key=[A-Za-z0-9_-]*/key=<found>/' | sort -u | head -5
+            grep -io '<title>[^<]*' page.html | head -1
+            grep -io 'private\|sign in to\|this profile' page.html | sort | uniq -c | head -5
+            grep -c '<item>' page.html || true
+          done
