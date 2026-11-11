@@ -193,20 +193,14 @@ function createScrollPenguin() {
 createScrollPenguin();
 
 
-// Night mode: follows the visitor's choice, else their dark-mode setting or local time (7pm-6am)
+// Day/night toggle: night is the default, and the visitor's choice is remembered
 function setupSkyToggle() {
     const root = document.documentElement;
     const button = document.getElementById('skyToggle');
     if (!button) return;
-    const darkQuery = window.matchMedia('(prefers-color-scheme: dark)');
 
     function savedSky() {
         try { return localStorage.getItem('sky'); } catch (e) { return null; }
-    }
-
-    function autoSky() {
-        const hour = new Date().getHours();
-        return darkQuery.matches || hour >= 19 || hour < 6 ? 'night' : 'day';
     }
 
     function applySky(sky, animate) {
@@ -217,21 +211,16 @@ function setupSkyToggle() {
         }
         root.setAttribute('data-sky', sky);
         const night = sky === 'night';
-        button.setAttribute('aria-pressed', String(night));
         button.setAttribute('aria-label', night ? 'Switch to day mode' : 'Switch to night mode');
         button.title = night ? 'Day mode' : 'Night mode';
     }
 
-    applySky(root.getAttribute('data-sky') || savedSky() || autoSky(), false);
+    applySky(savedSky() === 'day' ? 'day' : 'night', false);
 
     button.addEventListener('click', () => {
         const next = root.getAttribute('data-sky') === 'night' ? 'day' : 'night';
         try { localStorage.setItem('sky', next); } catch (e) {}
         applySky(next, true);
-    });
-
-    darkQuery.addEventListener('change', () => {
-        if (!savedSky()) applySky(autoSky(), true);
     });
 }
 

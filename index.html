@@ -6,14 +6,11 @@
     <meta name="description" content="Toney Zhen's portfolio — AI/ML projects, research experience, and skills in computer vision, deep learning, and full-stack development.">
     <title>Toney Zhen | AI/ML Portfolio</title>
     <script>
-        // Pick day or night before the page paints, so it never flashes the wrong sky
+        // Night is the default; a visitor who switched to day keeps it. Runs before paint to avoid a flash.
         (function () {
             var saved = null;
             try { saved = localStorage.getItem('sky'); } catch (e) {}
-            var hour = new Date().getHours();
-            var night = saved ? saved === 'night'
-                : (window.matchMedia('(prefers-color-scheme: dark)').matches || hour >= 19 || hour < 6);
-            document.documentElement.setAttribute('data-sky', night ? 'night' : 'day');
+            document.documentElement.setAttribute('data-sky', saved === 'day' ? 'day' : 'night');
         })();
     </script>
     <link rel="stylesheet" href="style.css">
@@ -39,7 +36,7 @@
                 <li><a href="#contact">Contact</a></li>
                 <li><a href="Toney_Resume.pdf" class="nav-resume-btn" download>Resume</a></li>
             </ul>
-            <button class="sky-toggle" id="skyToggle" type="button" aria-label="Switch to night mode" aria-pressed="false">
+            <button class="sky-toggle" id="skyToggle" type="button" aria-label="Switch to day mode" title="Day mode">
                 <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                     <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/>
                 </svg>
