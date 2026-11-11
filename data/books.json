@@ -1,5 +1,96 @@
 {
-  "updated": null,
+  "updated": "2026-11-11",
   "currentlyReading": [],
-  "read": []
+  "read": [
+    {
+      "title": "Meditations",
+      "author": "Marcus Aurelius",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1750554861l/233411514.jpg",
+      "rating": 0,
+      "pages": null,
+      "readAt": null,
+      "review": "",
+      "url": "https://www.goodreads.com/review/show/9096409799"
+    },
+    {
+      "title": "The Sea of Monsters",
+      "author": "Rick Riordan",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1530819367l/40727118.jpg",
+      "rating": 0,
+      "pages": null,
+      "readAt": null,
+      "review": "",
+      "url": "https://www.goodreads.com/review/show/9096409182"
+    },
+    {
+      "title": "Psychocybernetic Principles for Creative Living",
+      "author": "Maxwell Maltz",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1176334067l/614069.jpg",
+      "rating": 0,
+      "pages": null,
+      "readAt": null,
+      "review": "",
+      "url": "https://www.goodreads.com/review/show/9096413256"
+    },
+    {
+      "title": "The Count of Monte Cristo",
+      "author": "Alexandre Dumas",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1724863997l/7126.jpg",
+      "rating": 5,
+      "pages": null,
+      "readAt": null,
+      "review": "",
+      "url": "https://www.goodreads.com/review/show/9096406427"
+    },
+    {
+      "title": "How to Win Friends & Influence People",
+      "author": "Dale Carnegie",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1442726934l/4865.jpg",
+      "rating": 0,
+      "pages": null,
+      "readAt": null,
+      "review": "",
+      "url": "https://www.goodreads.com/review/show/9096413956"
+    },
+    {
+      "title": "The Lightning Thief",
+      "author": "Rick Riordan",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1684776677l/123675190.jpg",
+      "rating": 0,
+      "pages": null,
+      "readAt": null,
+      "review": "",
+      "url": "https://www.goodreads.com/review/show/9096409016"
+    },
+    {
+      "title": "The Odyssey",
+      "author": "Homer",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1711957706l/1381.jpg",
+      "rating": 5,
+      "pages": null,
+      "readAt": null,
+      "review": "",
+      "url": "https://www.goodreads.com/review/show/9096406343"
+    },
+    {
+      "title": "Mastery",
+      "author": "Robert Greene",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1348274726l/13589182.jpg",
+      "rating": 0,
+      "pages": null,
+      "readAt": null,
+      "review": "",
+      "url": "https://www.goodreads.com/review/show/9096407724"
+    },
+    {
+      "title": "Atomic Habits: An Easy & Proven Way to Build Good Habits & Break Bad Ones",
+      "author": "James Clear",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1655988385l/40121378.jpg",
+      "rating": 0,
+      "pages": null,
+      "readAt": null,
+      "review": "",
+      "url": "https://www.goodreads.com/review/show/9096410270"
+    }
+  ]
 }
