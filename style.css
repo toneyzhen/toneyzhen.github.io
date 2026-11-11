@@ -1,29 +1,5 @@
-/* ---------- Colors: day (default) and night ---------- */
+/* ---------- Colors: polar night ---------- */
 :root {
-    --page-bg: linear-gradient(180deg, #e3f2fd 0%, #bbdefb 50%, #ffffff 100%);
-    --text: #2c3e50;
-    --muted: #546e7a;
-    --faint: #90a4ae;
-    --accent: #0277bd;
-    --header-bg: rgba(255, 255, 255, 0.95);
-    --menu-bg: rgba(255, 255, 255, 0.98);
-    --hero-fade: #ffffff;
-    --horizon: #b3e5fc;
-    --horizon-glow: rgba(2, 119, 189, 0.12);
-    --section-bg: #ffffff;
-    --section-alt-bg: #f0f9ff;
-    --card-bg: #ffffff;
-    --ice-border: #b3e5fc;
-    --divider: #e1f5fe;
-    --chip-bg: #e1f5fe;
-    --chip-text: #01579b;
-    --ice-shelf: rgba(179, 229, 252, 0.3);
-    --snow: #b3e5fc;
-    --snow-glow: none;
-    color-scheme: light;
-}
-
-:root[data-sky="night"] {
     --page-bg: linear-gradient(180deg, #040a17 0%, #0a1830 55%, #0d1d38 100%);
     --text: #dce8f5;
     --muted: #a3b6cb;
@@ -133,7 +109,6 @@ nav a:hover {
 }
 
 .nav-toggle {
-    order: 1; /* keep the menu button last, after the day/night toggle */
     display: none;
     flex-direction: column;
     justify-content: center;
@@ -462,7 +437,7 @@ h2::after {
 }
 
 footer {
-    background: linear-gradient(135deg, #01579b 0%, #0277bd 100%);
+    background: linear-gradient(135deg, #071730 0%, #0c2a4f 100%);
     color: white;
     text-align: center;
     padding: 30px 0;
@@ -768,7 +743,7 @@ footer::before {
     right: 0;
     bottom: 0;
     height: 4px;
-    background: rgba(2, 119, 189, 0.12);
+    background: rgba(125, 211, 252, 0.12);
     z-index: 90;
     pointer-events: none;
 }
@@ -830,7 +805,7 @@ footer::before {
     width: 100%;
     height: 100%;
     transform-origin: 50% 100%;
-    filter: drop-shadow(0 2px 2px rgba(0, 0, 0, 0.2));
+    filter: drop-shadow(0 0 4px rgba(186, 230, 253, 0.55));
 }
 
 .scroll-penguin.walking svg {
@@ -867,46 +842,7 @@ footer::before {
     }
 }
 
-/* ---------- Night mode: toggle, sky, aurora ---------- */
-.sky-toggle {
-    flex-shrink: 0;
-    width: 40px;
-    height: 40px;
-    display: grid;
-    place-items: center;
-    padding: 0;
-    border-radius: 50%;
-    border: 2px solid var(--ice-border);
-    background: var(--card-bg);
-    color: var(--accent);
-    cursor: pointer;
-    transition: transform 0.3s, border-color 0.3s;
-}
-
-.sky-toggle:hover {
-    border-color: var(--accent);
-    transform: rotate(-15deg);
-}
-
-.sky-toggle:focus-visible {
-    outline: 2px solid var(--accent);
-    outline-offset: 3px;
-}
-
-.sky-toggle svg {
-    width: 20px;
-    height: 20px;
-}
-
-.sky-toggle .icon-sun,
-:root[data-sky="night"] .sky-toggle .icon-moon {
-    display: none;
-}
-
-:root[data-sky="night"] .sky-toggle .icon-sun {
-    display: block;
-}
-
+/* ---------- Night sky: stars and aurora over the hero ---------- */
 .hero-content {
     position: relative;
     z-index: 1;
@@ -916,12 +852,6 @@ footer::before {
     position: absolute;
     inset: 0;
     pointer-events: none;
-    opacity: 0;
-    transition: opacity 1.2s ease;
-}
-
-:root[data-sky="night"] .night-sky {
-    opacity: 1;
 }
 
 .stars,
@@ -996,24 +926,6 @@ footer::before {
     0%   { transform: translateX(-6%) skewX(-12deg) scaleY(0.9); }
     50%  { transform: translateX(4%) skewX(8deg) scaleY(1.15); }
     100% { transform: translateX(10%) skewX(-4deg) scaleY(0.95); }
-}
-
-:root[data-sky="night"] footer {
-    background: linear-gradient(135deg, #071730 0%, #0c2a4f 100%);
-}
-
-:root[data-sky="night"] .scroll-penguin svg {
-    filter: drop-shadow(0 0 4px rgba(186, 230, 253, 0.55));
-}
-
-:root[data-sky="night"] .scroll-track {
-    background: rgba(125, 211, 252, 0.12);
-}
-
-/* brief cross-fade when the visitor flips day/night */
-:root.sky-changing,
-:root.sky-changing * {
-    transition: background-color 0.5s ease, color 0.5s ease, border-color 0.5s ease !important;
 }
 
 @media (prefers-reduced-motion: reduce) {
