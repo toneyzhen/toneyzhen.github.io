@@ -382,7 +382,7 @@
                     <div class="log-card-head">
                         <div>
                             <h3>Building with AI</h3>
-                            <p class="log-hint">Tokens per week with Claude and ChatGPT, last 6 months</p>
+                            <p class="log-hint">Tokens per week in Claude Code, by model</p>
                         </div>
                         <span class="log-meta" id="tokenMeta"></span>
                     </div>
@@ -391,6 +391,7 @@
                     <div class="token-chart" id="tokenChart" tabindex="0" role="group" aria-roledescription="chart" aria-label="Weekly token chart. Use the left and right arrow keys to read each week." aria-describedby="tokenLive"></div>
                     <div class="token-tip" id="tokenTip" hidden></div>
                     <p class="visually-hidden" id="tokenLive" aria-live="polite"></p>
+                    <p class="log-footnote">Counts tokens sent, written to context and generated. Cached context Claude re-reads each turn isn't counted.</p>
                     <details class="token-table">
                         <summary>View as table</summary>
                         <div class="table-wrap"><table id="tokenTable"></table></div>

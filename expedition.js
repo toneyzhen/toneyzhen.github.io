@@ -788,15 +788,13 @@
     /* Building with AI: weekly tokens (data/tokens.json)                  */
     /* ------------------------------------------------------------------ */
 
-    // Validated pair for the dark card (dataviz validator: lightness band, CVD and contrast pass)
-    const TOKEN_SERIES = [
-        { key: 'claude', label: 'Claude', color: '#d4764f' },
-        { key: 'chatgpt', label: 'ChatGPT', color: '#0d9e8f' },
-    ];
+    // Fixed color per model family, validated for the dark card (lightness band, colorblind
+    // separation and contrast all pass). Order matters: it's the stacking order too.
+    const TOKEN_COLORS = { opus: '#d4764f', sonnet: '#0d9e8f', haiku: '#8579d9', other: '#a58a2a' };
     const SVG_NS = 'http://www.w3.org/2000/svg';
 
     function fmtTokens(n) {
-        if (n >= 1e6) return (n / 1e6).toFixed(n >= 1e7 ? 0 : 1).replace(/\.0$/, '') + 'M';
+        if (n >= 1e6) return String(+(n / 1e6).toFixed(n >= 1e7 ? 1 : 2)) + 'M'; // 1.25M, 2M, 13.4M
         if (n >= 1e3) return Math.round(n / 1e3) + 'k';
         return String(n);
     }
@@ -817,6 +815,14 @@
         return `M${x},${y + h}V${y + r}Q${x},${y} ${x + r},${y}H${x + w - r}Q${x + w},${y} ${x + w},${y + r}V${y + h}Z`;
     }
 
+    // never round a partial share up to 100% (or down to 0%)
+    function sharePct(f) {
+        const p = f * 100;
+        if (p > 99.5 && p < 100) return Math.floor(p * 10) / 10;
+        if (p > 0 && p < 0.5) return Math.ceil(p * 10) / 10;
+        return Math.round(p);
+    }
+
     function niceMax(v) {
         if (v <= 0) return 1;
         const p = Math.pow(10, Math.floor(Math.log10(v)));
@@ -824,8 +830,15 @@
     }
 
     function renderTokens(data) {
-        const weeks = (data.weeks || []).map((w) => ({ ...w, total: TOKEN_SERIES.reduce((s, k) => s + (w[k.key] || 0), 0) }));
-        if (!weeks.some((w) => w.total > 0)) return;
+        const TOKEN_SERIES = (data.series || [])
+            .filter((s) => TOKEN_COLORS[s.key])
+            .sort((a, b) => Object.keys(TOKEN_COLORS).indexOf(a.key) - Object.keys(TOKEN_COLORS).indexOf(b.key))
+            .map((s) => ({ ...s, color: TOKEN_COLORS[s.key] }));
+        let weeks = (data.weeks || []).map((w) => ({ ...w, total: TOKEN_SERIES.reduce((s, k) => s + (w[k.key] || 0), 0) }));
+        if (!TOKEN_SERIES.length || !weeks.some((w) => w.total > 0)) return;
+        // start at the first week with any use (but show at least 8 weeks)
+        const firstUsed = weeks.findIndex((w) => w.total > 0);
+        weeks = weeks.slice(Math.max(0, Math.min(firstUsed, weeks.length - 8)));
         $('tokenCard').hidden = false;
 
         const sums = Object.fromEntries(TOKEN_SERIES.map((s) => [s.key, weeks.reduce((a, w) => a + (w[s.key] || 0), 0)]));
@@ -833,12 +846,13 @@
         const busiest = weeks.reduce((a, w) => (w.total > a.total ? w : a), weeks[0]);
         const lead = TOKEN_SERIES.reduce((a, s) => (sums[s.key] > sums[a.key] ? s : a), TOKEN_SERIES[0]);
 
-        $('tokenMeta').textContent = (data.estimated ? 'Estimated' : 'Measured') + (data.updated ? ` · updated ${weekLabel(data.updated)}` : '');
+        $('tokenMeta').textContent = (data.source ? `From ${data.source} logs` : 'Estimated') + (data.updated ? ` · updated ${weekLabel(data.updated)}` : '');
+        const span = weeks.length >= 20 ? '6 months' : `${weeks.length} weeks`;
 
         const stats = $('tokenStats');
         stats.replaceChildren();
-        [[fmtTokens(grand), 'tokens in 6 months'],
-         [Math.round((sums[lead.key] / grand) * 100) + '%', `with ${lead.label}`],
+        [[fmtTokens(grand), `tokens in ${span}`],
+         [sharePct(sums[lead.key] / grand) + '%', `with ${lead.label}`],
          [fmtTokens(busiest.total), `busiest week, ${weekLabel(busiest.start)}`]].forEach(([value, label]) => {
             const s = el('div', 'token-stat');
             s.appendChild(el('strong', null, value));
