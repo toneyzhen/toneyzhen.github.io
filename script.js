@@ -7,16 +7,6 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     });
 });
 
-// Form submission handler (only runs if a contact form exists on the page)
-const contactForm = document.querySelector('.contact-form');
-if (contactForm) {
-    contactForm.addEventListener('submit', function(e) {
-        e.preventDefault();
-        alert('Thanks for reaching out! I\'ll waddle back to you soon! 🐧');
-        this.reset();
-    });
-}
-
 // Mobile nav toggle
 const navToggle = document.getElementById('navToggle');
 const navMenu = document.getElementById('navMenu');
@@ -54,8 +44,10 @@ function createSnowflakes() {
     }
 }
 
-// Initialize snowflakes when page loads
-createSnowflakes();
+// Snowflakes are pure decoration, so skip them for visitors who ask for less motion
+if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    createSnowflakes();
+}
 
 // Scroll penguin: waddles along the bottom edge as you scroll; click it to slide back to the top
 function createScrollPenguin() {

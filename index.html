@@ -5,17 +5,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Toney Zhen's portfolio — AI/ML projects, research experience, and skills in computer vision, deep learning, and full-stack development.">
     <title>Toney Zhen | AI/ML Portfolio</title>
+    <link rel="canonical" href="https://toneyzhen.github.io/">
+    <meta name="theme-color" content="#081428">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://toneyzhen.github.io/">
+    <meta property="og:title" content="Toney Zhen | AI/ML Engineer &amp; Researcher">
+    <meta property="og:description" content="M.S. in AI at SJSU, open to ML engineering roles. Deepfake detection, LLM safety guardrails and research in computer vision.">
+    <meta property="og:image" content="https://toneyzhen.github.io/images/og-card.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Toney Zhen, AI/ML Engineer and Researcher, M.S. in AI at SJSU">
+    <meta name="twitter:card" content="summary_large_image">
     <link rel="icon" href="favicon.ico" sizes="any">
     <link rel="icon" href="favicon.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="apple-touch-icon.png">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="snowflakes" id="snowflakes"></div>
+    <div class="snowflakes" id="snowflakes" aria-hidden="true"></div>
 
     <header>
         <nav class="container">
-            <div class="logo">Portfolio</div>
+            <a class="logo" href="#home">Toney Zhen</a>
             <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation menu" aria-expanded="false">
                 <span></span>
                 <span></span>
@@ -43,9 +54,10 @@
             <div class="aurora"></div>
         </div>
         <div class="hero-content">
-            <div class="penguin-hero"><img src="images/thumbsup.jpg" alt="me doing a thumbsup"></div>
+            <div class="penguin-hero"><img src="images/thumbsup.jpg" alt="Toney giving a thumbs-up" width="480" height="640" fetchpriority="high"></div>
             <h1>Hi, I'm Toney Zhen</h1>
             <p class="hero-subtitle">AI/ML Engineer & Researcher</p>
+            <p class="hero-status"><span class="status-dot" aria-hidden="true"></span>Open to ML engineering roles · M.S. in AI at SJSU, graduating 2027</p>
             <br>
             <i>"Innovation needs a lot of experimentation, experimentation needs exploration, explorations will result in failures. If you do not have tolerance for failures, you won't succeed."</i>
             <br>
@@ -59,7 +71,7 @@
             <h2>About Me</h2>
             <div class="about-content">
                 <div class="about-image">
-                    <div class="penguin-avatar"><img src="images/gradphoto.jpg" alt="my grad photo"></div>
+                    <div class="penguin-avatar"><img src="images/gradphoto.jpg" alt="Toney shaking hands on stage at UCI graduation" width="600" height="899" loading="lazy" decoding="async"></div>
                 </div>
                 <div class="about-text">
                     <p>Hello there! My name is Toney Zhen, and I'm originally from Whittier,
@@ -133,46 +145,77 @@
         <div class="container">
             <h2>Featured Projects</h2>
             <div class="projects-grid">
-                <div class="project-card">
-                    <div class="project-img">🎭</div>
+                <article class="project-card">
+                    <div class="project-img" aria-hidden="true">🎭</div>
                     <div class="project-content">
-                        <a href="https://github.com/adv-11/Deepfake-Classification-DeepLearning" target="_blank"><h3>Deepfake Image Classifier</h3></a>
-                        <p>Fine-tuned CNNs and Vision Transformers to classify real vs.
-                            AI-generated images, tuning the top model to ~0.99 validation AUC.</p>
+                        <h3>Deepfake Image Classifier</h3>
+                        <p class="project-kind">Computer vision · deep learning</p>
+                        <p>Tells real photos from AI-generated ones, and shows where the models stop generalizing.</p>
+                        <ul class="project-metrics" aria-label="Results">
+                            <li><strong>0.84 → 0.99</strong> validation AUC</li>
+                            <li><strong>2</strong> datasets</li>
+                        </ul>
+                        <ul class="project-points">
+                            <li>Fine-tuned ResNet and EfficientNet CNNs as baselines for detecting synthetic images</li>
+                            <li>Built and tuned ConvNeXt-Tiny, MaxViT and dual-branch MaxViT models, raising in-distribution AUC from 0.84 to 0.99</li>
+                            <li>Used cross-dataset tests and Grad-CAM to find where the models failed on unseen data</li>
+                        </ul>
                         <div class="project-tags">
                             <span class="tag">Python</span>
                             <span class="tag">PyTorch</span>
                             <span class="tag">torchvision</span>
+                            <span class="tag">Scikit-learn</span>
                             <span class="tag">CNNs</span>
                             <span class="tag">Vision Transformers</span>
                         </div>
+                        <a class="project-link" href="https://github.com/adv-11/Deepfake-Classification-DeepLearning" target="_blank" rel="noopener">View code on GitHub</a>
                     </div>
-                </div>
+                </article>
 
-                <div class="project-card">
-                    <div class="project-img"><img src="images/fabflix.png" alt="fabflix moviemart"></div>
+                <article class="project-card">
+                    <div class="project-img"><img src="images/fabflix.png" alt="FabFlix MovieMart's movie search page" width="674" height="486" loading="lazy" decoding="async"></div>
                     <div class="project-content">
                         <h3>FabFlix MovieMart</h3>
-                        <p>A scalable full-stack web application providing support for an
-                            e-commerce catalogue of 20,000+ unique movies and 70,000+ movie
-                            stars.</p>
+                        <p class="project-kind">Full-stack web app · cloud deployment</p>
+                        <p>An online movie store over a catalog of 20,000+ movies and 70,000+ stars, built to hold up under load.</p>
+                        <ul class="project-metrics" aria-label="Results">
+                            <li><strong>~9,000</strong> requests/min</li>
+                            <li><strong>20,000+</strong> movies</li>
+                        </ul>
+                        <ul class="project-points">
+                            <li>Built sessions, fuzzy-search autocomplete, advanced search and secure login, with prepared statements against SQL injection</li>
+                            <li>Deployed on AWS EC2 with Docker, a Kubernetes cluster, MySQL replication and load balancing</li>
+                            <li>Sustained about 9,000 requests per minute in Apache JMeter load tests</li>
+                        </ul>
                         <div class="project-tags">
-                            <span class="tag">JavaScript</span>
-                            <span class="tag">jQuery</span>
                             <span class="tag">Java</span>
                             <span class="tag">Jakarta Servlet</span>
                             <span class="tag">MySQL</span>
+                            <span class="tag">JavaScript</span>
+                            <span class="tag">jQuery</span>
+                            <span class="tag">Docker</span>
+                            <span class="tag">Kubernetes</span>
+                            <span class="tag">AWS</span>
                         </div>
                     </div>
-                </div>
+                </article>
 
-                <div class="project-card">
-                    <div class="project-img"><img src="images/maliciousinput.png" alt="LLM Shield guardrail flagging malicious input"></div>
+                <article class="project-card">
+                    <div class="project-img"><img src="images/maliciousinput.png" alt="LLM Shield flagging a malicious prompt" width="428" height="247" loading="lazy" decoding="async"></div>
                     <div class="project-content">
-                        <a href = "https://github.com/adv-11/ml-guardrails-project" target = "_blank"><h3>LLM Shield</h3></a>
-                        <p>4 lightweight, precision-first guardrails that screen
-                            requests and responses sent to and from the LLM to ensure safety.
-                            Built from fundamental machine learning algorithms.</p>
+                        <h3>LLM Shield</h3>
+                        <p class="project-kind">LLM safety guardrails · team of 4</p>
+                        <p>Lightweight guardrails, built from classic ML, that screen what goes into and comes out of an LLM.</p>
+                        <ul class="project-metrics" aria-label="Results">
+                            <li><strong>96.1%</strong> F1</li>
+                            <li><strong>97.6%</strong> recall</li>
+                            <li><strong>300,000</strong> examples</li>
+                        </ul>
+                        <ul class="project-points">
+                            <li>Built the PII guardrail that blocks personal information before it reaches the LLM, comparing classifiers on 300,000 examples</li>
+                            <li>Reached 92.9% accuracy and 96.1% F1 by replacing TF-IDF with text embeddings and PCA, nearly halving training time</li>
+                            <li>Coordinated four complementary input and output guardrails around shared precision and recall targets</li>
+                        </ul>
                         <div class="project-tags">
                             <span class="tag">Python</span>
                             <span class="tag">Scikit-learn</span>
@@ -180,8 +223,9 @@
                             <span class="tag">Pandas</span>
                             <span class="tag">Matplotlib</span>
                         </div>
+                        <a class="project-link" href="https://github.com/adv-11/ml-guardrails-project" target="_blank" rel="noopener">View code on GitHub</a>
                     </div>
-                </div>
+                </article>
             </div>
         </div>
         <div class="ice-shelf"></div>
@@ -192,22 +236,22 @@
             <h2>Skills & Expertise</h2>
             <div class="skills-grid">
                 <div class="skill-card">
-                    <div class="skill-icon">💻</div>
+                    <div class="skill-icon" aria-hidden="true">💻</div>
                     <h3>Programming Languages</h3>
                     <p>Python, Java, JavaScript, C, C++, SQL</p>
                 </div>
                 <div class="skill-card">
-                    <div class="skill-icon">🤖</div>
+                    <div class="skill-icon" aria-hidden="true">🤖</div>
                     <h3>AI/ML</h3>
                     <p>PyTorch, torchvision, Scikit-learn, NumPy, Pandas, Matplotlib</p>
                 </div>
                 <div class="skill-card">
-                    <div class="skill-icon">⚛️</div>
+                    <div class="skill-icon" aria-hidden="true">⚛️</div>
                     <h3>Frameworks & Tools</h3>
                     <p>Django, Flask, Node.js, React, JUnit, Git, Docker, Kubernetes, AWS, VS Code</p>
                 </div>
                 <div class="skill-card">
-                    <div class="skill-icon">🐧</div>
+                    <div class="skill-icon" aria-hidden="true">🐧</div>
                     <h3>Waddling</h3>
                     <p>Expert Level</p>
                 </div>
@@ -221,7 +265,7 @@
             <h2>Courses Taken</h2>
             <div class="courses-grid">
                 <div class="course-card">
-                    <div class="course-icon">💾</div>
+                    <div class="course-icon" aria-hidden="true">💾</div>
                     <h3>Database Management Systems</h3>
                     <p>Introduction to the design of databases and the use of database 
                         management systems (DBMS) for applications. Topics include 
@@ -230,25 +274,22 @@
                         Language (SQL) programming.</p>
                 </div>
                 <div class="course-card">
-                    <div class="course-icon">📚</div>
+                    <div class="course-icon" aria-hidden="true">📚</div>
                     <h3>Web Applications</h3>
                     <p>Introduces students to advanced database technologies and web 
                         applications. Topics include database connectivity (ODBC/JDBC), 
                         database administration, web servers, web programming languages 
                         (Java servlets, XML, Ajax, and mobile platforms).</p>
-                    <!-- <div class="course-meta">
-                        <span class="course-year">2024</span>
-                    </div> -->
                 </div>
                 <div class="course-card">
-                    <div class="course-icon">🤖</div>
+                    <div class="course-icon" aria-hidden="true">🤖</div>
                     <h3>Machine Learning+Data Mining</h3>
                     <p>Introduction to principles of machine learning and data-mining
                         applied to real-world datasets. Typical applications include spam
                         filtering, object recognition, and credit scoring.</p>
                 </div>
                 <div class="course-card">
-                    <div class="course-icon">🧠</div>
+                    <div class="course-icon" aria-hidden="true">🧠</div>
                     <h3>Artificial Intelligence</h3>
                     <p>Different means of representing knowledge and uses of representations
                         in heuristic problem solving. Representations considered include
@@ -256,7 +297,7 @@
                         language grammars, and search trees.</p>
                 </div>
                 <div class="course-card">
-                    <div class="course-icon">🔗</div>
+                    <div class="course-icon" aria-hidden="true">🔗</div>
                     <h3>Deep Learning</h3>
                     <p>Explores deep neural networks and their applications to problems
                         such as speech recognition, image segmentation, and natural
@@ -264,7 +305,7 @@
                         applications, and techniques for learning from very large datasets.</p>
                 </div>
                 <div class="course-card">
-                    <div class="course-icon">🎮</div>
+                    <div class="course-icon" aria-hidden="true">🎮</div>
                     <h3>Reinforcement Learning</h3>
                     <p>Covers reinforcement learning (RL) and deep reinforcement learning
                         (DRL), including RL formalism, Markov decision processes, Deep
@@ -323,15 +364,38 @@
                     <div class="top-head">
                         <h4 class="log-subhead">Top this month</h4>
                         <div class="top-tabs" role="tablist" aria-label="Top this month">
-                            <button type="button" role="tab" id="tabArtists" aria-selected="true" aria-controls="topArtists">Artists</button>
-                            <button type="button" role="tab" id="tabTracks" aria-selected="false" aria-controls="topTracks" tabindex="-1">Tracks</button>
+                            <button type="button" role="tab" id="tabArtists" aria-selected="true" aria-controls="panelArtists">Artists</button>
+                            <button type="button" role="tab" id="tabTracks" aria-selected="false" aria-controls="panelTracks" tabindex="-1">Tracks</button>
                         </div>
                     </div>
-                    <ol class="top-list" id="topArtists" role="tabpanel" aria-labelledby="tabArtists"></ol>
-                    <ol class="top-list" id="topTracks" role="tabpanel" aria-labelledby="tabTracks" hidden></ol>
+                    <div id="panelArtists" role="tabpanel" aria-labelledby="tabArtists">
+                        <ol class="top-list" id="topArtists"></ol>
+                    </div>
+                    <div id="panelTracks" role="tabpanel" aria-labelledby="tabTracks" hidden>
+                        <ol class="top-list" id="topTracks"></ol>
+                    </div>
                     <p class="log-footnote" id="musicStats"></p>
                 </article>
 
+
+                <article class="log-card log-card-wide" id="tokenCard" hidden>
+                    <div class="log-card-head">
+                        <div>
+                            <h3>Building with AI</h3>
+                            <p class="log-hint">Tokens per week with Claude and ChatGPT, last 6 months</p>
+                        </div>
+                        <span class="log-meta" id="tokenMeta"></span>
+                    </div>
+                    <div class="token-stats" id="tokenStats"></div>
+                    <ul class="token-legend" id="tokenLegend"></ul>
+                    <div class="token-chart" id="tokenChart" tabindex="0" role="group" aria-roledescription="chart" aria-label="Weekly token chart. Use the left and right arrow keys to read each week." aria-describedby="tokenLive"></div>
+                    <div class="token-tip" id="tokenTip" hidden></div>
+                    <p class="visually-hidden" id="tokenLive" aria-live="polite"></p>
+                    <details class="token-table">
+                        <summary>View as table</summary>
+                        <div class="table-wrap"><table id="tokenTable"></table></div>
+                    </details>
+                </article>
             </div>
         </div>
         <div class="ice-shelf"></div>
@@ -387,17 +451,17 @@
             <h2>Get In Touch</h2>
             <div class="contact-links">
                 <a href="mailto:toney.zhen@sjsu.edu" class="contact-card">
-                    <div class="contact-icon">📧</div>
+                    <div class="contact-icon" aria-hidden="true">📧</div>
                     <h3>Email</h3>
                     <p>toney.zhen@sjsu.edu</p>
                 </a>
                 <a href="https://github.com/toneyzhen" target="_blank" class="contact-card">
-                    <div class="contact-icon">💻</div>
+                    <div class="contact-icon" aria-hidden="true">💻</div>
                     <h3>GitHub</h3>
                     <p>@toneyzhen</p>
                 </a>
                 <a href="https://linkedin.com/in/toney-zhen" target="_blank" class="contact-card">
-                    <div class="contact-icon">💼</div>
+                    <div class="contact-icon" aria-hidden="true">💼</div>
                     <h3>LinkedIn</h3>
                     <p>/in/toney-zhen</p>
                 </a>

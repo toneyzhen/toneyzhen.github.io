@@ -783,4 +783,233 @@
     }
 
     whenNear($('musicCard'), startListening);
+
+    /* ------------------------------------------------------------------ */
+    /* Building with AI: weekly tokens (data/tokens.json)                  */
+    /* ------------------------------------------------------------------ */
+
+    // Validated pair for the dark card (dataviz validator: lightness band, CVD and contrast pass)
+    const TOKEN_SERIES = [
+        { key: 'claude', label: 'Claude', color: '#d4764f' },
+        { key: 'chatgpt', label: 'ChatGPT', color: '#0d9e8f' },
+    ];
+    const SVG_NS = 'http://www.w3.org/2000/svg';
+
+    function fmtTokens(n) {
+        if (n >= 1e6) return (n / 1e6).toFixed(n >= 1e7 ? 0 : 1).replace(/\.0$/, '') + 'M';
+        if (n >= 1e3) return Math.round(n / 1e3) + 'k';
+        return String(n);
+    }
+
+    function weekLabel(iso, withYear) {
+        return new Date(iso + 'T12:00:00').toLocaleDateString(undefined, { month: 'short', day: 'numeric', ...(withYear ? { year: 'numeric' } : {}) });
+    }
+
+    function svg(tag, attrs) {
+        const node = document.createElementNS(SVG_NS, tag);
+        Object.entries(attrs).forEach(([k, v]) => node.setAttribute(k, v));
+        return node;
+    }
+
+    // a bar segment with only its top corners rounded (the data end); the base stays square
+    function topRounded(x, y, w, h, r) {
+        r = Math.min(r, w / 2, h);
+        return `M${x},${y + h}V${y + r}Q${x},${y} ${x + r},${y}H${x + w - r}Q${x + w},${y} ${x + w},${y + r}V${y + h}Z`;
+    }
+
+    function niceMax(v) {
+        if (v <= 0) return 1;
+        const p = Math.pow(10, Math.floor(Math.log10(v)));
+        return [1, 2, 2.5, 5, 10].map((m) => m * p).find((m) => m >= v);
+    }
+
+    function renderTokens(data) {
+        const weeks = (data.weeks || []).map((w) => ({ ...w, total: TOKEN_SERIES.reduce((s, k) => s + (w[k.key] || 0), 0) }));
+        if (!weeks.some((w) => w.total > 0)) return;
+        $('tokenCard').hidden = false;
+
+        const sums = Object.fromEntries(TOKEN_SERIES.map((s) => [s.key, weeks.reduce((a, w) => a + (w[s.key] || 0), 0)]));
+        const grand = Object.values(sums).reduce((a, b) => a + b, 0);
+        const busiest = weeks.reduce((a, w) => (w.total > a.total ? w : a), weeks[0]);
+        const lead = TOKEN_SERIES.reduce((a, s) => (sums[s.key] > sums[a.key] ? s : a), TOKEN_SERIES[0]);
+
+        $('tokenMeta').textContent = (data.estimated ? 'Estimated' : 'Measured') + (data.updated ? ` · updated ${weekLabel(data.updated)}` : '');
+
+        const stats = $('tokenStats');
+        stats.replaceChildren();
+        [[fmtTokens(grand), 'tokens in 6 months'],
+         [Math.round((sums[lead.key] / grand) * 100) + '%', `with ${lead.label}`],
+         [fmtTokens(busiest.total), `busiest week, ${weekLabel(busiest.start)}`]].forEach(([value, label]) => {
+            const s = el('div', 'token-stat');
+            s.appendChild(el('strong', null, value));
+            s.appendChild(el('span', null, label));
+            stats.appendChild(s);
+        });
+
+        const legend = $('tokenLegend');
+        legend.replaceChildren();
+        TOKEN_SERIES.forEach((s) => {
+            const li = el('li');
+            const sw = el('i');
+            sw.style.background = s.color;
+            li.append(sw, `${s.label} `);
+            li.appendChild(el('b', null, fmtTokens(sums[s.key])));
+            legend.appendChild(li);
+        });
+
+        const table = $('tokenTable');
+        table.replaceChildren();
+        const head = el('tr');
+        ['Week of', ...TOKEN_SERIES.map((s) => s.label), 'Total'].forEach((t) => head.appendChild(el('th', null, t)));
+        const thead = el('thead');
+        thead.appendChild(head);
+        const tbody = el('tbody');
+        [...weeks].reverse().forEach((w) => {
+            const tr = el('tr');
+            tr.appendChild(el('td', null, weekLabel(w.start, true)));
+            TOKEN_SERIES.forEach((s) => tr.appendChild(el('td', null, (w[s.key] || 0).toLocaleString())));
+            tr.appendChild(el('td', null, w.total.toLocaleString()));
+            tbody.appendChild(tr);
+        });
+        table.append(thead, tbody);
+
+        const chart = $('tokenChart');
+        const tip = $('tokenTip');
+        let active = -1;
+
+        function showWeek(i, anchorX) {
+            active = i;
+            const w = weeks[i];
+            chart.classList.add('has-focus');
+            chart.querySelectorAll('.bar').forEach((b, k) => b.classList.toggle('on', k === i));
+            tip.replaceChildren(el('strong', null, 'Week of ' + weekLabel(w.start, true)));
+            TOKEN_SERIES.forEach((s) => {
+                const row = el('div');
+                const sw = el('i');
+                sw.style.background = s.color;
+                row.append(sw, s.label);
+                row.appendChild(el('span', null, (w[s.key] || 0).toLocaleString()));
+                tip.appendChild(row);
+            });
+            const total = el('div');
+            total.append('Total');
+            total.appendChild(el('span', null, w.total.toLocaleString()));
+            tip.appendChild(total);
+            tip.hidden = false;
+            const card = $('tokenCard').getBoundingClientRect();
+            const box = chart.getBoundingClientRect();
+            const x = box.left - card.left + anchorX;
+            const left = Math.max(8, Math.min(x - tip.offsetWidth / 2, card.width - tip.offsetWidth - 8));
+            tip.style.left = left + 'px';
+            tip.style.top = (box.top - card.top - tip.offsetHeight - 8) + 'px';
+            $('tokenLive').textContent = `Week of ${weekLabel(w.start, true)}: ` +
+                TOKEN_SERIES.map((s) => `${s.label} ${(w[s.key] || 0).toLocaleString()}`).join(', ') + ` tokens.`;
+        }
+
+        function hideWeek() {
+            active = -1;
+            chart.classList.remove('has-focus');
+            chart.querySelectorAll('.bar').forEach((b) => b.classList.remove('on'));
+            tip.hidden = true;
+        }
+
+        let geometry = null;
+
+        function draw() {
+            const W = chart.clientWidth;
+            if (!W) return;
+            const H = 200;
+            const m = { top: 8, right: 4, bottom: 24, left: 40 };
+            const iw = W - m.left - m.right;
+            const ih = H - m.top - m.bottom;
+            const max = niceMax(Math.max(...weeks.map((w) => w.total)));
+            const y = (v) => m.top + ih - (v / max) * ih;
+            const band = iw / weeks.length;
+            const bw = Math.max(3, Math.min(22, band * 0.7));
+            const root = svg('svg', { viewBox: `0 0 ${W} ${H}`, height: H, 'aria-hidden': 'true' });
+
+            [0, max / 2, max].forEach((t) => {
+                root.appendChild(svg('line', { x1: m.left, x2: W - m.right, y1: y(t), y2: y(t), stroke: t ? 'rgba(125, 211, 252, 0.12)' : 'rgba(125, 211, 252, 0.35)' }));
+                const label = svg('text', { x: m.left - 8, y: y(t) + 4, 'text-anchor': 'end' });
+                label.textContent = fmtTokens(t);
+                root.appendChild(label);
+            });
+
+            let lastLabel = -10;
+            weeks.forEach((w, i) => {
+                const cx = m.left + band * i + band / 2;
+                const g = svg('g', { class: 'bar' });
+                let base = 0;
+                const drawn = TOKEN_SERIES.filter((s) => (w[s.key] || 0) > 0);
+                drawn.forEach((s, k) => {
+                    const v = w[s.key];
+                    const top = y(base + v);
+                    // 2px surface gap between stacked segments
+                    const bottom = y(base) - (k > 0 ? 2 : 0);
+                    const h = Math.max(0, bottom - top);
+                    const isTop = k === drawn.length - 1;
+                    g.appendChild(svg('path', { d: isTop ? topRounded(cx - bw / 2, top, bw, h, 4) : `M${cx - bw / 2},${top}h${bw}v${h}h${-bw}Z`, fill: s.color }));
+                    base += v;
+                });
+                root.appendChild(g);
+
+                const d = new Date(w.start + 'T12:00:00');
+                const prev = i > 0 ? new Date(weeks[i - 1].start + 'T12:00:00') : null;
+                // label each month at its first week; skip a partial month at the left edge
+                const monthStarts = prev ? prev.getMonth() !== d.getMonth() : d.getDate() <= 7;
+                if (monthStarts && i - lastLabel >= 3) {
+                    const label = svg('text', { x: cx, y: H - 6, 'text-anchor': 'middle' });
+                    label.textContent = d.toLocaleDateString(undefined, { month: 'short' });
+                    root.appendChild(label);
+                    lastLabel = i;
+                }
+            });
+
+            chart.replaceChildren(root);
+            geometry = { m, band };
+            if (active >= 0) showWeek(active, m.left + band * active + band / 2);
+        }
+
+        function indexAt(clientX) {
+            if (!geometry) return -1;
+            const x = clientX - chart.getBoundingClientRect().left - geometry.m.left;
+            const i = Math.floor(x / geometry.band);
+            return i >= 0 && i < weeks.length ? i : -1;
+        }
+
+        function pointAt(e) {
+            const i = indexAt(e.clientX);
+            if (i < 0) return hideWeek();
+            if (i !== active) showWeek(i, geometry.m.left + geometry.band * i + geometry.band / 2);
+        }
+        chart.addEventListener('pointermove', pointAt);
+        chart.addEventListener('pointerdown', pointAt); // taps on touch screens
+        chart.addEventListener('pointerleave', (e) => { if (e.pointerType === 'mouse') hideWeek(); });
+        chart.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
+                e.preventDefault();
+                const i = active < 0 ? weeks.length - 1 : Math.max(0, Math.min(weeks.length - 1, active + (e.key === 'ArrowRight' ? 1 : -1)));
+                showWeek(i, geometry.m.left + geometry.band * i + geometry.band / 2);
+            } else if (e.key === 'Escape') {
+                hideWeek();
+            }
+        });
+        chart.addEventListener('blur', hideWeek);
+
+        draw();
+        let lastW = chart.clientWidth;
+        new ResizeObserver(() => {
+            if (chart.clientWidth !== lastW) {
+                lastW = chart.clientWidth;
+                draw();
+            }
+        }).observe(chart);
+    }
+
+    whenNear($('tokenCard').parentElement, () => {
+        fetch('data/tokens.json', { cache: 'no-cache' })
+            .then((r) => (r.ok ? r.json() : null))
+            .then((data) => { if (data) renderTokens(data); })
+            .catch(() => {});
+    });
 })();

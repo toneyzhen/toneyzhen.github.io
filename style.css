@@ -3,7 +3,7 @@
     --page-bg: linear-gradient(180deg, #040a17 0%, #0a1830 55%, #0d1d38 100%);
     --text: #dce8f5;
     --muted: #a3b6cb;
-    --faint: #7f93ab;
+    --faint: #8fa3bb;
     --accent: #7dd3fc;
     --header-bg: rgba(6, 14, 30, 0.9);
     --menu-bg: rgba(6, 14, 30, 0.98);
@@ -66,6 +66,7 @@ nav {
     font-size: 28px;
     font-weight: bold;
     color: var(--accent);
+    text-decoration: none;
     display: flex;
     align-items: center;
     gap: 10px;
@@ -73,6 +74,7 @@ nav {
 
 .logo::before {
     content: "🐧";
+    content: "🐧" / ""; /* decorative: screen readers skip it */
     font-size: 36px;
 }
 
@@ -214,21 +216,34 @@ nav a:hover {
     letter-spacing: 0.5px;
 }
 
-.btn {
-    display: inline-block;
-    padding: 12px 30px;
-    background: linear-gradient(135deg, #0277bd 0%, #01579b 100%);
-    color: white;
-    text-decoration: none;
+.hero-content .hero-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    margin: 4px 0 26px;
+    padding: 8px 18px;
     border-radius: 50px;
-    font-weight: 600;
-    transition: transform 0.3s, box-shadow 0.3s;
-    animation: fadeInUp 1s ease 0.4s backwards;
+    border: 1px solid var(--ice-border);
+    background: rgba(13, 29, 56, 0.6);
+    color: var(--text);
+    font-size: 15px;
+    font-weight: 500;
 }
 
-.btn:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 10px 30px rgba(2, 119, 189, 0.3);
+.status-dot {
+    flex: 0 0 auto;
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: #2dd4bf;
+    box-shadow: 0 0 0 0 rgba(45, 212, 191, 0.6);
+    animation: status-pulse 2.4s ease-out infinite;
+}
+
+@keyframes status-pulse {
+    0%   { box-shadow: 0 0 0 0 rgba(45, 212, 191, 0.55); }
+    70%  { box-shadow: 0 0 0 9px rgba(45, 212, 191, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(45, 212, 191, 0); }
 }
 
 .snowflakes {
@@ -283,6 +298,7 @@ h2 {
 
 h2::after {
     content: "🐧";
+    content: "🐧" / "";
     display: block;
     font-size: 32px;
     margin-top: 10px;
@@ -293,12 +309,6 @@ h2::after {
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 30px;
     margin-top: 40px;
-}
-
-.project-card-link {
-    text-decoration: none;
-    color: inherit;
-    display: block;
 }
 
 .project-card {
@@ -349,9 +359,109 @@ h2::after {
     color: var(--accent);
 }
 
+.project-card {
+    display: flex;
+    flex-direction: column;
+}
+
+.project-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.project-tags + .project-link {
+    margin-top: auto;
+}
+
+.project-content .project-tags {
+    margin-bottom: 0;
+}
+
 .project-content p {
     color: var(--muted);
     margin-bottom: 15px;
+}
+
+.project-content .project-kind {
+    margin: -6px 0 12px;
+    color: var(--faint);
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+}
+
+.project-metrics {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 16px;
+}
+
+.project-metrics li {
+    padding: 6px 12px;
+    border-radius: 10px;
+    background: rgba(45, 212, 191, 0.1);
+    border: 1px solid rgba(45, 212, 191, 0.3);
+    color: var(--muted);
+    font-size: 12px;
+}
+
+.project-metrics strong {
+    display: block;
+    color: #5eead4;
+    font-size: 17px;
+    font-variant-numeric: tabular-nums;
+}
+
+.project-points {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 18px;
+}
+
+.project-points li {
+    position: relative;
+    padding-left: 18px;
+    color: var(--muted);
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.project-points li::before {
+    content: "❄";
+    content: "❄" / "";
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+    font-size: 11px;
+    top: 3px;
+}
+
+.project-link {
+    align-self: flex-start;
+    margin-top: auto;
+    padding-top: 16px;
+    color: var(--accent);
+    font-weight: 600;
+    font-size: 14px;
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.2s;
+}
+
+.project-link::after {
+    content: " ↗";
+    content: " ↗" / "";
+}
+
+.project-link:hover,
+.project-link:focus-visible {
+    border-bottom-color: var(--accent);
+    outline: none;
 }
 
 .project-tags {
@@ -454,6 +564,7 @@ footer {
 
 footer::before {
     content: "🐧🐧🐧";
+    content: "🐧🐧🐧" / "";
     display: block;
     font-size: 32px;
     margin-bottom: 10px;
@@ -597,6 +708,7 @@ footer::before {
 
 .experience-list li::before {
     content: "❄";
+    content: "❄" / "";
     position: absolute;
     left: 0;
     color: var(--accent);
@@ -643,23 +755,6 @@ footer::before {
     line-height: 1.6;
     flex-grow: 1;
     margin-bottom: 15px;
-}
-
-.course-meta {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding-top: 15px;
-    border-top: 2px solid var(--divider);
-}
-
-.course-year {
-    background: var(--chip-bg);
-    color: var(--chip-text);
-    padding: 5px 15px;
-    border-radius: 20px;
-    font-size: 13px;
-    font-weight: 600;
 }
 
 @keyframes fadeInUp {
@@ -1306,10 +1401,6 @@ a.log-meta:hover {
     gap: 8px;
     counter-reset: rank;
     min-height: 282px; /* the taller Tracks list, so switching tabs doesn't jump */
-}
-
-.top-list[hidden] {
-    display: none;
 }
 
 .top-list li {
@@ -1960,4 +2051,197 @@ a.log-meta:hover {
     .resume-pages {
         padding: 10px;
     }
+}
+
+/* ---------- Reduced motion: the older decorative animations ---------- */
+@media (prefers-reduced-motion: reduce) {
+    .penguin-hero,
+    .penguin-avatar,
+    .hero-content h1,
+    .hero-content p,
+    .status-dot {
+        animation: none;
+    }
+}
+
+/* ---------- Building with AI: weekly token chart ---------- */
+.log-card-wide {
+    grid-column: 1 / -1;
+}
+
+.log-card[hidden] {
+    display: none;
+}
+
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+}
+
+.token-stats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px 40px;
+}
+
+.token-stat strong {
+    display: block;
+    color: var(--text);
+    font-size: 26px;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    line-height: 1.2;
+}
+
+.token-stat span {
+    color: var(--muted);
+    font-size: 13px;
+}
+
+.token-legend {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 20px;
+    font-size: 13px;
+    color: var(--muted);
+}
+
+.token-legend li {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.token-legend i {
+    width: 12px;
+    height: 12px;
+    border-radius: 3px;
+}
+
+.token-legend b {
+    color: var(--text);
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+}
+
+.token-chart {
+    position: relative;
+    width: 100%;
+    border-radius: 8px;
+}
+
+.token-chart:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 4px;
+}
+
+.token-chart svg {
+    display: block;
+    width: 100%;
+    overflow: visible;
+}
+
+.token-chart text {
+    fill: var(--faint);
+    font-size: 11px;
+    font-variant-numeric: tabular-nums;
+}
+
+.token-chart .bar {
+    transition: opacity 0.15s;
+}
+
+.token-chart.has-focus .bar:not(.on) {
+    opacity: 0.45;
+}
+
+.token-tip {
+    position: absolute;
+    z-index: 3;
+    pointer-events: none;
+    min-width: 160px;
+    padding: 10px 12px;
+    border-radius: 10px;
+    border: 1px solid var(--ice-border);
+    background: rgba(6, 14, 30, 0.95);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+    font-size: 13px;
+    color: var(--text);
+}
+
+.token-tip strong {
+    display: block;
+    margin-bottom: 4px;
+}
+
+.token-tip div {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-variant-numeric: tabular-nums;
+}
+
+.token-tip i {
+    width: 10px;
+    height: 10px;
+    border-radius: 2px;
+}
+
+.token-tip span {
+    margin-left: auto;
+    padding-left: 12px;
+}
+
+#tokenCard {
+    position: relative;
+}
+
+.token-table summary {
+    cursor: pointer;
+    color: var(--accent);
+    font-size: 13px;
+    font-weight: 600;
+    width: fit-content;
+}
+
+.token-table .table-wrap {
+    overflow-x: auto;
+    max-height: 260px;
+    overflow-y: auto;
+    margin-top: 10px;
+}
+
+.token-table table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    font-variant-numeric: tabular-nums;
+}
+
+.token-table th,
+.token-table td {
+    padding: 6px 10px;
+    text-align: right;
+    border-bottom: 1px solid var(--divider);
+    color: var(--muted);
+    white-space: nowrap;
+}
+
+.token-table th:first-child,
+.token-table td:first-child {
+    text-align: left;
+}
+
+.token-table th {
+    color: var(--text);
+    font-weight: 600;
+    position: sticky;
+    top: 0;
+    background: var(--card-bg);
 }
