@@ -92,8 +92,8 @@
             const spine = el('button', 'shelf-book' + (book.reading ? ' reading' : ''));
             spine.type = 'button';
             spine.style.setProperty('--spine', spineColor(book));
-            spine.style.height = 118 + (hash(book.title) % 42) + 'px';
-            spine.style.width = Math.max(22, Math.min(40, Math.round((book.pages || 320) / 13))) + 'px';
+            spine.style.height = 70 + (hash(book.title) % 22) + '%'; // books scale with the shelf's height
+            spine.style.width = Math.max(24, Math.min(40, Math.round((book.pages || 320) / 12))) + 'px';
             spine.setAttribute('aria-label', `${book.title} by ${book.author}${book.reading ? ' (reading now)' : ''}`);
             spine.title = book.title;
             spine.appendChild(el('span', null, book.title));
@@ -870,22 +870,6 @@
             li.appendChild(el('b', null, fmtTokens(sums[s.key])));
             legend.appendChild(li);
         });
-
-        const table = $('tokenTable');
-        table.replaceChildren();
-        const head = el('tr');
-        ['Week of', ...TOKEN_SERIES.map((s) => s.label), 'Total'].forEach((t) => head.appendChild(el('th', null, t)));
-        const thead = el('thead');
-        thead.appendChild(head);
-        const tbody = el('tbody');
-        [...weeks].reverse().forEach((w) => {
-            const tr = el('tr');
-            tr.appendChild(el('td', null, weekLabel(w.start, true)));
-            TOKEN_SERIES.forEach((s) => tr.appendChild(el('td', null, (w[s.key] || 0).toLocaleString())));
-            tr.appendChild(el('td', null, w.total.toLocaleString()));
-            tbody.appendChild(tr);
-        });
-        table.append(thead, tbody);
 
         const chart = $('tokenChart');
         const tip = $('tokenTip');
