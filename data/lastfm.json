@@ -1,28 +1,28 @@
 {
-  "updated": "2026-11-12T02:10+00:00",
+  "updated": "2026-11-12T21:55+00:00",
   "recent": {
-    "name": "Courtesy Call",
-    "artist": "Thousand Foot Krutch",
-    "art": "https://lastfm-img.freetls.fastly.net/i/u/300x300/6c3e3689e2a776c58407a616dabd89de.jpg",
+    "name": "Eldest Daughter",
+    "artist": "Taylor Swift",
+    "art": "https://lastfm-img.freetls.fastly.net/i/u/300x300/837e4d37b0c4a0a65eb12177e1afb8ee.png",
     "nowPlaying": false,
-    "playedAt": 1794448968
+    "playedAt": 1794520529
   },
   "topArtists": [
     {
       "name": "Metro Boomin",
-      "plays": 12
+      "plays": 13
     },
     {
       "name": "Taylor Swift",
-      "plays": 9
+      "plays": 13
+    },
+    {
+      "name": "Olivia Rodrigo",
+      "plays": 10
     },
     {
       "name": "Tory Lanez",
       "plays": 9
-    },
-    {
-      "name": "Olivia Rodrigo",
-      "plays": 7
     },
     {
       "name": "Yeat",
@@ -33,31 +33,31 @@
     {
       "name": "Space Cadet (feat. Gunna)",
       "artist": "Metro Boomin",
-      "plays": 11
+      "plays": 12
     },
     {
-      "name": "My Nigga",
-      "artist": "YG",
-      "plays": 4
-    },
-    {
-      "name": "Heather",
-      "artist": "Conan Gray",
-      "plays": 3
+      "name": "852 Hz",
+      "artist": "Puretones",
+      "plays": 6
     },
     {
       "name": "Money In The Grave (Drake ft. Rick Ross)",
       "artist": "Drake",
-      "plays": 3
+      "plays": 5
     },
     {
-      "name": "let me know (I wonder why freestyle)",
-      "artist": "Juice WRLD",
-      "plays": 3
+      "name": "POPSTAR (feat. Drake)",
+      "artist": "DJ Khaled",
+      "plays": 4
+    },
+    {
+      "name": "Not Like Us",
+      "artist": "Kendrick Lamar",
+      "plays": 4
     }
   ],
   "stats": {
-    "plays": 171,
+    "plays": 238,
     "since": 1794423867
   }
 }
