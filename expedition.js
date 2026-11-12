@@ -145,10 +145,13 @@
         const when = book.readAt ? 'Finished ' + formatMonth(book.readAt) : '';
         const details = [when, book.pages ? book.pages + ' pages' : ''].filter(Boolean).join(' · ');
         if (details) back.appendChild(el('span', null, details));
-        back.appendChild(el('p', 'review', book.review || 'No review yet. Ask me about it!'));
+        back.appendChild(el('p', 'review', book.review || 'No notes yet. Ask me about it!'));
 
         $('bookTitle').textContent = book.title;
         $('bookAuthor').textContent = book.author;
+        $('bookNotes').hidden = !book.review;
+        $('bookNotesText').textContent = book.review || '';
+        $('bookNotes').scrollTop = 0;
         $('bookPrev').disabled = bookIndex === 0;
         $('bookNext').disabled = bookIndex === books.length - 1;
     }
