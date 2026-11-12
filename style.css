@@ -2245,3 +2245,20 @@ a.log-meta:hover {
     top: 0;
     background: var(--card-bg);
 }
+
+/* The hero's 100px side padding left phones only ~120px for content */
+@media (max-width: 768px) {
+    .hero {
+        padding: 80px max(20px, env(safe-area-inset-left, 0px)) 60px;
+    }
+
+    .hero-content .hero-status {
+        font-size: 14px;
+        padding: 8px 14px;
+    }
+
+    .penguin-hero img {
+        width: 55%;
+        height: auto;
+    }
+}
