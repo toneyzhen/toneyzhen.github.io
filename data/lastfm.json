@@ -1,39 +1,49 @@
 {
-  "updated": "2026-11-12T21:55+00:00",
+  "updated": "2026-11-13T21:37+00:00",
   "recent": {
-    "name": "Eldest Daughter",
-    "artist": "Taylor Swift",
-    "art": "https://lastfm-img.freetls.fastly.net/i/u/300x300/837e4d37b0c4a0a65eb12177e1afb8ee.png",
+    "name": "Supernal",
+    "artist": "Forhill",
+    "art": "https://lastfm-img.freetls.fastly.net/i/u/300x300/325d2f86400b55ea87a67d52a72c5b7c.jpg",
     "nowPlaying": false,
-    "playedAt": 1794520529
+    "playedAt": 1794601193
   },
   "topArtists": [
     {
-      "name": "Metro Boomin",
-      "plays": 13
+      "name": "Faouzia",
+      "plays": 24
     },
     {
       "name": "Taylor Swift",
+      "plays": 21
+    },
+    {
+      "name": "Home",
+      "plays": 18
+    },
+    {
+      "name": "Voyage",
+      "plays": 16
+    },
+    {
+      "name": "Metro Boomin",
       "plays": 13
-    },
-    {
-      "name": "Olivia Rodrigo",
-      "plays": 10
-    },
-    {
-      "name": "Tory Lanez",
-      "plays": 9
-    },
-    {
-      "name": "Yeat",
-      "plays": 7
     }
   ],
   "topTracks": [
     {
+      "name": "Unethical",
+      "artist": "Faouzia",
+      "plays": 24
+    },
+    {
       "name": "Space Cadet (feat. Gunna)",
       "artist": "Metro Boomin",
       "plays": 12
+    },
+    {
+      "name": "Eldest Daughter",
+      "artist": "Taylor Swift",
+      "plays": 8
     },
     {
       "name": "852 Hz",
@@ -44,20 +54,10 @@
       "name": "Money In The Grave (Drake ft. Rick Ross)",
       "artist": "Drake",
       "plays": 5
-    },
-    {
-      "name": "POPSTAR (feat. Drake)",
-      "artist": "DJ Khaled",
-      "plays": 4
-    },
-    {
-      "name": "Not Like Us",
-      "artist": "Kendrick Lamar",
-      "plays": 4
     }
   ],
   "stats": {
-    "plays": 238,
+    "plays": 398,
     "since": 1794423867
   }
 }
