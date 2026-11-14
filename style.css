@@ -606,7 +606,8 @@ footer::before {
 
 .about-content {
     display: grid;
-    grid-template-columns: 250px 258px 1fr;
+    /* the bio takes exactly half, so the divider on its left edge sits on the page's centre line */
+    grid-template-columns: minmax(0, 1fr) 250px 50%;
     gap: 36px;
     align-items: center;
     margin: 0 auto;
@@ -618,8 +619,15 @@ footer::before {
     flex-direction: column;
     justify-content: center;
     gap: 18px;
-    padding: 0 34px 0 0;
-    border-right: 2px solid var(--divider);
+}
+
+.about-text {
+    align-self: stretch;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-left: 44px;
+    border-left: 2px solid var(--divider);
 }
 
 .about-edu h3 {
@@ -665,18 +673,15 @@ footer::before {
     margin-top: 6px;
 }
 
-@media (max-width: 1050px) {
+@media (max-width: 1150px) {
     .about-content {
         grid-template-columns: 250px 1fr;
     }
 
-    .about-edu {
-        padding-right: 0;
-        border-right: 0;
-    }
-
     .about-text {
         grid-column: 1 / -1;
+        padding-left: 0;
+        border-left: 0;
     }
 }
 
