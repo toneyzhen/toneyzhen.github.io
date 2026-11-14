@@ -1,39 +1,39 @@
 {
-  "updated": "2026-11-13T21:37+00:00",
+  "updated": "2026-11-14T20:05+00:00",
   "recent": {
-    "name": "Supernal",
-    "artist": "Forhill",
-    "art": "https://lastfm-img.freetls.fastly.net/i/u/300x300/325d2f86400b55ea87a67d52a72c5b7c.jpg",
+    "name": "Space Cadet (feat. Gunna)",
+    "artist": "Metro Boomin",
+    "art": "https://lastfm-img.freetls.fastly.net/i/u/300x300/2ff8d65302db34c43947fa364e6096d6.gif",
     "nowPlaying": false,
-    "playedAt": 1794601193
+    "playedAt": 1794686702
   },
   "topArtists": [
     {
+      "name": "Olivia Rodrigo",
+      "plays": 34
+    },
+    {
       "name": "Faouzia",
-      "plays": 24
+      "plays": 26
     },
     {
       "name": "Taylor Swift",
-      "plays": 21
+      "plays": 23
     },
     {
       "name": "Home",
       "plays": 18
     },
     {
-      "name": "Voyage",
+      "name": "Tory Lanez",
       "plays": 16
-    },
-    {
-      "name": "Metro Boomin",
-      "plays": 13
     }
   ],
   "topTracks": [
     {
       "name": "Unethical",
       "artist": "Faouzia",
-      "plays": 24
+      "plays": 26
     },
     {
       "name": "Space Cadet (feat. Gunna)",
@@ -41,23 +41,23 @@
       "plays": 12
     },
     {
+      "name": "cigarette smoke",
+      "artist": "Olivia Rodrigo",
+      "plays": 8
+    },
+    {
       "name": "Eldest Daughter",
       "artist": "Taylor Swift",
       "plays": 8
     },
     {
-      "name": "852 Hz",
-      "artist": "Puretones",
-      "plays": 6
-    },
-    {
       "name": "Money In The Grave (Drake ft. Rick Ross)",
       "artist": "Drake",
-      "plays": 5
+      "plays": 6
     }
   ],
   "stats": {
-    "plays": 398,
+    "plays": 571,
     "since": 1794423867
   }
 }
