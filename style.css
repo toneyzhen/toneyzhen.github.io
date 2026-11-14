@@ -505,7 +505,7 @@ h2::after {
 }
 
 .skills-list {
-    max-width: 900px;
+    max-width: 1000px;
     margin: 0 auto;
     background: var(--card-bg);
     border: 2px solid var(--ice-border);
@@ -515,7 +515,7 @@ h2::after {
 
 .skill-row {
     display: grid;
-    grid-template-columns: 170px 1fr;
+    grid-template-columns: 160px 1fr;
     gap: 8px 20px;
     align-items: baseline;
     padding: 14px 0;
@@ -612,7 +612,7 @@ footer::before {
 
 .about-content {
     display: grid;
-    grid-template-columns: 250px 270px 1fr;
+    grid-template-columns: 250px 258px 1fr;
     gap: 36px;
     align-items: center;
     margin: 0 auto;
@@ -624,7 +624,7 @@ footer::before {
     flex-direction: column;
     justify-content: center;
     gap: 18px;
-    padding: 0 36px 0 0;
+    padding: 0 34px 0 0;
     border-right: 2px solid var(--divider);
 }
 
