@@ -45,12 +45,12 @@ body {
 header {
     background: var(--header-bg);
     backdrop-filter: blur(10px);
-    padding: 20px 0;
+    padding: 10px 0;
     position: sticky;
     top: 0;
     z-index: 100;
     box-shadow: 0 2px 20px rgba(0,0,0,0.1);
-    border-bottom: 3px solid var(--accent);
+    border-bottom: 2px solid var(--accent);
 }
 
 nav {
@@ -63,7 +63,7 @@ nav {
 
 .logo {
     margin-right: auto;
-    font-size: 28px;
+    font-size: 22px;
     font-weight: bold;
     color: var(--accent);
     text-decoration: none;
@@ -75,7 +75,7 @@ nav {
 .logo::before {
     content: "🐧";
     content: "🐧" / ""; /* decorative: screen readers skip it */
-    font-size: 36px;
+    font-size: 26px;
 }
 
 nav ul {
@@ -98,7 +98,7 @@ nav a:hover {
 .nav-resume-btn {
     background: linear-gradient(135deg, #0277bd 0%, #01579b 100%);
     color: white !important;
-    padding: 8px 20px;
+    padding: 6px 18px;
     border-radius: 50px;
     font-weight: 600;
     transition: transform 0.3s, box-shadow 0.3s;
@@ -173,7 +173,7 @@ nav a:hover {
 }
 
 .penguin-hero img {
-    width: 240px;
+    width: 200px;
     height: auto;
     object-fit: cover;
     clip-path: inset(5% 0 0 0); /* crop out top 5% of the image */
@@ -267,7 +267,7 @@ nav a:hover {
 section {
     padding: 52px 0 60px;
     /* keep headings clear of the sticky header on nav jumps; script.js measures the real header height */
-    scroll-margin-top: calc(var(--header-h, 101px) - 16px);
+    scroll-margin-top: calc(var(--header-h, 64px) - 16px);
     background: var(--section-bg);
     position: relative;
     z-index: 2;
@@ -2201,6 +2201,6 @@ a.log-meta:hover {
     }
 
     .penguin-hero img {
-        width: 180px;
+        width: 150px;
     }
 }
