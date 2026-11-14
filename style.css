@@ -150,7 +150,7 @@ nav a:hover {
     align-items: center;
     justify-content: center;
     text-align: center;
-    padding: 70px 100px 80px;
+    padding: 36px 100px 64px;
     position: relative;
     overflow: hidden;
 }
@@ -167,12 +167,13 @@ nav a:hover {
 
 .penguin-hero {
     font-size: 120px;
-    margin-bottom: 20px;
+    line-height: 0; /* the emoji-sized font left a tall empty line under the photo */
+    margin-bottom: 22px;
     animation: waddle 2s ease-in-out infinite;
 }
 
 .penguin-hero img {
-    width: 170px;
+    width: 240px;
     height: auto;
     object-fit: cover;
     clip-path: inset(5% 0 0 0); /* crop out top 5% of the image */
@@ -187,7 +188,7 @@ nav a:hover {
 
 .hero-content h1 {
     font-size: 56px;
-    margin-bottom: 20px;
+    margin-bottom: 14px;
     color: var(--accent);
     animation: fadeInUp 1s ease;
 }
@@ -2203,7 +2204,7 @@ a.log-meta:hover {
 /* The hero's 100px side padding left phones only ~120px for content */
 @media (max-width: 768px) {
     .hero {
-        padding: 50px max(20px, env(safe-area-inset-left, 0px)) 60px;
+        padding: 30px max(20px, env(safe-area-inset-left, 0px)) 56px;
     }
 
     .hero-content .hero-status {
@@ -2212,6 +2213,6 @@ a.log-meta:hover {
     }
 
     .penguin-hero img {
-        width: 130px;
+        width: 180px;
     }
 }
