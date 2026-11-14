@@ -1,3 +1,14 @@
+// Tell the CSS how tall the sticky header really is (it grows when the nav wraps),
+// so jumping to a section never leaves its title underneath it
+(function () {
+    const header = document.querySelector('header');
+    if (!header) return;
+    const sync = () => document.documentElement.style.setProperty('--header-h', header.offsetHeight + 'px');
+    sync();
+    if ('ResizeObserver' in window) new ResizeObserver(sync).observe(header);
+    else window.addEventListener('resize', sync);
+})();
+
 // Smooth scrolling for navigation links
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {

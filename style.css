@@ -266,7 +266,8 @@ nav a:hover {
 
 section {
     padding: 52px 0 60px;
-    scroll-margin-top: 84px; /* keep headings clear of the sticky header on nav jumps */
+    /* keep headings clear of the sticky header on nav jumps; script.js measures the real header height */
+    scroll-margin-top: calc(var(--header-h, 101px) - 16px);
     background: var(--section-bg);
     position: relative;
     z-index: 2;
