@@ -619,6 +619,8 @@ footer::before {
     flex-direction: column;
     justify-content: center;
     gap: 18px;
+    position: relative;
+    left: 14px; /* nudged toward the divider: its ragged right edge made that gap look wider */
 }
 
 .about-text {
@@ -676,6 +678,10 @@ footer::before {
 @media (max-width: 1150px) {
     .about-content {
         grid-template-columns: 250px 1fr;
+    }
+
+    .about-edu {
+        left: 0;
     }
 
     .about-text {
