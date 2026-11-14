@@ -208,14 +208,6 @@ nav a:hover {
     color: var(--faint);
 }
 
-.hero-subtitle {
-    font-size: 20px !important;
-    font-weight: 600;
-    color: var(--accent) !important;
-    margin-bottom: 10px !important;
-    letter-spacing: 0.5px;
-}
-
 .hero-content .hero-status {
     display: inline-flex;
     align-items: center;
@@ -272,7 +264,7 @@ nav a:hover {
 }
 
 section {
-    padding: 80px 0;
+    padding: 52px 0 60px;
     background: var(--section-bg);
     position: relative;
     z-index: 2;
@@ -289,9 +281,9 @@ main section:nth-child(even) {
 }
 
 h2 {
-    font-size: 42px;
+    font-size: 36px;
     text-align: center;
-    margin-bottom: 50px;
+    margin-bottom: 28px;
     color: var(--accent);
     position: relative;
 }
@@ -300,15 +292,14 @@ h2::after {
     content: "🐧";
     content: "🐧" / "";
     display: block;
-    font-size: 32px;
-    margin-top: 10px;
+    font-size: 24px;
+    margin-top: 2px;
 }
 
 .projects-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 30px;
-    margin-top: 40px;
 }
 
 .project-card {
@@ -415,12 +406,48 @@ h2::after {
     font-variant-numeric: tabular-nums;
 }
 
+.project-details {
+    margin-bottom: 16px;
+}
+
+.project-details summary {
+    display: inline-block;
+    cursor: pointer;
+    color: var(--accent);
+    font-size: 14px;
+    font-weight: 600;
+    list-style: none;
+    padding: 4px 0;
+}
+
+.project-details summary::-webkit-details-marker {
+    display: none;
+}
+
+.project-details summary::before {
+    content: "+";
+    content: "+" / "";
+    display: inline-block;
+    width: 16px;
+}
+
+.project-details[open] summary::before {
+    content: "−";
+    content: "−" / "";
+}
+
+.project-details summary:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+    border-radius: 4px;
+}
+
 .project-points {
     list-style: none;
     display: flex;
     flex-direction: column;
     gap: 8px;
-    margin-bottom: 18px;
+    margin-top: 10px;
 }
 
 .project-points li {
@@ -480,35 +507,42 @@ h2::after {
     border: 1px solid var(--ice-border);
 }
 
-.skills-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 20px;
-    margin-top: 40px;
-}
-
-.skill-card {
+.skills-list {
+    max-width: 900px;
+    margin: 0 auto;
     background: var(--card-bg);
-    padding: 30px;
-    border-radius: 15px;
-    text-align: center;
-    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
-    transition: transform 0.3s;
     border: 2px solid var(--ice-border);
+    border-radius: 15px;
+    padding: 6px 25px;
 }
 
-.skill-card:hover {
-    transform: translateY(-5px);
-    border-color: var(--accent);
+.skill-row {
+    display: grid;
+    grid-template-columns: 170px 1fr;
+    gap: 8px 20px;
+    align-items: baseline;
+    padding: 14px 0;
 }
 
-.skill-icon {
-    font-size: 48px;
-    margin-bottom: 15px;
+.skill-row + .skill-row {
+    border-top: 1px solid var(--divider);
 }
 
-.skill-card h3 {
+.skill-row dt {
     color: var(--accent);
+    font-weight: 600;
+}
+
+.skill-row dd {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+@media (max-width: 600px) {
+    .skill-row {
+        grid-template-columns: 1fr;
+    }
 }
 
 .contact-links {
@@ -625,7 +659,6 @@ footer::before {
     display: grid;
     grid-template-columns: 1fr;
     gap: 25px;
-    margin-top: 40px;
     max-width: 900px;
     margin-left: auto;
     margin-right: auto;

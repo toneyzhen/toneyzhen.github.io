@@ -56,7 +56,6 @@
         <div class="hero-content">
             <div class="penguin-hero"><img src="images/thumbsup.jpg" alt="Toney giving a thumbs-up" width="480" height="640" fetchpriority="high"></div>
             <h1>Hi, I'm Toney Zhen</h1>
-            <p class="hero-subtitle">AI/ML Engineer & Researcher</p>
             <p class="hero-status"><span class="status-dot" aria-hidden="true"></span>Open to full-time ML engineering roles · M.S. in AI at SJSU, graduating 2027</p>
             <br>
             <i>"Innovation needs a lot of experimentation, experimentation needs exploration, explorations will result in failures. If you do not have tolerance for failures, you won't succeed."</i>
@@ -195,11 +194,14 @@
                             <li><strong>0.84 → 0.99</strong> validation AUC</li>
                             <li><strong>2</strong> datasets</li>
                         </ul>
-                        <ul class="project-points">
-                            <li>Fine-tuned ResNet and EfficientNet CNNs as baselines for detecting synthetic images</li>
-                            <li>Built and tuned ConvNeXt-Tiny, MaxViT and dual-branch MaxViT models, raising in-distribution AUC from 0.84 to 0.99</li>
-                            <li>Used cross-dataset tests and Grad-CAM to find where the models failed on unseen data</li>
-                        </ul>
+                        <details class="project-details">
+                            <summary>How I built it</summary>
+                            <ul class="project-points">
+                                <li>Fine-tuned ResNet and EfficientNet CNNs as baselines for detecting synthetic images</li>
+                                <li>Built and tuned ConvNeXt-Tiny, MaxViT and dual-branch MaxViT models, raising in-distribution AUC from 0.84 to 0.99</li>
+                                <li>Used cross-dataset tests and Grad-CAM to find where the models failed on unseen data</li>
+                            </ul>
+                        </details>
                         <div class="project-tags">
                             <span class="tag">Python</span>
                             <span class="tag">PyTorch</span>
@@ -222,11 +224,14 @@
                             <li><strong>~9,000</strong> requests/min</li>
                             <li><strong>20,000+</strong> movies</li>
                         </ul>
-                        <ul class="project-points">
-                            <li>Built sessions, fuzzy-search autocomplete, advanced search and secure login, with prepared statements against SQL injection</li>
-                            <li>Deployed on AWS EC2 with Docker, a Kubernetes cluster, MySQL replication and load balancing</li>
-                            <li>Sustained about 9,000 requests per minute in Apache JMeter load tests</li>
-                        </ul>
+                        <details class="project-details">
+                            <summary>How I built it</summary>
+                            <ul class="project-points">
+                                <li>Built sessions, fuzzy-search autocomplete, advanced search and secure login, with prepared statements against SQL injection</li>
+                                <li>Deployed on AWS EC2 with Docker, a Kubernetes cluster, MySQL replication and load balancing</li>
+                                <li>Sustained about 9,000 requests per minute in Apache JMeter load tests</li>
+                            </ul>
+                        </details>
                         <div class="project-tags">
                             <span class="tag">Java</span>
                             <span class="tag">Jakarta Servlet</span>
@@ -251,11 +256,14 @@
                             <li><strong>97.6%</strong> recall</li>
                             <li><strong>300,000</strong> examples</li>
                         </ul>
-                        <ul class="project-points">
-                            <li>Built the PII guardrail that blocks personal information before it reaches the LLM, comparing classifiers on 300,000 examples</li>
-                            <li>Reached 92.9% accuracy and 96.1% F1 by replacing TF-IDF with text embeddings and PCA, nearly halving training time</li>
-                            <li>Coordinated four complementary input and output guardrails around shared precision and recall targets</li>
-                        </ul>
+                        <details class="project-details">
+                            <summary>How I built it</summary>
+                            <ul class="project-points">
+                                <li>Built the PII guardrail that blocks personal information before it reaches the LLM, comparing classifiers on 300,000 examples</li>
+                                <li>Reached 92.9% accuracy and 96.1% F1 by replacing TF-IDF with text embeddings and PCA, nearly halving training time</li>
+                                <li>Coordinated four complementary input and output guardrails around shared precision and recall targets</li>
+                            </ul>
+                        </details>
                         <div class="project-tags">
                             <span class="tag">Python</span>
                             <span class="tag">Scikit-learn</span>
@@ -274,28 +282,24 @@
     <section id="skills">
         <div class="container">
             <h2>Skills & Expertise</h2>
-            <div class="skills-grid">
-                <div class="skill-card">
-                    <div class="skill-icon" aria-hidden="true">💻</div>
-                    <h3>Programming Languages</h3>
-                    <p>Python, Java, JavaScript, C, C++, SQL</p>
+            <dl class="skills-list">
+                <div class="skill-row">
+                    <dt>Languages</dt>
+                    <dd><span class="tag">Python</span><span class="tag">Java</span><span class="tag">JavaScript</span><span class="tag">C</span><span class="tag">C++</span><span class="tag">SQL</span></dd>
                 </div>
-                <div class="skill-card">
-                    <div class="skill-icon" aria-hidden="true">🤖</div>
-                    <h3>AI/ML</h3>
-                    <p>PyTorch, torchvision, Scikit-learn, NumPy, Pandas, Matplotlib</p>
+                <div class="skill-row">
+                    <dt>AI/ML</dt>
+                    <dd><span class="tag">PyTorch</span><span class="tag">torchvision</span><span class="tag">Scikit-learn</span><span class="tag">NumPy</span><span class="tag">Pandas</span><span class="tag">Matplotlib</span></dd>
                 </div>
-                <div class="skill-card">
-                    <div class="skill-icon" aria-hidden="true">⚛️</div>
-                    <h3>Frameworks & Tools</h3>
-                    <p>Django, Flask, Node.js, React, JUnit, Git, Docker, Kubernetes, AWS, VS Code</p>
+                <div class="skill-row">
+                    <dt>Frameworks &amp; Tools</dt>
+                    <dd><span class="tag">Django</span><span class="tag">Flask</span><span class="tag">Node.js</span><span class="tag">React</span><span class="tag">JUnit</span><span class="tag">Git</span><span class="tag">Docker</span><span class="tag">Kubernetes</span><span class="tag">AWS</span><span class="tag">VS Code</span></dd>
                 </div>
-                <div class="skill-card">
-                    <div class="skill-icon" aria-hidden="true">🐧</div>
-                    <h3>Waddling</h3>
-                    <p>Expert Level</p>
+                <div class="skill-row">
+                    <dt>Waddling</dt>
+                    <dd><span class="tag">Expert level 🐧</span></dd>
                 </div>
-            </div>
+            </dl>
         </div>
         <div class="ice-shelf"></div>
     </section>
