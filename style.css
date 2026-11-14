@@ -145,12 +145,12 @@ nav a:hover {
 }
 
 .hero {
-    min-height: 90vh;
+    min-height: 0;
     display: flex;
     align-items: center;
     justify-content: center;
     text-align: center;
-    padding: 95px 100px;
+    padding: 70px 100px 80px;
     position: relative;
     overflow: hidden;
 }
@@ -172,8 +172,8 @@ nav a:hover {
 }
 
 .penguin-hero img {
-    width: 20%;
-    height: 20%;
+    width: 170px;
+    height: auto;
     object-fit: cover;
     clip-path: inset(5% 0 0 0); /* crop out top 5% of the image */
 }
@@ -361,10 +361,6 @@ h2::after {
     flex-direction: column;
 }
 
-.project-tags + .project-link {
-    margin-top: auto;
-}
-
 .project-content .project-tags {
     margin-bottom: 0;
 }
@@ -447,7 +443,7 @@ h2::after {
     display: flex;
     flex-direction: column;
     gap: 8px;
-    margin-top: 10px;
+    margin: 10px 0 14px;
 }
 
 .project-points li {
@@ -2207,7 +2203,7 @@ a.log-meta:hover {
 /* The hero's 100px side padding left phones only ~120px for content */
 @media (max-width: 768px) {
     .hero {
-        padding: 80px max(20px, env(safe-area-inset-left, 0px)) 60px;
+        padding: 50px max(20px, env(safe-area-inset-left, 0px)) 60px;
     }
 
     .hero-content .hero-status {
@@ -2216,7 +2212,6 @@ a.log-meta:hover {
     }
 
     .penguin-hero img {
-        width: 55%;
-        height: auto;
+        width: 130px;
     }
 }
