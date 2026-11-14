@@ -19,7 +19,7 @@
     <link rel="icon" href="favicon.ico" sizes="any">
     <link rel="icon" href="favicon.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="apple-touch-icon.png">
-    <link rel="stylesheet" href="style.css?v=6">
+    <link rel="stylesheet" href="style.css?v=7">
 </head>
 <body>
     <div class="snowflakes" id="snowflakes" aria-hidden="true"></div>
@@ -340,20 +340,10 @@
                 </article>
 
 
-                <article class="log-card log-card-wide" id="tokenCard" hidden>
-                    <div class="log-card-head">
-                        <div>
-                            <h3>Building with AI</h3>
-                            <p class="log-hint">Tokens per week in Claude Code, by model</p>
-                        </div>
-                        <span class="log-meta" id="tokenMeta"></span>
-                    </div>
-                    <div class="token-stats" id="tokenStats"></div>
-                    <ul class="token-legend" id="tokenLegend"></ul>
-                    <div class="token-chart" id="tokenChart" tabindex="0" role="group" aria-roledescription="chart" aria-label="Weekly token chart. Use the left and right arrow keys to read each week." aria-describedby="tokenLive"></div>
-                    <div class="token-tip" id="tokenTip" hidden></div>
-                    <p class="visually-hidden" id="tokenLive" aria-live="polite"></p>
-                    <p class="log-footnote">Counts tokens sent, written to context and generated. Cached context Claude re-reads each turn isn't counted.</p>
+                <article class="log-card log-card-wide token-card" id="tokenCard" hidden>
+                    <h3>Building with AI</h3>
+                    <p class="token-total"><strong id="tokenTotal"></strong> Claude tokens used in the past month</p>
+                    <span class="log-meta" id="tokenMeta"></span>
                 </article>
             </div>
         </div>
@@ -452,6 +442,6 @@
     </footer>
 
     <script src="script.js?v=2"></script>
-    <script src="expedition.js"></script>
+    <script src="expedition.js?v=2"></script>
 </body>
 </html>

@@ -2140,7 +2140,7 @@ a.log-meta:hover {
     }
 }
 
-/* ---------- Building with AI: weekly token chart ---------- */
+/* ---------- Building with AI: tokens in the past month ---------- */
 .log-card-wide {
     grid-column: 1 / -1;
 }
@@ -2159,123 +2159,34 @@ a.log-meta:hover {
     white-space: nowrap;
 }
 
-.token-stats {
-    display: flex;
+.token-card {
+    flex-direction: row;
     flex-wrap: wrap;
-    gap: 12px 40px;
+    align-items: baseline;
+    gap: 6px 20px;
+    padding: 16px 22px;
 }
 
-.token-stat strong {
-    display: block;
+.token-card h3 {
+    color: var(--accent);
+    font-size: 20px;
+}
+
+.token-total {
+    color: var(--muted);
+    font-size: 15px;
+}
+
+.token-total strong {
     color: var(--text);
-    font-size: 26px;
+    font-size: 24px;
     font-weight: 700;
     font-variant-numeric: tabular-nums;
-    line-height: 1.2;
+    margin-right: 4px;
 }
 
-.token-stat span {
-    color: var(--muted);
-    font-size: 13px;
-}
-
-.token-legend {
-    list-style: none;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px 20px;
-    font-size: 13px;
-    color: var(--muted);
-}
-
-.token-legend li {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.token-legend i {
-    width: 12px;
-    height: 12px;
-    border-radius: 3px;
-}
-
-.token-legend b {
-    color: var(--text);
-    font-weight: 600;
-    font-variant-numeric: tabular-nums;
-}
-
-.token-chart {
-    position: relative;
-    width: 100%;
-    border-radius: 8px;
-}
-
-.token-chart:focus-visible {
-    outline: 2px solid var(--accent);
-    outline-offset: 4px;
-}
-
-.token-chart svg {
-    display: block;
-    width: 100%;
-    overflow: visible;
-}
-
-.token-chart text {
-    fill: var(--faint);
-    font-size: 11px;
-    font-variant-numeric: tabular-nums;
-}
-
-.token-chart .bar {
-    transition: opacity 0.15s;
-}
-
-.token-chart.has-focus .bar:not(.on) {
-    opacity: 0.45;
-}
-
-.token-tip {
-    position: absolute;
-    z-index: 3;
-    pointer-events: none;
-    min-width: 160px;
-    padding: 10px 12px;
-    border-radius: 10px;
-    border: 1px solid var(--ice-border);
-    background: rgba(6, 14, 30, 0.95);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
-    font-size: 13px;
-    color: var(--text);
-}
-
-.token-tip strong {
-    display: block;
-    margin-bottom: 4px;
-}
-
-.token-tip div {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-variant-numeric: tabular-nums;
-}
-
-.token-tip i {
-    width: 10px;
-    height: 10px;
-    border-radius: 2px;
-}
-
-.token-tip span {
+.token-card .log-meta {
     margin-left: auto;
-    padding-left: 12px;
-}
-
-#tokenCard {
-    position: relative;
 }
 
 /* The hero's 100px side padding left phones only ~120px for content */
