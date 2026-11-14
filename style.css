@@ -612,11 +612,78 @@ footer::before {
 
 .about-content {
     display: grid;
-    grid-template-columns: 300px 1fr;
-    gap: 50px;
+    grid-template-columns: 250px 270px 1fr;
+    gap: 36px;
     align-items: center;
-    max-width: 900px;
     margin: 0 auto;
+}
+
+.about-edu {
+    align-self: stretch;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 18px;
+    padding: 0 36px 0 0;
+    border-right: 2px solid var(--divider);
+}
+
+.about-edu h3 {
+    color: var(--accent);
+    font-size: 22px;
+}
+
+.edu-item + .edu-item {
+    padding-top: 18px;
+    border-top: 1px solid var(--divider);
+}
+
+.edu-item h4 {
+    color: var(--text);
+    font-size: 16px;
+    line-height: 1.35;
+}
+
+.edu-school {
+    color: var(--muted);
+    font-weight: 600;
+    font-size: 14px;
+    margin-top: 2px;
+}
+
+.edu-meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px 10px;
+    margin: 8px 0;
+    color: var(--faint);
+    font-size: 13px;
+}
+
+.edu-detail {
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+.edu-detail + .edu-detail {
+    margin-top: 6px;
+}
+
+@media (max-width: 1050px) {
+    .about-content {
+        grid-template-columns: 250px 1fr;
+    }
+
+    .about-edu {
+        padding-right: 0;
+        border-right: 0;
+    }
+
+    .about-text {
+        grid-column: 1 / -1;
+    }
 }
 
 .about-image {
@@ -627,6 +694,7 @@ footer::before {
 
 .penguin-avatar {
     font-size: 200px;
+    line-height: 0; /* the emoji-sized font left a tall empty line under the photo */
     animation: float 3s ease-in-out infinite;
 }
 
@@ -642,10 +710,10 @@ footer::before {
 }
 
 .about-text p {
-    margin-bottom: 20px;
+    margin-bottom: 16px;
     color: var(--muted);
-    font-size: 17px;
-    line-height: 1.8;
+    font-size: 16px;
+    line-height: 1.7;
 }
 
 .about-text p:last-child {
@@ -744,11 +812,6 @@ footer::before {
     color: var(--accent);
 }
 
-.education-grid {
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-    max-width: 1100px;
-}
-
 @keyframes fadeInUp {
     from {
         opacity: 0;
@@ -784,6 +847,7 @@ footer::before {
 
     .penguin-avatar {
         font-size: 120px;
+        max-width: 220px;
     }
 
     .experience-header {
