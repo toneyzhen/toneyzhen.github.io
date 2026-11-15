@@ -19,7 +19,7 @@
     <link rel="icon" href="favicon.ico" sizes="any">
     <link rel="icon" href="favicon.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="apple-touch-icon.png">
-    <link rel="stylesheet" href="style.css?v=8">
+    <link rel="stylesheet" href="style.css?v=9">
 </head>
 <body>
     <div class="snowflakes" id="snowflakes" aria-hidden="true"></div>
@@ -338,6 +338,22 @@
                 </article>
 
 
+                <article class="log-card log-card-wide" id="ghCard" hidden>
+                    <div class="log-card-head">
+                        <h3>GitHub Contributions</h3>
+                        <a class="log-meta" href="https://github.com/toneyzhen" target="_blank" rel="noopener">@toneyzhen</a>
+                    </div>
+                    <p class="gh-total"><strong id="ghTotal"></strong> contributions in the past year</p>
+                    <div class="gh-scroll" id="ghScroll">
+                        <div class="gh-grid" id="ghGrid" role="img"></div>
+                    </div>
+                    <div class="gh-foot">
+                        <span class="log-meta" id="ghMeta"></span>
+                        <span class="gh-legend" aria-hidden="true">Less <i data-level="0"></i><i data-level="1"></i><i data-level="2"></i><i data-level="3"></i><i data-level="4"></i> More</span>
+                    </div>
+                    <div class="gh-tip" id="ghTip" hidden></div>
+                </article>
+
                 <article class="log-card log-card-wide token-card" id="tokenCard" hidden>
                     <h3>Building with AI</h3>
                     <p class="token-total"><strong id="tokenTotal"></strong> Claude tokens used in the past month</p>
@@ -440,6 +456,6 @@
     </footer>
 
     <script src="script.js?v=2"></script>
-    <script src="expedition.js?v=2"></script>
+    <script src="expedition.js?v=3"></script>
 </body>
 </html>

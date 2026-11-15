@@ -2159,6 +2159,117 @@ a.log-meta:hover {
     white-space: nowrap;
 }
 
+/* ---------- GitHub contributions heatmap ---------- */
+#ghCard {
+    position: relative;
+    /* one hue, dim to bright, on the dark card */
+    --gh-0: rgba(125, 211, 252, 0.08);
+    --gh-1: #1d4f80;
+    --gh-2: #2a7cbd;
+    --gh-3: #4fb0ee;
+    --gh-4: #b6e6ff;
+}
+
+.gh-total {
+    color: var(--muted);
+    font-size: 15px;
+    margin-top: -6px;
+}
+
+.gh-total strong {
+    color: var(--text);
+    font-size: 24px;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    margin-right: 4px;
+}
+
+.gh-scroll {
+    overflow-x: auto;
+    padding-bottom: 4px;
+}
+
+.gh-grid {
+    display: grid;
+    grid-template-columns: repeat(var(--weeks, 53), minmax(11px, 1fr));
+    grid-template-rows: 18px;
+    grid-auto-rows: auto;
+    gap: 3px;
+    min-width: calc(var(--weeks, 53) * 14px - 3px);
+}
+
+.gh-month {
+    grid-row: 1;
+    color: var(--faint);
+    font-size: 11px;
+    line-height: 1;
+    white-space: nowrap;
+}
+
+.gh-day {
+    aspect-ratio: 1;
+    border-radius: 3px;
+    background: var(--gh-0);
+}
+
+.gh-day[data-level="1"], .gh-legend i[data-level="1"] { background: var(--gh-1); }
+.gh-day[data-level="2"], .gh-legend i[data-level="2"] { background: var(--gh-2); }
+.gh-day[data-level="3"], .gh-legend i[data-level="3"] { background: var(--gh-3); }
+.gh-day[data-level="4"], .gh-legend i[data-level="4"] { background: var(--gh-4); }
+
+.gh-day.on {
+    outline: 2px solid var(--text);
+    outline-offset: 1px;
+}
+
+.gh-foot {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px 16px;
+}
+
+.gh-legend {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    margin-left: auto;
+    color: var(--faint);
+    font-size: 12px;
+}
+
+.gh-legend i {
+    width: 12px;
+    height: 12px;
+    border-radius: 3px;
+    background: var(--gh-0);
+}
+
+.gh-tip {
+    position: absolute;
+    z-index: 3;
+    pointer-events: none;
+    padding: 8px 12px;
+    border-radius: 10px;
+    border: 1px solid var(--ice-border);
+    background: rgba(6, 14, 30, 0.95);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+    font-size: 13px;
+    color: var(--text);
+    white-space: nowrap;
+}
+
+.gh-tip strong,
+.gh-tip span {
+    display: block;
+}
+
+.gh-tip span {
+    color: var(--muted);
+    font-size: 12px;
+}
+
 .token-card {
     flex-direction: row;
     flex-wrap: wrap;
