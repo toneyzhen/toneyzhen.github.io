@@ -2315,3 +2315,30 @@ a.log-meta:hover {
         width: 150px;
     }
 }
+
+/* Bookshelf: a pointer to free books */
+.shelf-foot {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 4px 12px;
+}
+
+.shelf-free {
+    color: var(--accent);
+    font-weight: 600;
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.2s;
+}
+
+.shelf-free::after {
+    content: " ↗";
+    content: " ↗" / "";
+}
+
+.shelf-free:hover,
+.shelf-free:focus-visible {
+    border-bottom-color: var(--accent);
+    outline: none;
+}
