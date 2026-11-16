@@ -1,32 +1,32 @@
 {
-  "updated": "2026-11-15T20:35+00:00",
+  "updated": "2026-11-16T23:50+00:00",
   "recent": {
-    "name": "The Color Violet",
+    "name": "Say It",
     "artist": "Tory Lanez",
-    "art": "https://lastfm-img.freetls.fastly.net/i/u/300x300/aece583659ca803df09d3a0576ce8cd5.jpg",
+    "art": "https://lastfm-img.freetls.fastly.net/i/u/300x300/f6592086cf020e36842d0721163e300f.jpg",
     "nowPlaying": false,
-    "playedAt": 1794769566
+    "playedAt": 1794873029
   },
   "topArtists": [
     {
       "name": "Olivia Rodrigo",
-      "plays": 40
+      "plays": 53
     },
     {
       "name": "Taylor Swift",
-      "plays": 29
+      "plays": 44
     },
     {
       "name": "Faouzia",
       "plays": 26
     },
     {
-      "name": "Home",
-      "plays": 23
+      "name": "Tory Lanez",
+      "plays": 26
     },
     {
-      "name": "Tory Lanez",
-      "plays": 22
+      "name": "The Weeknd",
+      "plays": 25
     }
   ],
   "topTracks": [
@@ -43,21 +43,21 @@
     {
       "name": "Space Cadet (feat. Gunna)",
       "artist": "Metro Boomin",
-      "plays": 13
+      "plays": 14
+    },
+    {
+      "name": "Money In The Grave (Drake ft. Rick Ross)",
+      "artist": "Drake",
+      "plays": 8
     },
     {
       "name": "cigarette smoke",
       "artist": "Olivia Rodrigo",
       "plays": 8
-    },
-    {
-      "name": "Eldest Daughter",
-      "artist": "Taylor Swift",
-      "plays": 8
     }
   ],
   "stats": {
-    "plays": 727,
+    "plays": 940,
     "since": 1794423867
   }
 }
