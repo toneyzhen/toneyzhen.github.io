@@ -1,63 +1,63 @@
 {
-  "updated": "2026-11-16T23:50+00:00",
+  "updated": "2026-11-17T23:09+00:00",
   "recent": {
-    "name": "Say It",
-    "artist": "Tory Lanez",
-    "art": "https://lastfm-img.freetls.fastly.net/i/u/300x300/f6592086cf020e36842d0721163e300f.jpg",
+    "name": "Nightcrawler (feat. Swae Lee & Chief Keef)",
+    "artist": "Travis Scott",
+    "art": "https://lastfm-img.freetls.fastly.net/i/u/300x300/8094bc29edd6d557546a5ff997197ee6.png",
     "nowPlaying": false,
-    "playedAt": 1794873029
+    "playedAt": 1794956991
   },
   "topArtists": [
+    {
+      "name": "XXXTENTACION",
+      "plays": 70
+    },
+    {
+      "name": "Ian",
+      "plays": 58
+    },
     {
       "name": "Olivia Rodrigo",
       "plays": 53
     },
     {
       "name": "Taylor Swift",
-      "plays": 44
-    },
-    {
-      "name": "Faouzia",
-      "plays": 26
+      "plays": 45
     },
     {
       "name": "Tory Lanez",
-      "plays": 26
-    },
-    {
-      "name": "The Weeknd",
-      "plays": 25
+      "plays": 39
     }
   ],
   "topTracks": [
+    {
+      "name": "3.5",
+      "artist": "Ian",
+      "plays": 51
+    },
+    {
+      "name": "YuNg BrAtZ",
+      "artist": "XXXTENTACION",
+      "plays": 40
+    },
     {
       "name": "Unethical",
       "artist": "Faouzia",
       "plays": 26
     },
     {
-      "name": "3.5",
-      "artist": "Ian",
-      "plays": 16
-    },
-    {
       "name": "Space Cadet (feat. Gunna)",
       "artist": "Metro Boomin",
-      "plays": 14
+      "plays": 16
     },
     {
       "name": "Money In The Grave (Drake ft. Rick Ross)",
       "artist": "Drake",
-      "plays": 8
-    },
-    {
-      "name": "cigarette smoke",
-      "artist": "Olivia Rodrigo",
-      "plays": 8
+      "plays": 10
     }
   ],
   "stats": {
-    "plays": 940,
+    "plays": 1147,
     "since": 1794423867
   }
 }
