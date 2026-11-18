@@ -1,49 +1,49 @@
 {
-  "updated": "2026-11-17T23:09+00:00",
+  "updated": "2026-11-18T22:41+00:00",
   "recent": {
-    "name": "Nightcrawler (feat. Swae Lee & Chief Keef)",
-    "artist": "Travis Scott",
-    "art": "https://lastfm-img.freetls.fastly.net/i/u/300x300/8094bc29edd6d557546a5ff997197ee6.png",
+    "name": "Low Life (feat. The Weeknd)",
+    "artist": "Future",
+    "art": "https://lastfm-img.freetls.fastly.net/i/u/300x300/ceae37ad2d17e660620bb306d08ed903.jpg",
     "nowPlaying": false,
-    "playedAt": 1794956991
+    "playedAt": 1795030685
   },
   "topArtists": [
     {
       "name": "XXXTENTACION",
-      "plays": 70
+      "plays": 72
     },
     {
       "name": "Ian",
-      "plays": 58
+      "plays": 60
     },
     {
       "name": "Olivia Rodrigo",
-      "plays": 53
+      "plays": 59
     },
     {
       "name": "Taylor Swift",
-      "plays": 45
+      "plays": 50
     },
     {
-      "name": "Tory Lanez",
-      "plays": 39
+      "name": "The Weeknd",
+      "plays": 42
     }
   ],
   "topTracks": [
     {
       "name": "3.5",
       "artist": "Ian",
-      "plays": 51
+      "plays": 52
     },
     {
       "name": "YuNg BrAtZ",
       "artist": "XXXTENTACION",
-      "plays": 40
+      "plays": 41
     },
     {
       "name": "Unethical",
       "artist": "Faouzia",
-      "plays": 26
+      "plays": 28
     },
     {
       "name": "Space Cadet (feat. Gunna)",
@@ -51,13 +51,13 @@
       "plays": 16
     },
     {
-      "name": "Money In The Grave (Drake ft. Rick Ross)",
-      "artist": "Drake",
-      "plays": 10
+      "name": "Heather",
+      "artist": "Conan Gray",
+      "plays": 11
     }
   ],
   "stats": {
-    "plays": 1147,
+    "plays": 1331,
     "since": 1794423867
   }
 }
