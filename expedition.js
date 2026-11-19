@@ -699,8 +699,7 @@
             renderTopList($('topTracks'), items, 'tracks');
         },
         stats(s) {
-            const since = new Date(s.since * 1000).toLocaleDateString(undefined, { month: 'short', year: 'numeric' });
-            $('musicStats').textContent = `${s.plays.toLocaleString()} songs played since ${since}`;
+            $('musicStats').textContent = `${s.plays.toLocaleString()} songs played`;
         },
     };
 
@@ -810,97 +809,14 @@
     }
 
     /* ------------------------------------------------------------------ */
-    /* GitHub contributions: a year of daily counts (data/github.json)     */
+    /* GitHub: contributions in the past year (data/github.json)          */
     /* ------------------------------------------------------------------ */
 
     function renderContributions(data) {
-        const counts = data.counts || [];
-        if (!data.start || !counts.length) return;
-        const start = new Date(data.start + 'T12:00:00');
-        const dayAt = (i) => new Date(start.getTime() + i * 864e5);
-        const fmtDay = (d) => d.toLocaleDateString(undefined, { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' });
-
-        // four shades split at the quartiles of the active days, so one huge day doesn't flatten the rest
-        const active = counts.filter((c) => c > 0).sort((a, b) => a - b);
-        const cut = (q) => active[Math.min(active.length - 1, Math.floor(q * active.length))];
-        const cuts = [cut(0.25), cut(0.5), cut(0.75)];
-        const level = (c) => (c <= 0 ? 0 : 1 + cuts.filter((t) => c > t).length);
-
-        const grid = $('ghGrid');
-        const offset = start.getDay(); // rows are Sunday..Saturday
-        const weeks = Math.ceil((offset + counts.length) / 7);
-        grid.style.setProperty('--weeks', weeks);
-        grid.replaceChildren();
-
-        let lastMonth = -1;
-        let lastLabelWeek = -4;
-        counts.forEach((count, i) => {
-            const d = dayAt(i);
-            const week = Math.floor((offset + i) / 7);
-            // name each month above the first week that starts in it
-            if (d.getDay() === 0 && d.getMonth() !== lastMonth) {
-                if (lastMonth !== -1 || d.getDate() <= 7) {
-                    if (week - lastLabelWeek >= 3) {
-                        const label = el('span', 'gh-month', d.toLocaleDateString(undefined, { month: 'short' }));
-                        label.style.gridColumn = week + 1;
-                        grid.appendChild(label);
-                        lastLabelWeek = week;
-                    }
-                }
-                lastMonth = d.getMonth();
-            }
-            const cell = el('i', 'gh-day');
-            cell.dataset.level = level(count);
-            cell.dataset.i = i;
-            cell.style.gridColumn = week + 1;
-            cell.style.gridRow = d.getDay() + 2;
-            grid.appendChild(cell);
-        });
-
-        const total = data.total != null ? data.total : counts.reduce((a, b) => a + b, 0);
-        const activeDays = active.length;
+        const total = data.total != null ? data.total : (data.counts || []).reduce((a, b) => a + b, 0);
+        if (!total) return;
         $('ghTotal').textContent = total.toLocaleString();
-        grid.setAttribute('aria-label', `${total.toLocaleString()} GitHub contributions in the past year, on ${activeDays} days.`);
-        if (data.updated) {
-            const day = new Date(data.updated + 'T12:00:00').toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
-            $('ghMeta').textContent = `${activeDays} active days · updated ${day}`;
-        }
         $('ghCard').hidden = false;
-
-        // on narrow screens the grid scrolls sideways; start at the most recent weeks
-        const scroller = $('ghScroll');
-        scroller.scrollLeft = scroller.scrollWidth;
-
-        const tip = $('ghTip');
-        let shown = null;
-        function show(cell) {
-            if (cell === shown) return;
-            if (shown) shown.classList.remove('on');
-            shown = cell;
-            cell.classList.add('on');
-            const i = +cell.dataset.i;
-            const n = counts[i];
-            tip.replaceChildren(el('strong', null, n === 0 ? 'No contributions' : `${n} contribution${n === 1 ? '' : 's'}`), el('span', null, fmtDay(dayAt(i))));
-            tip.hidden = false;
-            const card = $('ghCard').getBoundingClientRect();
-            const box = cell.getBoundingClientRect();
-            const left = box.left - card.left + box.width / 2 - tip.offsetWidth / 2;
-            tip.style.left = Math.max(8, Math.min(left, card.width - tip.offsetWidth - 8)) + 'px';
-            tip.style.top = (box.top - card.top - tip.offsetHeight - 8) + 'px';
-        }
-        function hide() {
-            if (shown) shown.classList.remove('on');
-            shown = null;
-            tip.hidden = true;
-        }
-        const point = (e) => {
-            const cell = e.target.closest('.gh-day');
-            if (cell) show(cell); else hide();
-        };
-        grid.addEventListener('pointermove', point);
-        grid.addEventListener('pointerdown', point); // taps on touch screens
-        grid.addEventListener('pointerleave', (e) => { if (e.pointerType === 'mouse') hide(); });
-        scroller.addEventListener('scroll', hide, { passive: true });
     }
 
     whenNear($('ghCard').parentElement, () => {

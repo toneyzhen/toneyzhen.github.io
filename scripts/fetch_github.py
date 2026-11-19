@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Save a year of GitHub contribution counts for the Expedition Log heatmap.
+"""Save the number of GitHub contributions in the past year for the Expedition Log.
 
 Uses GitHub's GraphQL API, which needs a token (the workflow's built-in one is
 enough). Only public contributions are visible to that token.
@@ -19,7 +19,6 @@ query($login: String!) {
     contributionsCollection {
       contributionCalendar {
         totalContributions
-        weeks { contributionDays { date contributionCount } }
       }
     }
   }
@@ -45,23 +44,23 @@ def main():
     if body.get("errors") or not (body.get("data") or {}).get("user"):
         sys.exit("GitHub API error: " + json.dumps(body.get("errors") or body)[:500])
 
-    calendar = body["data"]["user"]["contributionsCollection"]["contributionCalendar"]
-    days = [d for week in calendar["weeks"] for d in week["contributionDays"]]
-    if not days:
-        sys.exit("GitHub returned an empty calendar")
+    total = body["data"]["user"]["contributionsCollection"]["contributionCalendar"]["totalContributions"]
 
-    out = {
-        "updated": datetime.now(timezone.utc).strftime("%Y-%m-%d"),
-        "user": user,
-        "total": calendar["totalContributions"],
-        # one count per day, starting at `start` (always a Sunday) with no gaps
-        "start": days[0]["date"],
-        "counts": [d["contributionCount"] for d in days],
-    }
+    # Only the total is shown; skip the write when it hasn't changed so there's no daily commit
+    try:
+        with open(sys.argv[1]) as f:
+            old = json.load(f)
+        if old.get("total") == total and old.get("user") == user and "counts" not in old:
+            print(f"{total} contributions, unchanged")
+            return
+    except (OSError, ValueError):
+        pass
+
+    out = {"updated": datetime.now(timezone.utc).strftime("%Y-%m-%d"), "user": user, "total": total}
     with open(sys.argv[1], "w") as f:
-        json.dump(out, f, separators=(",", ":"))
+        json.dump(out, f, indent=2)
         f.write("\n")
-    print(f"{out['total']} contributions across {len(days)} days from {out['start']}")
+    print(f"{total} contributions in the past year")
 
 
 if __name__ == "__main__":
