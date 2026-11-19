@@ -1,32 +1,32 @@
 {
-  "updated": "2026-11-18T22:41+00:00",
+  "updated": "2026-11-19T22:45+00:00",
   "recent": {
-    "name": "Low Life (feat. The Weeknd)",
-    "artist": "Future",
-    "art": "https://lastfm-img.freetls.fastly.net/i/u/300x300/ceae37ad2d17e660620bb306d08ed903.jpg",
+    "name": "In My Room",
+    "artist": "Julia Wolf",
+    "art": "https://lastfm-img.freetls.fastly.net/i/u/300x300/34e5fa34c3bde72141decd9f0fd5f25c.png",
     "nowPlaying": false,
-    "playedAt": 1795030685
+    "playedAt": 1795127868
   },
   "topArtists": [
     {
+      "name": "Olivia Rodrigo",
+      "plays": 85
+    },
+    {
       "name": "XXXTENTACION",
-      "plays": 72
+      "plays": 73
     },
     {
       "name": "Ian",
       "plays": 60
     },
     {
-      "name": "Olivia Rodrigo",
-      "plays": 59
-    },
-    {
       "name": "Taylor Swift",
-      "plays": 50
+      "plays": 53
     },
     {
       "name": "The Weeknd",
-      "plays": 42
+      "plays": 43
     }
   ],
   "topTracks": [
@@ -38,26 +38,26 @@
     {
       "name": "YuNg BrAtZ",
       "artist": "XXXTENTACION",
-      "plays": 41
+      "plays": 42
+    },
+    {
+      "name": "Money In The Grave (Drake ft. Rick Ross)",
+      "artist": "Drake",
+      "plays": 31
     },
     {
       "name": "Unethical",
       "artist": "Faouzia",
-      "plays": 28
+      "plays": 29
     },
     {
       "name": "Space Cadet (feat. Gunna)",
       "artist": "Metro Boomin",
       "plays": 16
-    },
-    {
-      "name": "Heather",
-      "artist": "Conan Gray",
-      "plays": 11
     }
   ],
   "stats": {
-    "plays": 1331,
+    "plays": 1535,
     "since": 1794423867
   }
 }
