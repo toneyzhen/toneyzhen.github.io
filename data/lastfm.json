@@ -1,11 +1,11 @@
 {
-  "updated": "2026-11-19T22:45+00:00",
+  "updated": "2026-11-20T22:21+00:00",
   "recent": {
-    "name": "In My Room",
-    "artist": "Julia Wolf",
-    "art": "https://lastfm-img.freetls.fastly.net/i/u/300x300/34e5fa34c3bde72141decd9f0fd5f25c.png",
+    "name": "Physical",
+    "artist": "Dua Lipa",
+    "art": "https://lastfm-img.freetls.fastly.net/i/u/300x300/7017c94ef74a476838e751b0cee1f014.png",
     "nowPlaying": false,
-    "playedAt": 1795127868
+    "playedAt": 1795138975
   },
   "topArtists": [
     {
@@ -57,7 +57,7 @@
     }
   ],
   "stats": {
-    "plays": 1535,
+    "plays": 1543,
     "since": 1794423867
   }
 }
