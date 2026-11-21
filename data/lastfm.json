@@ -1,16 +1,20 @@
 {
-  "updated": "2026-11-20T22:21+00:00",
+  "updated": "2026-11-21T21:09+00:00",
   "recent": {
-    "name": "Physical",
-    "artist": "Dua Lipa",
-    "art": "https://lastfm-img.freetls.fastly.net/i/u/300x300/7017c94ef74a476838e751b0cee1f014.png",
+    "name": "traitor",
+    "artist": "Olivia Rodrigo",
+    "art": "https://lastfm-img.freetls.fastly.net/i/u/300x300/9da8add22ca31771a440d2a6f7615f6d.jpg",
     "nowPlaying": false,
-    "playedAt": 1795138975
+    "playedAt": 1795295374
   },
   "topArtists": [
     {
       "name": "Olivia Rodrigo",
-      "plays": 85
+      "plays": 96
+    },
+    {
+      "name": "Taylor Swift",
+      "plays": 75
     },
     {
       "name": "XXXTENTACION",
@@ -18,15 +22,11 @@
     },
     {
       "name": "Ian",
-      "plays": 60
+      "plays": 61
     },
     {
-      "name": "Taylor Swift",
-      "plays": 53
-    },
-    {
-      "name": "The Weeknd",
-      "plays": 43
+      "name": "Gracie Abrams",
+      "plays": 44
     }
   ],
   "topTracks": [
@@ -48,7 +48,7 @@
     {
       "name": "Unethical",
       "artist": "Faouzia",
-      "plays": 29
+      "plays": 30
     },
     {
       "name": "Space Cadet (feat. Gunna)",
@@ -57,7 +57,7 @@
     }
   ],
   "stats": {
-    "plays": 1543,
+    "plays": 1698,
     "since": 1794423867
   }
 }
