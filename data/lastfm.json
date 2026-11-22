@@ -1,20 +1,20 @@
 {
-  "updated": "2026-11-21T21:09+00:00",
+  "updated": "2026-11-22T21:16+00:00",
   "recent": {
-    "name": "traitor",
-    "artist": "Olivia Rodrigo",
-    "art": "https://lastfm-img.freetls.fastly.net/i/u/300x300/9da8add22ca31771a440d2a6f7615f6d.jpg",
+    "name": "21",
+    "artist": "Gracie Abrams",
+    "art": "https://lastfm-img.freetls.fastly.net/i/u/300x300/40693c1652f55d6cb3d63911000a4bb7.jpg",
     "nowPlaying": false,
-    "playedAt": 1795295374
+    "playedAt": 1795378613
   },
   "topArtists": [
     {
       "name": "Olivia Rodrigo",
-      "plays": 96
+      "plays": 127
     },
     {
       "name": "Taylor Swift",
-      "plays": 75
+      "plays": 88
     },
     {
       "name": "XXXTENTACION",
@@ -26,7 +26,7 @@
     },
     {
       "name": "Gracie Abrams",
-      "plays": 44
+      "plays": 53
     }
   ],
   "topTracks": [
@@ -48,7 +48,7 @@
     {
       "name": "Unethical",
       "artist": "Faouzia",
-      "plays": 30
+      "plays": 31
     },
     {
       "name": "Space Cadet (feat. Gunna)",
@@ -57,7 +57,7 @@
     }
   ],
   "stats": {
-    "plays": 1698,
+    "plays": 1846,
     "since": 1794423867
   }
 }
