@@ -1,24 +1,24 @@
 {
-  "updated": "2026-11-22T21:16+00:00",
+  "updated": "2026-11-24T02:35+00:00",
   "recent": {
-    "name": "21",
-    "artist": "Gracie Abrams",
-    "art": "https://lastfm-img.freetls.fastly.net/i/u/300x300/40693c1652f55d6cb3d63911000a4bb7.jpg",
+    "name": "Heather",
+    "artist": "Conan Gray",
+    "art": "https://lastfm-img.freetls.fastly.net/i/u/300x300/4f133a7c64471f91a30bf6ae80946c8c.jpg",
     "nowPlaying": false,
-    "playedAt": 1795378613
+    "playedAt": 1795487711
   },
   "topArtists": [
     {
       "name": "Olivia Rodrigo",
-      "plays": 127
+      "plays": 137
     },
     {
       "name": "Taylor Swift",
-      "plays": 88
+      "plays": 109
     },
     {
       "name": "XXXTENTACION",
-      "plays": 73
+      "plays": 77
     },
     {
       "name": "Ian",
@@ -26,7 +26,7 @@
     },
     {
       "name": "Gracie Abrams",
-      "plays": 53
+      "plays": 60
     }
   ],
   "topTracks": [
@@ -38,7 +38,7 @@
     {
       "name": "YuNg BrAtZ",
       "artist": "XXXTENTACION",
-      "plays": 42
+      "plays": 43
     },
     {
       "name": "Money In The Grave (Drake ft. Rick Ross)",
@@ -53,11 +53,11 @@
     {
       "name": "Space Cadet (feat. Gunna)",
       "artist": "Metro Boomin",
-      "plays": 16
+      "plays": 17
     }
   ],
   "stats": {
-    "plays": 1846,
+    "plays": 2064,
     "since": 1794423867
   }
 }
