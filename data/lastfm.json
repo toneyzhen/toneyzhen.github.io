@@ -1,35 +1,40 @@
 {
-  "updated": "2026-11-24T02:35+00:00",
+  "updated": "2026-11-25T00:06+00:00",
   "recent": {
-    "name": "Heather",
-    "artist": "Conan Gray",
-    "art": "https://lastfm-img.freetls.fastly.net/i/u/300x300/4f133a7c64471f91a30bf6ae80946c8c.jpg",
+    "name": "Unethical",
+    "artist": "Faouzia",
+    "art": "https://lastfm-img.freetls.fastly.net/i/u/300x300/842108f72e002ae0fa9e37d40b50a6e8.jpg",
     "nowPlaying": false,
-    "playedAt": 1795487711
+    "playedAt": 1795565198
   },
   "topArtists": [
     {
       "name": "Olivia Rodrigo",
-      "plays": 137
+      "plays": 141
     },
     {
       "name": "Taylor Swift",
-      "plays": 109
+      "plays": 118
     },
     {
       "name": "XXXTENTACION",
-      "plays": 77
-    },
-    {
-      "name": "Ian",
-      "plays": 61
+      "plays": 80
     },
     {
       "name": "Gracie Abrams",
-      "plays": 60
+      "plays": 68
+    },
+    {
+      "name": "Conan Gray",
+      "plays": 67
     }
   ],
   "topTracks": [
+    {
+      "name": "Heather",
+      "artist": "Conan Gray",
+      "plays": 66
+    },
     {
       "name": "3.5",
       "artist": "Ian",
@@ -43,21 +48,16 @@
     {
       "name": "Money In The Grave (Drake ft. Rick Ross)",
       "artist": "Drake",
-      "plays": 31
+      "plays": 38
     },
     {
       "name": "Unethical",
       "artist": "Faouzia",
       "plays": 31
-    },
-    {
-      "name": "Space Cadet (feat. Gunna)",
-      "artist": "Metro Boomin",
-      "plays": 17
     }
   ],
   "stats": {
-    "plays": 2064,
+    "plays": 2234,
     "since": 1794423867
   }
 }
