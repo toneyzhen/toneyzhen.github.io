@@ -819,14 +819,14 @@
         $('ghCard').hidden = false;
     }
 
-    whenNear($('ghCard').parentElement, () => {
+    whenNear($('ghCard').closest('.log-grid'), () => {
         fetch('data/github.json', { cache: 'no-cache' })
             .then((r) => (r.ok ? r.json() : null))
             .then((data) => { if (data) renderContributions(data); })
             .catch(() => {});
     });
 
-    whenNear($('tokenCard').parentElement, () => {
+    whenNear($('tokenCard').closest('.log-grid'), () => {
         fetch('data/tokens.json', { cache: 'no-cache' })
             .then((r) => (r.ok ? r.json() : null))
             .then((data) => { if (data) renderTokens(data); })

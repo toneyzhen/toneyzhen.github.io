@@ -404,7 +404,25 @@ h2 {
 }
 
 .project-details {
-    margin-bottom: 4px;
+    grid-column: 1 / -1;
+    grid-row: 1;
+}
+
+/* "How I built it" and "View code on GitHub" share one row; the link sits in the
+   top-right of the details' cell, so opened notes still use the card's full width */
+.project-actions {
+    margin-top: auto;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: start;
+}
+
+.project-actions .project-link {
+    grid-column: 2;
+    grid-row: 1;
+    margin-top: 0;
+    padding-top: 4px;
+    position: relative;
 }
 
 .project-details summary {
@@ -1482,7 +1500,7 @@ a.log-meta:hover {
     flex-direction: column;
     gap: 6px;
     counter-reset: rank;
-    min-height: 274px; /* the taller Tracks list, so switching tabs doesn't jump */
+    min-height: 166px; /* both lists are five one-line rows, so switching tabs doesn't jump */
 }
 
 .top-list li {
@@ -1490,7 +1508,7 @@ a.log-meta:hover {
     display: grid;
     grid-template-columns: 18px 1fr auto;
     align-items: center;
-    gap: 4px 10px;
+    gap: 3px 10px;
     font-size: 14px;
     min-width: 0;
 }
@@ -1511,8 +1529,24 @@ a.log-meta:hover {
 
 .item-text {
     display: flex;
-    flex-direction: column;
+    align-items: baseline;
+    gap: 6px;
     min-width: 0;
+}
+
+.item-name {
+    flex: 0 1 auto;
+    min-width: 0;
+}
+
+.item-sub {
+    flex: 0 3 auto;
+    min-width: 0;
+}
+
+.item-sub::before {
+    content: "· ";
+    content: "· " / "";
 }
 
 .item-name,
@@ -1539,7 +1573,7 @@ a.log-meta:hover {
 
 .item-bar {
     grid-column: 2 / 4;
-    height: 4px;
+    height: 3px;
     border-radius: 2px;
     background: var(--divider);
     overflow: hidden;
@@ -2149,6 +2183,40 @@ a.log-meta:hover {
 /* ---------- Building with AI: tokens in the past month ---------- */
 .log-card-wide {
     grid-column: 1 / -1;
+}
+
+/* GitHub and Building with AI side by side, one per row on narrow screens */
+.log-strips {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 25px;
+}
+
+.log-strips:not(:has(> :not([hidden]))) {
+    display: none;
+}
+
+.log-strips .token-card {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: baseline;
+    gap: 2px 12px;
+}
+
+.log-strips .log-card-wide {
+    grid-column: auto;
+}
+
+.log-strips .token-card .log-meta {
+    grid-column: 2;
+    grid-row: 1;
+    margin-left: 0;
+}
+
+.log-strips .token-total {
+    grid-column: 1 / -1;
+    grid-row: 2;
 }
 
 .log-card[hidden] {
