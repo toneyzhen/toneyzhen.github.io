@@ -2321,3 +2321,19 @@ a.log-meta:hover {
     font-size: 14px;
     line-height: 1.55;
 }
+
+.side-name {
+    color: var(--text);
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.side-note {
+    margin-left: 6px;
+    padding: 1px 8px;
+    border-radius: 20px;
+    border: 1px solid var(--ice-border);
+    color: var(--faint);
+    font-size: 12px;
+    vertical-align: 2px;
+}
