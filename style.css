@@ -2243,10 +2243,21 @@ a.log-meta:hover {
     gap: 8px;
     cursor: pointer;
     list-style: none;
-    padding: 6px 0;
+    padding: 9px 18px 9px 14px;
+    border: 1px solid var(--ice-border);
+    border-radius: 999px;
+    background: var(--card-bg);
     color: var(--accent);
     font-size: 17px;
     font-weight: 600;
+    transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
+}
+
+.side-projects summary:hover,
+.side-projects[open] summary {
+    border-color: var(--accent);
+    background: var(--chip-bg);
+    box-shadow: 0 0 14px var(--horizon-glow);
 }
 
 .side-projects summary::-webkit-details-marker {
@@ -2284,7 +2295,7 @@ a.log-meta:hover {
     list-style: none;
     display: flex;
     flex-direction: column;
-    margin-top: 10px;
+    margin-top: 16px;
     border-top: 1px solid var(--divider);
 }
 
