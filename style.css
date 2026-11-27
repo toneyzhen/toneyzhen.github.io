@@ -283,6 +283,12 @@ main section:nth-child(even) {
     background: var(--section-alt-bg);
 }
 
+/* the two tallest sections sit a little tighter */
+#projects,
+#log {
+    padding: 44px 0 50px;
+}
+
 h2 {
     font-size: 36px;
     text-align: center;
@@ -320,7 +326,7 @@ h2 {
 
 .project-img {
     width: 100%;
-    height: 200px;
+    height: 172px;
     background: linear-gradient(135deg, #4fc3f7 0%, #0277bd 100%);
     display: flex;
     align-items: center;
@@ -337,7 +343,7 @@ h2 {
 }
 
 .project-content {
-    padding: 25px;
+    padding: 22px;
 }
 
 .project-content h3 {
@@ -1115,7 +1121,7 @@ footer::before {
     text-align: center;
     color: var(--muted);
     max-width: 560px;
-    margin: -14px auto 30px;
+    margin: -14px auto 22px;
 }
 
 .log-grid {
@@ -1129,11 +1135,11 @@ footer::before {
     background: var(--card-bg);
     border: 2px solid var(--ice-border);
     border-radius: 15px;
-    padding: 22px;
+    padding: 20px 22px;
     box-shadow: 0 5px 20px rgba(0, 0, 0, 0.25);
     display: flex;
     flex-direction: column;
-    gap: 14px;
+    gap: 12px;
     min-width: 0;
 }
 
@@ -1474,9 +1480,9 @@ a.log-meta:hover {
     list-style: none;
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 6px;
     counter-reset: rank;
-    min-height: 282px; /* the taller Tracks list, so switching tabs doesn't jump */
+    min-height: 274px; /* the taller Tracks list, so switching tabs doesn't jump */
 }
 
 .top-list li {
@@ -2234,7 +2240,7 @@ a.log-meta:hover {
 
 /* ---------- Side projects: a plain list behind a toggle ---------- */
 .side-projects {
-    margin-top: 32px;
+    margin-top: 24px;
 }
 
 .side-projects summary {
