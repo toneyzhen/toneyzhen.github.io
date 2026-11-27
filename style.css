@@ -2231,3 +2231,93 @@ a.log-meta:hover {
     border-bottom-color: var(--accent);
     outline: none;
 }
+
+/* ---------- Side projects: a plain list behind a toggle ---------- */
+.side-projects {
+    margin-top: 32px;
+}
+
+.side-projects summary {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    list-style: none;
+    padding: 6px 0;
+    color: var(--accent);
+    font-size: 17px;
+    font-weight: 600;
+}
+
+.side-projects summary::-webkit-details-marker {
+    display: none;
+}
+
+.side-projects summary::before {
+    content: "+";
+    content: "+" / "";
+    display: inline-block;
+    width: 14px;
+}
+
+.side-projects[open] summary::before {
+    content: "−";
+    content: "−" / "";
+}
+
+.side-projects summary:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+    border-radius: 4px;
+}
+
+.side-count {
+    padding: 1px 9px;
+    border-radius: 20px;
+    background: var(--chip-bg);
+    color: var(--chip-text);
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.side-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    margin-top: 10px;
+    border-top: 1px solid var(--divider);
+}
+
+.side-list li {
+    padding: 14px 0;
+    border-bottom: 1px solid var(--divider);
+}
+
+.side-list a {
+    color: var(--text);
+    font-size: 16px;
+    font-weight: 600;
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: color 0.2s, border-color 0.2s;
+}
+
+.side-list a::after {
+    content: " ↗";
+    content: " ↗" / "";
+    color: var(--accent);
+}
+
+.side-list a:hover,
+.side-list a:focus-visible {
+    color: var(--accent);
+    border-bottom-color: var(--accent);
+    outline: none;
+}
+
+.side-list p {
+    margin-top: 4px;
+    color: var(--muted);
+    font-size: 14px;
+    line-height: 1.55;
+}
