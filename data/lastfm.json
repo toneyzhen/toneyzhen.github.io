@@ -1,32 +1,32 @@
 {
-  "updated": "2026-11-26T23:59+00:00",
+  "updated": "2026-11-27T23:43+00:00",
   "recent": {
-    "name": "Life Is Good (feat. Drake)",
-    "artist": "Future",
-    "art": "https://lastfm-img.freetls.fastly.net/i/u/300x300/80fbbd7ec3ba9c7eef82741fd565872f.png",
+    "name": "Heather",
+    "artist": "Conan Gray",
+    "art": "https://lastfm-img.freetls.fastly.net/i/u/300x300/4f133a7c64471f91a30bf6ae80946c8c.jpg",
     "nowPlaying": false,
-    "playedAt": 1795736242
+    "playedAt": 1795823031
   },
   "topArtists": [
     {
       "name": "Sabrina Carpenter",
-      "plays": 278
+      "plays": 280
     },
     {
       "name": "Olivia Rodrigo",
-      "plays": 147
+      "plays": 150
     },
     {
       "name": "Taylor Swift",
-      "plays": 139
+      "plays": 141
+    },
+    {
+      "name": "Future",
+      "plays": 119
     },
     {
       "name": "XXXTENTACION",
-      "plays": 83
-    },
-    {
-      "name": "Gracie Abrams",
-      "plays": 71
+      "plays": 86
     }
   ],
   "topTracks": [
@@ -36,6 +36,11 @@
       "plays": 224
     },
     {
+      "name": "Life Is Good (feat. Drake)",
+      "artist": "Future",
+      "plays": 102
+    },
+    {
       "name": "Heather",
       "artist": "Conan Gray",
       "plays": 66
@@ -43,21 +48,16 @@
     {
       "name": "3.5",
       "artist": "Ian",
-      "plays": 53
+      "plays": 55
     },
     {
       "name": "YuNg BrAtZ",
       "artist": "XXXTENTACION",
-      "plays": 44
-    },
-    {
-      "name": "Money In The Grave (Drake ft. Rick Ross)",
-      "artist": "Drake",
-      "plays": 38
+      "plays": 45
     }
   ],
   "stats": {
-    "plays": 2627,
+    "plays": 2768,
     "since": 1794423867
   }
 }
