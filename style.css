@@ -2322,12 +2322,6 @@ a.log-meta:hover {
     line-height: 1.55;
 }
 
-.side-name {
-    color: var(--text);
-    font-size: 16px;
-    font-weight: 600;
-}
-
 .side-note {
     margin-left: 6px;
     padding: 1px 8px;
