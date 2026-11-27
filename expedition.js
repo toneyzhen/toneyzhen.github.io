@@ -109,7 +109,7 @@
 
     function setBookTransform() {
         $('book3d').style.transform = `rotateX(${rotX}deg) rotateY(${rotY}deg)`;
-        if (typeof updateFlipLabel === 'function') updateFlipLabel();
+        updateFlipLabel();
     }
 
     function fillBook(book) {
@@ -210,7 +210,6 @@
     $('bookFlip').addEventListener('click', () => {
         rotY += 180;
         setBookTransform();
-        updateFlipLabel();
     });
     $('bookPrev').addEventListener('click', () => showBook(bookIndex - 1));
     $('bookNext').addEventListener('click', () => showBook(bookIndex + 1));
@@ -794,9 +793,10 @@
     }
 
     function renderTokens(data) {
-        // the data is weekly, so "the past month" is the four most recent weeks
+        // the data is weekly, so "the past month" is the four most recent finished weeks
+        // (the newest bucket is the week in progress, which early in the week is nearly empty)
         const keys = (data.series || []).map((s) => s.key);
-        const total = (data.weeks || []).slice(-4)
+        const total = (data.weeks || []).slice(-5, -1)
             .reduce((sum, w) => sum + keys.reduce((a, k) => a + (w[k] || 0), 0), 0);
         if (!total) return;
         $('tokenTotal').textContent = fmtTokens(total);
@@ -813,7 +813,7 @@
     /* ------------------------------------------------------------------ */
 
     function renderContributions(data) {
-        const total = data.total != null ? data.total : (data.counts || []).reduce((a, b) => a + b, 0);
+        const total = data.total;
         if (!total) return;
         $('ghTotal').textContent = total.toLocaleString();
         $('ghCard').hidden = false;

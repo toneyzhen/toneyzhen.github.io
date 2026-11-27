@@ -9,15 +9,6 @@
     else window.addEventListener('resize', sync);
 })();
 
-// Smooth scrolling for navigation links
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
-        target.scrollIntoView({ behavior: 'smooth' });
-    });
-});
-
 // Mobile nav toggle
 const navToggle = document.getElementById('navToggle');
 const navMenu = document.getElementById('navMenu');
@@ -208,7 +199,6 @@ createScrollPenguin();
     const pdfUrl = link.getAttribute('href');
     let doc = null;
     let renderedWidth = 0;
-    let rendering = null;
 
     function showStatus(text, withLink) {
         const p = document.createElement('p');
@@ -283,8 +273,7 @@ createScrollPenguin();
                 showStatus('Loading resume…');
                 doc = await loadDocument();
             }
-            rendering = render();
-            await rendering;
+            await render();
         } catch (err) {
             console.warn('Resume viewer:', err);
             renderedWidth = 0;

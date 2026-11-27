@@ -153,21 +153,32 @@ def main():
     for book in reading + read:
         book["title"] = renames.get(book["title"], book["title"])
 
+    try:
+        with open(out_path, encoding="utf-8") as f:
+            old = json.load(f)
+    except (OSError, ValueError):
+        old = {}
+
+    # The widget has no page counts or read dates, and only a short review. Keep what an
+    # earlier export import (scripts/import_goodreads_csv.py) added for the same book.
+    known = {(b["author"], b["title"]): b for b in old.get("currentlyReading", []) + old.get("read", [])}
+    for book in reading + read:
+        previous = known.get((book["author"], book["title"]), {})
+        for field in ("pages", "readAt"):
+            book[field] = book[field] or previous.get(field)
+        if len(previous.get("review") or "") > len(book["review"]):
+            book["review"] = previous["review"]
+
     data = {
         "updated": datetime.now(timezone.utc).date().isoformat(),
         "currentlyReading": reading,
         "read": read[:MAX_READ],
     }
 
-    # Only the date changed? Keep the old file so the Action doesn't commit every day.
-    try:
-        with open(out_path, encoding="utf-8") as f:
-            old = json.load(f)
-        if {**old, "updated": None} == {**data, "updated": None}:
-            print("Books unchanged")
-            return
-    except (OSError, ValueError):
-        pass
+    # Only the date changed? Keep the old file so there's no commit.
+    if {**old, "updated": None} == {**data, "updated": None}:
+        print("Books unchanged")
+        return
 
     with open(out_path, "w", encoding="utf-8") as f:
         json.dump(data, f, ensure_ascii=False, indent=2)

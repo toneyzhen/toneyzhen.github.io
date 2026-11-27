@@ -50,7 +50,7 @@ def main():
     try:
         with open(sys.argv[1]) as f:
             old = json.load(f)
-        if old.get("total") == total and old.get("user") == user and "counts" not in old:
+        if old.get("total") == total and old.get("user") == user:
             print(f"{total} contributions, unchanged")
             return
     except (OSError, ValueError):

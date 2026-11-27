@@ -264,6 +264,13 @@ nav a:hover {
     }
 }
 
+/* In-page links glide, unless the visitor asked for less motion */
+@media (prefers-reduced-motion: no-preference) {
+    html {
+        scroll-behavior: smooth;
+    }
+}
+
 section {
     padding: 52px 0 60px;
     /* keep headings clear of the sticky header on nav jumps; script.js measures the real header height */
@@ -2221,16 +2228,6 @@ a.log-meta:hover {
 
 .log-card[hidden] {
     display: none;
-}
-
-.visually-hidden {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    margin: -1px;
-    overflow: hidden;
-    clip: rect(0 0 0 0);
-    white-space: nowrap;
 }
 
 .token-card {
