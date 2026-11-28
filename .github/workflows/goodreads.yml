@@ -17,6 +17,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Check the sync keeps imported details
+        run: python3 -m unittest discover -s scripts -p "test_*.py"
+
       - name: Fetch Goodreads shelves
         run: python3 scripts/fetch_goodreads.py 206355505 data/books.json
 

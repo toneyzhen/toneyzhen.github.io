@@ -7,7 +7,7 @@ signing in, so this script reads that. It has titles, authors, covers, links
 and star ratings, but no read dates or page counts.
 
 Browsers can't fetch it from the site directly, so a GitHub Action runs this
-once a day and commits the result.
+when started from the Actions tab and commits the result.
 
 Usage: python3 scripts/fetch_goodreads.py <goodreads-user-id> <output.json>
 """
