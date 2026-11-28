@@ -21,10 +21,9 @@ skips folders starting with `_`, so this note isn't part of the live site.
 
 ## Layout and tone
 - Move Projects above About.
-- About Me: cut it roughly in half; the education card already covers the facts.
 - Expedition Log is taller than Experience; consider trimming it further.
-- Remaining penguin touches: "waddled" in the Log intro, "waddling around on a
-  hike" in About, the scrolling penguin, the snow.
+- Remaining penguin touches: "waddled" in the Log intro, the scrolling penguin,
+  the snow.
 - The "23.7M Claude tokens" card can read as "AI did the work" on a site light
   on hand-built ML; decide whether it stays.
 - Live Last.fm shows whatever played last, which isn't under my control.
